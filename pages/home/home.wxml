@@ -1,0 +1,46 @@
+<!--pages/home/home.wxml-->
+<image src='/images/bg.png' class='bg'></image>
+<view class='page_row' bindtap="suo">
+  <view class="search">  
+    <view class="df search_arr">  
+      <icon class="searchcion" size='20' type='search'></icon>  
+      <input class="" disabled placeholder="请输入关键字" value="{{searchValue}}"/>  
+    </view>  
+  </view>  
+  <view class='sousuo'>搜索</view>
+</view>
+<view class='add-image'>
+  <swiper indicator-dots="{{indicatorDots}}" autoplay="true" interval="{{interval}}" duration="{{duration}}">
+    <block wx:for = "{{imgUrls}}">
+      <swiper-item>
+        <image src="{{item}}" class="slide-image" />
+      </swiper-item>
+    </block>
+  </swiper>
+</view>
+<!-- <view class='hot-card'>
+  <view class='hot-name'>
+    <image class='hot-name-line' src='/images/line-red.png'></image>
+    <view class='hot-name-text'>{{productList[0].name}}</view>
+    <image class='hot-name-line' src='/images/line-red.png'></image>
+  </view>
+  <image class='hot-info' src='/images/discount.png'></image>
+  <image class='hot-image' src='{{productList[0].image}}'></image>
+</view> -->
+<view class='list-title'>
+  <image class='list-title-line' src='/images/line-black.png'></image>
+  <view class='list-title-text'>春季推荐</view>
+  <image class='list-title-line' src='/images/line-black.png'></image>
+</view>
+
+<view class='product-row'>
+  <navigator class='product-card' wx:for='{{productList}}' wx:key='id' wx:for-index='pindex' wx:for-item='pitem' url="/pages/detail/detail?id={{pitem.id}}">
+    <image class='product-image' src='{{pitem.imgPrimaryUrl}}' mode='widthFix'></image> 
+    <view class='product-name'>{{pitem.title}}</view>
+    <view class='product-meta'>
+      <view class='product-money'>￥</view>
+      <view class='product-price'>{{pitem.priceUnderline}}</view>
+      <view class='product-add' catchtap='addToTrolley' data-id="{{pitem.id}}">+</view>
+    </view>
+  </navigator>
+</view>

@@ -1,0 +1,108 @@
+<import src="../../wxParse/wxParse.wxml" />
+<scroll-view scroll-y="true" class="container" scroll-into-view="{{toView}}" style="height:{{scrollHeight}}px;"> 
+   <view class="swiper-container" wx:if="{{!goodsDetail.basicInfo.videoId}}">
+        <swiper class="swiper_box" 
+                    autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="swiperchange" indicator-dots="true">
+            <!-- <block wx:for="{{goodsDetail}}" wx:key="id"> -->
+            <block wx:for="{{goodsDetail.imgPrimaryList}}">
+                <swiper-item>
+                    <image src="{{item.url}}" class="slide-image" mode="aspectFit" lazy-load="true"/>
+                </swiper-item>
+            </block>
+        </swiper>
+        <!-- <view class="dots">  
+            <block wx:for="{{goodsDetail.pics}}" wx:key="unique">  
+                <view class="dot{{index == swiperCurrent ? ' active' : ''}}"></view>  
+            </block>  
+        </view>  --> 
+    </view>
+    <view class="goods-info">
+        <view class="goods-price">¥{{price_section}}</view>
+        <view class="goods-title">{{goodsDetail.sharetitle}}</view>
+        <view class="goods-info-fx">
+            <image mode="aspectFit" src='../../images/share.jpg' />
+            <button open-type="share" />
+        </view>
+    </view>
+
+
+   <view bindtap="onGoodSelect" class="goods-attr" style="margin-bottom: 1rpx;">
+       <view class="goodTitle" style="left: 24rpx;">选择</view>
+       <view class="goodTip">{{select_string == '' ? '选择商品型号' : select_string}}</view>
+       <image mode="aspectFit" class="tip-style" src='../../images/youbiao.png' />
+   </view>
+   <view class="goods-attr">
+       <view class="goodTitle" style="left: 24rpx;">服务</view>
+       <view class="goodTip">7天无理由 ·运费险</view>
+        <image mode="aspectFit" class="tip-style" src='../../images/youbiao.png' />
+   </view>
+
+    <view class="good-tab">
+        <view bindtap="goodInstr" class="label-title {{toView==='goodDesc'?'active':''}}">图文详情</view>
+        <view bindtap="goodSize" class="label-title {{toView==='goodSize'?'active':''}}">商品参数</view>
+    </view>
+    <view class="goods-des-info" >        
+        <view id="goodDesc" wx:for="{{goodsDetail.imgDescList}}">
+            <image mode="aspectFit" class="des-imgs" src="{{item.url}}" />
+        </view>        
+        <view id="goodSize" wx:for="{{goodsDetail.imgSpecList}}">
+            <image mode="aspectFit" class="des-imgs" src="{{item.url}}" />
+        </view>
+    </view>
+    <view class="footer-box">        
+        <view class="join-shop-cart" bindtap="toAddShopCar">加入购物车</view>
+        <view class="now-buy" bindtap="tobuy">立即购买</view>
+   </view>
+    <view catchtouchmove="true" class="show-popup" hidden="{{hideShopPopup}}" >
+        <view class="popup-mask" bindtap="closePopupTap"></view>
+        <view class="popup-contents">
+             <view class="pop-goods-info">
+                <view class="pop-img-box">
+                    <image mode="aspectFit" src="{{single_image}}" class="goods-thumbnail"/>
+                </view>
+                <view class="popup-good-attr">
+                    <view class="pop-goods-price">¥ {{pop_goods_price}}</view>
+                    <view class="pop-goods-stock">库存{{stock_amount}}件</view>
+                    <view class="pop-goods-select">已选:{{select_string}}</view>
+                </view>
+                 <view class="pop-goods-close" bindtap="closePopupTap"></view> 
+             </view>
+            <view class="size-label-box">
+                <view style="border-bottom: 1rpx solid #eee;" wx:for="{{attrs}}" wx:for-item="property" wx:for-index="idx" wx:key="id">
+                <view class="label">{{property.attrName}}</view> 
+                <view class="label-item-box">
+                    <view class="label-item {{item.active ? 'active' : '' }}" wx:for="{{property.children}}" wx:key="id" 
+                    bindtap="labelItemTap" data-propertyindex="{{idx}}" data-propertyid="{{property.id}}" 
+                    data-propertyname="{{property.attrName}}" data-propertychildindex="{{index}}" data-propertychildid="{{item.id}}" data-propertychildname="{{item.attrName}}">
+                        {{item.attrName}}
+                    </view> 
+                </view>
+                </view> 
+                <view class="buy-num-box">
+                    <view class="num-label">购买数量</view>
+                    <view class="num-box">
+                        <view class="num-jian {{buyNumber == buyNumMin ? 'hui': ''}}" bindtap="numJianTap">-</view>
+                        <view class="num-input">
+                        <input type="number" value="{{buyNumber}}" disabled/>
+                        </view>
+                        <view class="num-jia {{buyNumber== buyNumMax ? 'hui': ''}}" bindtap="numJiaTap">+</view>
+                    </view>
+                </view>  
+            </view> 
+            
+            <block wx:if="{{isOkButton}}">
+                <view class="popup-ok-btn" bindtap="onOKButton">确定</view>
+            </block>
+            <block wx:else>
+                <view class="btn_grounp">
+                    <view class="popup-join-btn" bindtap="addShopCar">
+                        加入购物车
+                    </view>
+                    <view class="popup-buy-btn" bindtap="buyNow">
+                        立即购买
+                    </view>
+                </view>
+            </block>
+        </view>
+    </view>
+</scroll-view>
