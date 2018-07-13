@@ -3,20 +3,26 @@ var app = getApp()
 const api = require('../../utils/api');
 Page({
   data: {
-    goodsList:{
-      saveHidden:true,
-      totalPrice:0,
-      /* totalScoreToPay: 0, */     //积分
-      allSelect:true,
-      noSelect:false,
-      list:[]
-    },
+    isEmpty: true,          //购物车是否空
+    totalPrice:0,           //总价
+    allSelect:false,         //是否全选
+    noSelect:true,         //是否选择
+    list:[],                //商品列表
+    hideShopPopup: true,    //弹出窗口是否隐藏
+    attrs:[],               //商品属性
+    single_image: "",       //商品图片
+    pop_goods_price: 0,     //商品价格
+    stock_amount: 0,        //商品库存
+    select_string: 0,       //商品规格名称
     delBtnWidth:120,    //删除按钮宽度单位（rpx）
+    productskuPriceMap : [], //单品数据价格表
+    productsku:{}, //选中的单品数据
+    canSubmit: false, //  选中规格尺寸时候是否允许加入购物车
   },
 
   onPullDownRefresh: function(){
     this.getTrolley();
-    wx.stopPullDownRefresh();
+    /* wx.stopPullDownRefresh(); */
   },
  
  //获取元素自适应后的实际宽度
@@ -39,10 +45,10 @@ Page({
       delBtnWidth:delBtnWidth
     });
   },
-  onLoad: function () {
+  /* onLoad: function () {
       this.initEleWidth();
       this.onShow();
-  },
+  }, */
 
   getTrolley(){
     let that = this;
@@ -57,11 +63,11 @@ Page({
         title: '数据加载错误',
       })
     }).then(res => {
-      wx.hideLoading()
+      wx.hideLoading();
+      wx.stopPullDownRefresh();
       if (res.code && res.code == 200) {
-        let shopList = res.data;
-        that.data.goodsList.list = shopList;
-        that.setGoodsList(that.getSaveHide(),that.totalPrice(),that.allSelect(),that.noSelect(),shopList);
+        that.data.list = res.data;
+        that.setGoodsList(res.data);
       } else {
         wx.showToast({
           icon: 'none',
@@ -72,12 +78,8 @@ Page({
   },
 
   onShow: function(){
-      /* var shopList = [];
-      // 获取购物车数据
-      var shopCarInfoMem = wx.getStorageSync('shopCarInfo');
-      if (shopCarInfoMem && shopCarInfoMem.shopList) {
-        shopList = shopCarInfoMem.shopList
-      } */
+      this.selectArr = [];
+      this.initEleWidth();
       this.getTrolley();
   },
   toIndexPage:function(){
@@ -109,10 +111,10 @@ Page({
           left = "left:-"+delBtnWidth+"px";
         }
       }
-      var list = this.data.goodsList.list;
+      var list = this.data.list;
       if(index!="" && index !=null){
         list[parseInt(index)].left = left; 
-        this.setGoodsList(this.getSaveHide(),this.totalPrice(),this.allSelect(),this.noSelect(),list);
+        this.setGoodsList(list);
       }
     }
   },
@@ -125,50 +127,191 @@ Page({
       var delBtnWidth = this.data.delBtnWidth;
       //如果距离小于删除按钮的1/2，不显示删除按钮
       var left = disX > delBtnWidth/2 ? "margin-left:-"+delBtnWidth+"px":"margin-left:0px";
-      var list = this.data.goodsList.list;
+      var list = this.data.list;
      if(index!=="" && index != null){
         list[parseInt(index)].left = left; 
-        this.setGoodsList(this.getSaveHide(),this.totalPrice(),this.allSelect(),this.noSelect(),list);
-
+        this.setGoodsList(list);
       }
     }
   },
+
+  closePopupTap: function () {
+    this.setData({
+      hideShopPopup: true,
+    });
+  },
+
+  selectSpec: function(e){
+    var that = this;
+    var index = e.currentTarget.dataset.index;
+    var list = this.data.list;
+    var goodAttrList = list[parseInt(index)].spec.split("|");
+    console.log(goodAttrList);
+    api.GetProductDetail({ productId: list[parseInt(index)].productId }).then(res => {
+      if(res.code && res.code == 200){
+        that.setData({
+          attrs : res.data.attrs,
+          select_string: goodAttrList.join(",")
+        });
+
+        for(let i = 0; i < that.data.attrs.length; i++){
+          for(let j = 0; j < that.data.attrs[i].children.length; j++){
+            var children = that.data.attrs[i].children[j];
+            console.log("children.attrName = " + children.attrName);
+            for(let k = 0; k < goodAttrList.length; k++)
+              if(children.attrName == goodAttrList[k]){
+                console.log("active === true");
+                that.data.attrs[i].children[j].active = true;
+              }else{
+                that.data.attrs[i].children[j].active = false;
+              }
+          }
+        }
+
+        api.getProductDetailList({
+          productId: list[parseInt(index)].productId,
+        }).then(res => {
+          if(res.code && res.code == 200){
+            let productskuPriceMap = that.data.productskuPriceMap;
+            res.data.forEach(element => {
+              productskuPriceMap[element.attrOption] = element;
+            });
+
+            let needSelectNumber = that.data.attrs.length;
+            console.log("needSelectNumber = " + needSelectNumber);
+            let currentSelectNumber = 0;
+            let attrOptionString =[];
+            for (var i=0; i<needSelectNumber; ++i) {
+              let children = that.data.attrs[i].children;
+              for(var j=0; j<children.length; ++j) {
+                if(children[j].active) {
+                  currentSelectNumber++;
+                  attrOptionString.push(children[j].id);
+                  console.log(attrOptionString);
+                }
+              }
+            }
+            if (needSelectNumber == currentSelectNumber) {
+              this.data.canSubmit = true;
+              console.log("can submit");
+
+              let sku = this.data.productskuPriceMap[attrOptionString.join("|")];
+              if (sku) {
+                this.setData({
+                  pop_goods_price: sku.unitPrice,       //单品价格
+                  stock_amount: sku.stockAmount,         //单品库存
+                  sale_amount: sku.saleAmount,          //单品销售
+                  single_image: sku.imageSelect,         //单品图片
+                  productsku: sku                 
+                });
+              }
+            }
+
+
+          }else{
+            wx.showToast({
+              icon: 'none',
+              title: '数据加载错误',
+            });
+          }
+        });
+      }else{
+        wx.showToast({
+          icon: 'none',
+          title: '数据加载错误',
+        })
+      }
+    });
+
+
+    this.setData({
+      hideShopPopup: false,
+    });
+  },
+
+  labelItemTap: function (e) {
+    var that = this;
+
+    //点击按钮的所有子节点先取消 再选中
+    var childs = that.data.attrs[e.currentTarget.dataset.propertyindex].children;
+    for (var i = 0; i < childs.length; i++) {
+      that.data.attrs[e.currentTarget.dataset.propertyindex].children[i].active = false;
+    }
+
+    // 设置当前选中状态
+    that.data.attrs[e.currentTarget.dataset.propertyindex].children[e.currentTarget.dataset.propertychildindex].active = true;
+    that.selectArr[e.currentTarget.dataset.propertyindex] = that.data.attrs[e.currentTarget.dataset.propertyindex].children[e.currentTarget.dataset.propertychildindex].attrName;
+    this.setData({
+      attrs: that.data.attrs,
+      select_string:that.selectArr.join(",")
+    });
+
+    //获取所有的选中规格尺寸数据
+    let needSelectNumber = that.data.attrs.length;
+    let currentSelectNumber = 0;
+    let attrOptionString =[];
+    for (var i=0; i<needSelectNumber; ++i) {
+      let children = that.data.attrs[i].children;
+      for(var j=0; j<children.length; ++j) {
+        if(children[j].active) {
+          currentSelectNumber++;
+          attrOptionString.push(children[j].id);
+        }
+      }
+    }
+    if (needSelectNumber == currentSelectNumber) {
+      this.data.canSubmit = true;
+
+      let sku = this.data.productskuPriceMap[attrOptionString.join("|")];
+      if (sku) {
+        this.setData({
+          pop_goods_price: sku.unitPrice,       //单品价格
+          stock_amount: sku.stockAmount,         //单品库存
+          sale_amount: sku.saleAmount,          //单品销售
+          single_image: sku.imageSelect,         //单品图片
+          productsku: sku                 
+        });
+      }
+    }
+   
+  },
+
+  stopTap: function(){
+  },
+
   delItem:function(e){
     var that = this;
     var index = e.currentTarget.dataset.index;
-    var list = this.data.goodsList.list;
-    api.DelCart({itemId:list[parseInt(index)].itemId}).then(res =>{
+    var list = this.data.list;
+    api.DelCart({},list[parseInt(index)].itemId).then(res =>{
       if(res.code && res.code == 200){
         list.splice(index,1);
-        that.setGoodsList(that.getSaveHide(),that.totalPrice(),that.allSelect(),that.noSelect(),list);
+        that.setGoodsList(list);
       }
     });    
   },
   selectTap:function(e){
     var index = e.currentTarget.dataset.index;
-    var list = this.data.goodsList.list;
+    var list = this.data.list;
     if(index!=="" && index != null){
         list[parseInt(index)].active = !list[parseInt(index)].active ; 
-        this.setGoodsList(this.getSaveHide(),this.totalPrice(),this.allSelect(),this.noSelect(),list);
+        this.setGoodsList(list);
       }
    },
-   totalPrice:function(){
-      var list = this.data.goodsList.list;
+   getTotalPrice:function(){
+      var list = this.data.list;
       var total = 0;
-      /* let totalScoreToPay = 0; */
       for(var i = 0 ; i < list.length ; i++){
           var curItem = list[i];
           if(curItem.active){
             total+= parseFloat(curItem.unitPrice)*curItem.count;
-            /* totalScoreToPay += curItem.score * curItem.count; */
           }
       }
-      /* this.data.goodsList.totalScoreToPay = totalScoreToPay; */
       total = parseFloat(total.toFixed(2));//js浮点计算bug，取两位小数精度
       return total;
    },
-   allSelect:function(){
-      var list = this.data.goodsList.list;
+   getAllSelect:function(){
+      var list = this.data.list;
       var allSelect = false;
       for(var i = 0 ; i < list.length ; i++){
           var curItem = list[i];
@@ -181,8 +324,8 @@ Page({
       }
       return allSelect;
    },
-   noSelect:function(){
-      var list = this.data.goodsList.list;
+   getNoSelect:function(){
+      var list = this.data.list;
       var noSelect = 0;
       for(var i = 0 ; i < list.length ; i++){
           var curItem = list[i];
@@ -196,20 +339,19 @@ Page({
         return false;
       }
    },
-   setGoodsList:function(saveHidden,total,allSelect,noSelect,list){
+   setGoodsList:function(list){
+     var bEmpty = list.length > 0 ? false: true;
      this.setData({
-        goodsList:{
-          saveHidden:saveHidden,
-          totalPrice:total,
-          allSelect:allSelect,
-          noSelect:noSelect,
           list:list,
-        }
+          totalPrice:this.getTotalPrice(),
+          allSelect:this.getAllSelect(),
+          noSelect:this.getNoSelect(),
+          isEmpty: bEmpty
       });
    },
    bindAllSelect:function(){
-      var currentAllSelect = this.data.goodsList.allSelect;
-      var list = this.data.goodsList.list;
+      var currentAllSelect = this.data.allSelect;
+      var list = this.data.list;
       if(currentAllSelect){
         for(var i = 0 ; i < list.length ; i++){
             var curItem = list[i];
@@ -221,21 +363,20 @@ Page({
             curItem.active = true;
         }
       }
-     
-      this.setGoodsList(this.getSaveHide(),this.totalPrice(),!currentAllSelect,this.noSelect(),list);
+      this.setGoodsList(list);
    },
 
    jiaBtnTap:function(e){
     var that = this
     var index = e.currentTarget.dataset.index;
-    var list = that.data.goodsList.list;
+    var list = that.data.list;
     if(index!=="" && index != null){
       var carShopBean = list[parseInt(index)];
       var itemCount = carShopBean.count + 1;
       api.ModifyCart({itemId: carShopBean.itemId, count: itemCount}).then(res =>{
         if(res.code && res.code == 200){
           list[parseInt(index)].count = itemCount;
-          that.setGoodsList(that.getSaveHide(), that.totalPrice(), that.allSelect(), that.noSelect(), list);
+          that.setGoodsList(list);
         }else{
           wx.showToast({
             icon: 'none',
@@ -249,11 +390,11 @@ Page({
    jianBtnTap:function(e){
     var that = this
     var index = e.currentTarget.dataset.index;
-    var list = this.data.goodsList.list;
+    var list = this.data.list;
     if(index!=="" && index != null){
       if(list[parseInt(index)].count > 1){
         list[parseInt(index)].count-- ;
-        this.setGoodsList(this.getSaveHide(),this.totalPrice(),this.allSelect(),this.noSelect(),list);
+        that.setGoodsList(list);
         api.ModifyCart({itemId: list[parseInt(index)].itemId, count: list[parseInt(index)].count}).then(res =>{
           if(res.code && res.code == 200){
           }else{
@@ -267,52 +408,18 @@ Page({
     }
    },
 
-   editTap:function(){
-     var list = this.data.goodsList.list;
-     for(var i = 0 ; i < list.length ; i++){
-            var curItem = list[i];
-            curItem.active = false;
-     }
-     this.setGoodsList(!this.getSaveHide(),this.totalPrice(),this.allSelect(),this.noSelect(),list);
-   },
-
-   saveTap:function(){
-     var list = this.data.goodsList.list;
-     for(var i = 0 ; i < list.length ; i++){
-            var curItem = list[i];
-            curItem.active = true;
-     }
-     this.setGoodsList(!this.getSaveHide(),this.totalPrice(),this.allSelect(),this.noSelect(),list);
-   },
-
-   getSaveHide:function(){
-     var saveHidden = this.data.goodsList.saveHidden;
-     return saveHidden;
-   },
-   deleteSelected:function(){
-    var list = this.data.goodsList.list;
-    list = list.filter(function(curGoods) {
-      return !curGoods.active;
-     });
-     this.setGoodsList(this.getSaveHide(),this.totalPrice(),this.allSelect(),this.noSelect(),list);
-    },
-
     toPayOrder:function(){
       wx.showLoading();
       var that = this;
-      if (this.data.goodsList.noSelect) {
+      if (this.data.noSelect) {
         wx.hideLoading();
         return;
       }
       // 重新计算价格，判断库存
       var shopList = [];
-      var shopCarInfoMem = wx.getStorageSync('shopCarInfo');
-      if (shopCarInfoMem && shopCarInfoMem.shopList) {
-        // shopList = shopCarInfoMem.shopList
-        shopList = shopCarInfoMem.shopList.filter(entity => {
-          return entity.active;
-        });
-      }
+      shopList = this.data.list.filter(entity => {
+        return entity.active;
+      });
       if (shopList.length == 0) {
         wx.hideLoading();
         return;
@@ -326,86 +433,49 @@ Page({
           return;
         }
         let carShopBean = shopList[i];
-        // 获取价格和库存
-        if (!carShopBean.propertyChildIds || carShopBean.propertyChildIds == "") {
-          wx.request({
-            url: 'https://api.it120.cc/'+ app.globalData.subDomain +'/shop/goods/detail',
-            data: {
-              id: carShopBean.goodsId
-            },
-            success: function(res) {
-              doneNumber++;
-              if (res.data.data.properties) {
+
+        api.CarVerify({itemId: carShopBean.itemId}).then(res => {
+          if(res.code && res.code == 200){
+            //商品已失效
+            if(res.data.delFlag == 1){
                 wx.showModal({
                   title: '提示',
-                  content: res.data.data.basicInfo.name + ' 商品已失效，请重新购买',
+                  content: carShopBean.desc + ' 商品已失效，请重新购买',
                   showCancel:false
-                })
+                });
                 isFail = true;
                 wx.hideLoading();
                 return;
-              }
-              if (res.data.data.basicInfo.stores < carShopBean.number) {
-                wx.showModal({
-                  title: '提示',
-                  content: res.data.data.basicInfo.name + ' 库存不足，请重新购买',
-                  showCancel:false
-                })
-                isFail = true;
-                wx.hideLoading();
-                return;
-              }
-              if (res.data.data.basicInfo.minPrice != carShopBean.price) {
-                wx.showModal({
-                  title: '提示',
-                  content: res.data.data.basicInfo.name + ' 价格有调整，请重新购买',
-                  showCancel:false
-                })
-                isFail = true;
-                wx.hideLoading();
-                return;
-              }
-              if (needDoneNUmber == doneNumber) {
-                that.navigateToPayOrder();
-              }
             }
-          })
-        } else {
-          wx.request({
-            url: 'https://api.it120.cc/'+ app.globalData.subDomain +'/shop/goods/price',
-            data: {
-              goodsId: carShopBean.goodsId,
-              propertyChildIds:carShopBean.propertyChildIds
-            },
-            success: function(res) {
-              doneNumber++;
-              if (res.data.data.stores < carShopBean.number) {
-                wx.showModal({
-                  title: '提示',
-                  content: carShopBean.name + ' 库存不足，请重新购买',
-                  showCancel:false
-                })
-                isFail = true;
-                wx.hideLoading();
-                return;
-              }
-              if (res.data.data.price != carShopBean.price) {
-                wx.showModal({
-                  title: '提示',
-                  content: carShopBean.name + ' 价格有调整，请重新购买',
-                  showCancel:false
-                })
-                isFail = true;
-                wx.hideLoading();
-                return;
-              }
-              if (needDoneNUmber == doneNumber) {
-                that.navigateToPayOrder();
-              }
+
+            if(carShopBean.unitPrice != res.data.unitPrice){
+              wx.showModal({
+                title: '提示',
+                content: carShopBean.desc + ' 价格有调整，请重新购买',
+                showCancel:false
+              });
+              isFail = true;
+              wx.hideLoading();
+              return;
             }
-          })
-        }
-        
+
+            if(carShopBean.count > res.data.stockAmount){
+              wx.showModal({
+                title: '提示',
+                content: carShopBean.desc + ' 库存不足，请重新购买',
+                showCancel:false
+              })
+              isFail = true;
+              wx.hideLoading();
+              return;
+            }
+            doneNumber++;
+            if (needDoneNUmber == doneNumber) {
+              wx.setStorageSync('ShopList', shopList);
+              that.navigateToPayOrder();
+            }
+          }
+        });
       }
     },
     navigateToPayOrder:function () {

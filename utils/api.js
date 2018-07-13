@@ -55,7 +55,9 @@ const AddCart = data => RequestServer(data, '/api/v1/wechat/cart/add', 'POST')
 // POST /api/v1/wechat/modifyCart // 修改
 const ModifyCart = data => RequestServer(data, `/api/v1/wechat/cart/modify`, 'POST')
 // POST /api/v1/wechat/addorder // 删除商品
-const DelCart = data => RequestServer(data, `/api/v1/wechat/cart/delete`, 'DELETE')
+const DelCart = (data, itemId) => RequestServer(data, `/api/v1/wechat/cart/delete?itemId=${itemId}`, 'DELETE');
+//GET 购物车商品确认
+const CarVerify = data => RequestServer(data, "/api/v1/wechat/cart/verify");
 
 // 收货地址
 // GET /api/v1/wechat/userDefaultAddr 获取默认地址
@@ -152,6 +154,7 @@ module.exports= {
   AddCart,
   ModifyCart,
   DelCart,
+  CarVerify,
   userDefaultAddr,
   addaddr,
   addrList,

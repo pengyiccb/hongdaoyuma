@@ -52,7 +52,6 @@ Page({
     var that = this;
     wx.getSystemInfo({
       success: function (res) {
-        console.info(res.windowHeight);
         that.setData({
           scrollHeight: res.windowHeight
         });
@@ -62,14 +61,7 @@ Page({
 
   onLoad: function (e) {
     this.selectArr = [];
-    if (e.inviter_id) {
-      wx.setStorage({
-        key: 'inviter_id_' + e.id,
-        data: e.inviter_id
-      })
-    }
     var that = this;
-    that.data.kjId = e.kjId;
     // 获取购物车数据
     wx.getStorage({
       key: 'shopCarInfo',
@@ -87,22 +79,10 @@ Page({
 
     api.GetProductDetail({ productId: e.id }).then(res => {
       let data = res.data
-      console.log(data);
-      // attrs
-      // :
-      // (2) [{…}, {…}]
-      // product
-      // :
-      // {id: 1, title: "英爵伦 2018夏季新款 男士纯色短袖T恤 男装体恤上衣简约潮牌衣服", subtitle: "95%棉 打底柔软舒适 外穿简约时尚", brief: " 纯电商(只在线上销售)", priceUnderline: 55, …}
-      // __proto__
-      // :
-      // Object
-      // this.data = data;
       this.setData({
         goodsDetail: res.data.product,
         attrs : res.data.attrs,
         single_image: res.data.product.imgPrimaryList[0].url,
-        // buyNumber: 1
       });
 
       wx.setNavigationBarTitle({
@@ -113,21 +93,14 @@ Page({
         productId: that.data.goodsDetail.id,
       }).then(res=>{
         let productskuPriceMap = this.data.productskuPriceMap;
-        console.log(res);
         if (res.code==200) {
           res.data.forEach(element => {
             productskuPriceMap[element.attrOption] = element;
           });
-          console.log(productskuPriceMap);
           let pirceList = res.data.map(e => {return e.unitPrice});
-          console.log(pirceList);
           let max = Math.max.apply(null, pirceList);
           let min = Math.min.apply(null, pirceList);
-          console.log(max);
-          console.log(min);
           this.setData({ price_section: min + "-" + max});
-          // this.setData({pop_goods_price: res.data.unitPrice});
-          // this.setData({productsku : res.data});
         }
     });
     });
@@ -177,30 +150,11 @@ Page({
 
   },
   tobuy: function () {
-    // wx.showToast({
-    //   icon: 'none',
-    //   title: '此功能暂未开放'
-    // });
-    // return;
     this.setData({
       shopType: "tobuy",
       isOkButton: true
     });
     this.bindGuiGeTap();
-    /*    if (this.data.goodsDetail.properties && !this.data.canSubmit) {
-          this.bindGuiGeTap();
-          return;
-        }
-        if(this.data.buyNumber < 1){
-          wx.showModal({
-            title: '提示',
-            content: '暂时缺货哦~',
-            showCancel:false
-          })
-          return;
-        }
-        this.addShopCar();
-        this.goShopCar();*/
   },
   /**
    * 规格选择弹出框
@@ -228,7 +182,6 @@ Page({
     }
   },
   numJiaTap: function () {
-    console.log("numJiaTap " + this.data.buyNumber  + " < " + this.data.stock_amount)
     if (this.data.buyNumber < this.data.stock_amount) {
       var currentNum = this.data.buyNumber;
       currentNum += 1;
@@ -243,7 +196,6 @@ Page({
    */
   labelItemTap: function (e) {
     var that = this;
-    console.log(e);
 
     let attrParentId = e.currentTarget.dataset.propertyid;
     let tapAttrId = e.currentTarget.dataset.propertychildid;
@@ -260,7 +212,7 @@ Page({
 
     // 设置当前选中状态
     that.data.attrs[e.currentTarget.dataset.propertyindex].children[e.currentTarget.dataset.propertychildindex].active = true;
-    that.selectArr[e.currentTarget.dataset.propertyindex] = "'" + that.data.attrs[e.currentTarget.dataset.propertyindex].children[e.currentTarget.dataset.propertychildindex].attrName + "'";
+    that.selectArr[e.currentTarget.dataset.propertyindex] = that.data.attrs[e.currentTarget.dataset.propertyindex].children[e.currentTarget.dataset.propertychildindex].attrName;
     this.setData({
       attrs: that.data.attrs,
       select_string:that.selectArr.join(",")
@@ -280,16 +232,10 @@ Page({
       }
     }
     if (needSelectNumber == currentSelectNumber) {
-      console.log(attrOptionString.join("|"));
-      console.log(that.data.goodsDetail.id);
       this.data.canSubmit = true;
 
       let sku = this.data.productskuPriceMap[attrOptionString.join("|")];
-      console.log(sku);
       if (sku) {
-        /* api.getProductSkuStockAmount({ skuId: sku.id}).then(res=>{
-          console.log(res.data);
-        }); */
         this.setData({
           pop_goods_price: sku.unitPrice,       //单品价格
           stock_amount: sku.stockAmount,         //单品库存
@@ -305,7 +251,6 @@ Page({
   * 加入购物车
   */
   addShopCar: function () {
-    // if (this.data.goodsDetail.properties && !this.data.canSubmit) {
       if (!this.data.canSubmit) {
         wx.showModal({
           title: '提示',
@@ -314,9 +259,6 @@ Page({
         });
         return;
       }
-    //   this.bindGuiGeTap();
-    //   return;
-    // }
     if (this.data.buyNumber < 1) {
       wx.showModal({
         title: '提示',
