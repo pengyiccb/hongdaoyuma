@@ -14,10 +14,13 @@ Page({
     pop_goods_price: 0,     //商品价格
     stock_amount: 0,        //商品库存
     select_string: 0,       //商品规格名称
+    skuId: 0,
     delBtnWidth:120,    //删除按钮宽度单位（rpx）
     productskuPriceMap : [], //单品数据价格表
     productsku:{}, //选中的单品数据
     canSubmit: false, //  选中规格尺寸时候是否允许加入购物车
+    selAttr: [],
+    curIndex: 0
   },
 
   onPullDownRefresh: function(){
@@ -60,7 +63,7 @@ Page({
       wx.hideLoading();
       wx.showToast({
         icon: 'none',
-        title: '数据加载错误',
+        title: res.msg,
       })
     }).then(res => {
       wx.hideLoading();
@@ -71,14 +74,13 @@ Page({
       } else {
         wx.showToast({
           icon: 'none',
-          title: '数据加载错误',
+          title: res.msg,
         })
       }
     });
   },
 
   onShow: function(){
-      this.selectArr = [];
       this.initEleWidth();
       this.getTrolley();
   },
@@ -144,29 +146,30 @@ Page({
   selectSpec: function(e){
     var that = this;
     var index = e.currentTarget.dataset.index;
+    that.data.curIndex = parseInt(index);
     var list = this.data.list;
-    var goodAttrList = list[parseInt(index)].spec.split("|");
-    console.log(goodAttrList);
+    this.data.selAttr = [];
+    this.data.selAttr = list[parseInt(index)].spec.split("|");
     api.GetProductDetail({ productId: list[parseInt(index)].productId }).then(res => {
       if(res.code && res.code == 200){
         that.setData({
-          attrs : res.data.attrs,
-          select_string: goodAttrList.join(",")
+          attrs : res.data.attrs
         });
 
         for(let i = 0; i < that.data.attrs.length; i++){
           for(let j = 0; j < that.data.attrs[i].children.length; j++){
             var children = that.data.attrs[i].children[j];
-            console.log("children.attrName = " + children.attrName);
-            for(let k = 0; k < goodAttrList.length; k++)
-              if(children.attrName == goodAttrList[k]){
-                console.log("active === true");
-                that.data.attrs[i].children[j].active = true;
-              }else{
-                that.data.attrs[i].children[j].active = false;
+            for(let k = 0; k < that.data.selAttr.length; k++)
+              if(children.attrName == that.data.selAttr[k]){
+                children.active = true;
               }
           }
         }
+
+        that.setData({
+          attrs: that.data.attrs,
+          select_string: that.data.selAttr.join(",")
+        });
 
         api.getProductDetailList({
           productId: list[parseInt(index)].productId,
@@ -178,7 +181,6 @@ Page({
             });
 
             let needSelectNumber = that.data.attrs.length;
-            console.log("needSelectNumber = " + needSelectNumber);
             let currentSelectNumber = 0;
             let attrOptionString =[];
             for (var i=0; i<needSelectNumber; ++i) {
@@ -187,13 +189,11 @@ Page({
                 if(children[j].active) {
                   currentSelectNumber++;
                   attrOptionString.push(children[j].id);
-                  console.log(attrOptionString);
                 }
               }
             }
             if (needSelectNumber == currentSelectNumber) {
               this.data.canSubmit = true;
-              console.log("can submit");
 
               let sku = this.data.productskuPriceMap[attrOptionString.join("|")];
               if (sku) {
@@ -211,18 +211,17 @@ Page({
           }else{
             wx.showToast({
               icon: 'none',
-              title: '数据加载错误',
+              title: res.msg,
             });
           }
         });
       }else{
         wx.showToast({
           icon: 'none',
-          title: '数据加载错误',
+          title: res.msg,
         })
       }
     });
-
 
     this.setData({
       hideShopPopup: false,
@@ -239,11 +238,20 @@ Page({
     }
 
     // 设置当前选中状态
+    that.data.selAttr = [];
     that.data.attrs[e.currentTarget.dataset.propertyindex].children[e.currentTarget.dataset.propertychildindex].active = true;
-    that.selectArr[e.currentTarget.dataset.propertyindex] = that.data.attrs[e.currentTarget.dataset.propertyindex].children[e.currentTarget.dataset.propertychildindex].attrName;
+    for(let i = 0; i < that.data.attrs.length; i++){
+      for(let j = 0; j < that.data.attrs[i].children.length; j++){
+        var children = that.data.attrs[i].children[j];
+        if(children.active){
+          that.data.selAttr.push(children.attrName);
+        }
+      }
+    }
+
     this.setData({
       attrs: that.data.attrs,
-      select_string:that.selectArr.join(",")
+      select_string:that.data.selAttr.join(",")
     });
 
     //获取所有的选中规格尺寸数据
@@ -269,11 +277,40 @@ Page({
           stock_amount: sku.stockAmount,         //单品库存
           sale_amount: sku.saleAmount,          //单品销售
           single_image: sku.imageSelect,         //单品图片
-          productsku: sku                 
+          skuId: sku.id
         });
       }
     }
    
+  },
+
+  onOKButton: function(){
+    if (!this.data.canSubmit) {
+      wx.showModal({
+        title: '提示',
+        content: '请选择商品规格！',
+        showCancel: false
+      });
+      return;
+    }
+    let that = this;
+    var list = that.data.list;
+    console.log(list);
+    api.ModifyCart({itemId: list[that.data.curIndex].itemId, skuId: that.data.skuId}).then(res => {
+      if(res.code && res.code == 200){
+        list.spec = that.data.selAttr.join("|");
+        that.setGoodsList(list);
+
+        that.setData({
+          hideShopPopup: true,
+        });
+      }else{
+        wx.showToast({
+          icon: 'none',
+          title: res.msg,
+        });
+      }
+    });
   },
 
   stopTap: function(){

@@ -60,7 +60,6 @@ Page({
   },
 
   onLoad: function (e) {
-    this.selectArr = [];
     var that = this;
     // 获取购物车数据
     wx.getStorage({
@@ -197,25 +196,27 @@ Page({
   labelItemTap: function (e) {
     var that = this;
 
-    let attrParentId = e.currentTarget.dataset.propertyid;
-    let tapAttrId = e.currentTarget.dataset.propertychildid;
-
-    // for (var i=0; i<that.data.attrs.length; ++i) {
-    //   that.data.attrs[i].active =false;
-    // }
     //点击按钮的所有子节点先取消 再选中
     var childs = that.data.attrs[e.currentTarget.dataset.propertyindex].children;
     for (var i = 0; i < childs.length; i++) {
       that.data.attrs[e.currentTarget.dataset.propertyindex].children[i].active = false;
-      // that.data.goodsDetail.properties[e.currentTarget.dataset.propertyindex].childsCurGoods[i].active = false;
     }
 
     // 设置当前选中状态
+    var selAttr = [];
     that.data.attrs[e.currentTarget.dataset.propertyindex].children[e.currentTarget.dataset.propertychildindex].active = true;
-    that.selectArr[e.currentTarget.dataset.propertyindex] = that.data.attrs[e.currentTarget.dataset.propertyindex].children[e.currentTarget.dataset.propertychildindex].attrName;
+    for(let i = 0; i < that.data.attrs.length; i++){
+      for(let j = 0; j < that.data.attrs[i].children.length; j++){
+        var children = that.data.attrs[i].children[j];
+        if(children.active){
+          selAttr.push(children.attrName);
+        }
+      }
+    }
+
     this.setData({
       attrs: that.data.attrs,
-      select_string:that.selectArr.join(",")
+      select_string:selAttr.join(",")
     });
 
     //获取所有的选中规格尺寸数据
@@ -307,26 +308,8 @@ Page({
 
     //shopCarInfo = {shopNum:12,shopList:[]}
   },
-	/**
-	  * 立即购买
-	  */
+
   buyNow: function () {
-    // if (this.data.goodsDetail.properties && !this.data.canSubmit) {
-    //   if (!this.data.canSubmit) {
-    //     wx.showModal({
-    //       title: '提示',
-    //       content: '请选择商品规格！',
-    //       showCancel: false
-    //     })
-    //   }
-    //   this.bindGuiGeTap();
-    //   wx.showModal({
-    //     title: '提示',
-    //     content: '请先选择规格尺寸哦~',
-    //     showCancel: false
-    //   })
-    //   return;
-    // }
     if (this.data.buyNumber < 1) {
       wx.showModal({
         title: '提示',
