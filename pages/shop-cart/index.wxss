@@ -136,6 +136,8 @@ view {
 .goods-info .text-box .goods-price{
   font-size: 26rpx;
   color:#e64340;
+  position: absolute;
+  bottom: 0rpx;
 }
 .goods-info .text-box .buy-num{
   width: 164rpx;

@@ -60,68 +60,36 @@ const DelCart = (data, itemId) => RequestServer(data, `/api/v1/wechat/cart/delet
 const CarVerify = data => RequestServer(data, "/api/v1/wechat/cart/verify");
 
 // 收货地址
-// GET /api/v1/wechat/userDefaultAddr 获取默认地址
-const userDefaultAddr = data => RequestServer(data, `/api/v1/wechat/userDefaultAddr`)
-// POST /api/v1/wechat/addaddr 新增
-const addaddr = (data, i) => RequestServer(data, `/api/v1/wechat/addaddr?isDefault=${i}`, 'POST')
-// GET /api/v1/wechat/addrList 获取地址列表
-const addrList = data => RequestServer(data, `/api/v1/wechat/addrList`)
-
+//获取用户默认地址
+const userDefaultAddr = data => RequestServer(data, `/api/v1/wechat/address/default`)
+//添加用户地址
+const addaddr = data => RequestServer(data, `/api/v1/wechat/address/add`, 'POST')
+//获取地址列表
+const addrList = data => RequestServer(data, `/api/v1/wechat/address/list`)
+//修改用户地址
+const modifyAddr = data => RequestServer(data, `/api/v1/wechat/address/modify`, 'POST')
+//删除用户地址
+const delAddr = (data, addressId) => RequestServer(data, `/api/v1/wechat/address/delete?addressId=${addressId}`, 'DELETE')
+//获取指定用户地址
+const getAddrById = (data, addressId) => RequestServer(data, `/api/v1/wechat/address/detail?addressId=${addressId}`)
 
 // 支付接口
 // POST /api/v1/wechat/playorder
-const playorder = data => RequestServer(data, `/api/v1/wechat/playorder`, 'POST')
+const playorder = data => RequestServer(data, `/api/v1/wechat/pay/prepay`)
 
 // 获取订单列表
 // GET /api/v1/wechat/orderList
-const orderList = data => RequestServer(data, `/api/v1/wechat/orderList`)
+const orderList = data => RequestServer(data, `/api/v1/wechat/order/list`)
+//确认订单
+const orderConfirm = data => RequestServer(data, `/api/v1/wechat/order/confirm`, 'POST')
+//关闭订单
+const orderClose = data => RequestServer(data, `/api/v1/wechat/order/close`, 'DELETE')
+//微信获取订单详情
+const orderDetail = data => RequestServer(data, `/api/v1/wechat/order/detail`)
+//计算订单总价
+const orderTotalPrice = data => RequestServer(data, `/api/v1/wechat/order/price/total`, 'POST')
 
 
-//== 获取购物车
-const getTrolleyList = data => RequestServer("GET", "/api/v1/wechat/trolleyList");
-
-//获取订单商品
-// params.data = {sessionKey}
-const getOrderList = data => RequestServer("GET", "/api/v1/wechat/OrderList");
-
-
-//添加订单到购物车
-const addOrderToTrolley = data => RequestServer("GET", "/api/v1/wechat/addOrderToTrolley");
-
-//商品详情
-const getOrderDetail = data => RequestServer("GET", "/api/v1/wechat/OrderDetail");
-
-//提交订单结算
-const submitOrder = data => RequestServer("GET", "/api/v1/wechat/submitOrder");
-
-//提交订单结算
-const getPrepayOrderInfo = data => RequestServer(data, "/api/v1/wechat/getPrepayOrderInfo");
-
-
-//发请求到服务器 不需要了
-// const requestToServer = (method, url, params={data, success, fail}, Authorization=true) => {
-//   // var data = params.data || {};
-//   let header = {};
-//   if (Authorization) {
-//     header['Authorization'] = `Bearer ` + wx.getStorageSync('Authorization');
-//   }
-//   header['Content-Type'] = method === "POST" && 'application/x-www-form-urlencoded;charset=UTF-8;' || 'application/json;charset=UTF-8;';
-//   wx.request({
-//     url: API_URL + url,
-//     method: method || 'GET',
-//     data: params.data || {},
-//     header: header,
-//     success: (res) => {
-//       res.data.message && console.log(res.data.message);
-//       params.success && params.success(res);
-//     },
-//     fail: (res) => {
-//       params.fail && params.fail(res);
-//     }
-//   });
-// }
-//获取 sessionKey 登录到服务器 创建session (需要获取微信的 code)。返回一个服务器维护的 session_key
-//参数 params.data = {userInfo, appId}
 const loginToServer = (params = {data, success, fail}) => {
   wx.login({
     success : (wxLoginRes) => {
@@ -158,9 +126,15 @@ module.exports= {
   userDefaultAddr,
   addaddr,
   addrList,
+  modifyAddr,
+  delAddr,
+  getAddrById,
   playorder,
   orderList,
-  getPrepayOrderInfo,
+  orderClose,
+  orderDetail,
+  orderConfirm,
+  orderTotalPrice,
   getCarKinds,
   getCarMainProduct
 }

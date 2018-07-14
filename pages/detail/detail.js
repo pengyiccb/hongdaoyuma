@@ -28,6 +28,7 @@ Page({
     sale_amount: 0,
     single_image: "",
     select_string: "",    //已选规格
+    skuId: 0,
 
     
     propertyChildIds: "",
@@ -61,23 +62,12 @@ Page({
 
   onLoad: function (e) {
     var that = this;
-    // 获取购物车数据
-    wx.getStorage({
-      key: 'shopCarInfo',
-      success: function (res) {
-        that.setData({
-          shopCarInfo: res.data,
-          shopNum: res.data.shopNum
-        });
-      }
-    })    
 
     this.setData({
       productId: e.id
     });
 
     api.GetProductDetail({ productId: e.id }).then(res => {
-      let data = res.data
       this.setData({
         goodsDetail: res.data.product,
         attrs : res.data.attrs,
@@ -125,6 +115,7 @@ Page({
       url: "/pages/trolley/trolley"
     });
   },
+
   toAddShopCar: function () {
     this.setData({
       shopType: "addShopCar",
@@ -171,6 +162,7 @@ Page({
       hideShopPopup: true
     })
   },
+
   numJianTap: function () {
     if (this.data.buyNumber > this.data.buyNumMin) {
       var currentNum = this.data.buyNumber;
@@ -180,6 +172,7 @@ Page({
       })
     }
   },
+
   numJiaTap: function () {
     if (this.data.buyNumber < this.data.stock_amount) {
       var currentNum = this.data.buyNumber;
@@ -189,10 +182,7 @@ Page({
       })
     }
   },
-  /**
-   * 选择商品规格
-   * @param {Object} e
-   */
+
   labelItemTap: function (e) {
     var that = this;
 
@@ -242,7 +232,7 @@ Page({
           stock_amount: sku.stockAmount,         //单品库存
           sale_amount: sku.saleAmount,          //单品销售
           single_image: sku.imageSelect,         //单品图片
-          productsku: sku                 
+          skuId: sku.id         
         });
       }
     }
@@ -252,6 +242,7 @@ Page({
   * 加入购物车
   */
   addShopCar: function () {
+    var that = this;
       if (!this.data.canSubmit) {
         wx.showModal({
           title: '提示',
@@ -267,38 +258,26 @@ Page({
         showCancel: false
       })
       return;
-    }
-    //组建购物车
-    var shopCarInfo = this.bulidShopCarInfo();
-
-    this.setData({
-      shopCarInfo: shopCarInfo,
-      shopNum: shopCarInfo.shopNum
-    });
-
-    // 写入本地存储
-    wx.setStorage({
-      key: 'shopCarInfo',
-      data: shopCarInfo
-    })
-    this.closePopupTap();
-    wx.showToast({
-      title: '加入购物车成功',
-      icon: 'success',
-      duration: 2000
-    })
+    }    
 
     api.AddCart({
-      productId:this.data.productId,
-      skuId:shopCarInfo.productSkuId,
-      count: shopCarInfo.shopNum
+      productId: that.data.productId,
+      skuId: that.data.skuId,
+      count: that.data.buyNumber
     }).catch(err => {
       wx.showToast({
         icon: 'none',
         title: '数据错误，加入购物车失败',
       })
     }).then(res => {
-      if (!res.code || res.code != 200) {
+      if (res.code && res.code == 200) {
+        that.closePopupTap();
+        wx.showToast({
+          title: '加入购物车成功',
+          icon: 'success',
+          duration: 2000
+        })
+      }else{
         wx.showToast({
           icon: 'none',
           title: res.msg,
@@ -355,32 +334,7 @@ Page({
       })
     }).catch(err => {console.error(err)})
   },
-  /**
-   * 组建购物车信息
-   */
-  bulidShopCarInfo: function () {
-    let data = this.data.productsku;
-    let shopCarInfo = this.data.shopCarInfo;
-    shopCarInfo['productSkuId'] = data.id
-    shopCarInfo['shopNum'] = this.data.buyNumber
 
-    return shopCarInfo
-
-  },
-	/**
-	 * 组建立即购买信息
-	 */
-  buliduBuyNowInfo: function () {
-    let data = this.data.productsku
-    let shopCarInfo = this.data.shopCarInfo;
-    shopCarInfo['productSkuId'] = data.id
-    shopCarInfo['count'] = this.data.buyNumber
-    shopCarInfo['realMoney'] = this.data.buyNumber * data.unitPrice
-    shopCarInfo['list'] = this.data.goodsDetail
-
-    return shopCarInfo
-    
-  },
   onShareAppMessage: function () {
     return {
       title: this.data.goodsDetail.basicInfo.name,

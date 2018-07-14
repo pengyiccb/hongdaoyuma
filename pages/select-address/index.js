@@ -8,18 +8,26 @@ Page({
   },
 
   selectTap: function (e) {
-    var id = e.currentTarget.dataset.id;
-    wx.request({
-      url: 'https://api.it120.cc/'+ app.globalData.subDomain +'/user/shipping-address/update',
-      data: {
-        token: wx.getStorageSync('token'),
-        id:id,
-        isDefault:'true'
-      },
-      success: (res) =>{
-        wx.navigateBack({})
-      }
-    })
+    var that = this;
+    var index = e.currentTarget.dataset.index;
+    var addr = this.data.addressList[parseInt(index)];
+    api.modifyAddr({id: addr.id, userName: addr.userName, mobilePhone: addr.mobilePhone, areaAddress1: addr.areaAddress1, areaAddress2: addr.areaAddress2, areaAddress3: addr.areaAddress3,
+      addressDetail:addr.addressDetail, postalCode: addr.postalCode, nationalCode: addr.nationalCode, isDefault: 1}).then(res => {
+        if(res.code && res.code == 200){
+          for(let i = 0; i < that.data.addressList.length; i++){
+            that.data.addressList[i].isDefault = 0;
+          }
+          that.data.addressList[parseInt(index)].isDefault = 1;
+          that.setData({
+            addressList: that.data.addressList
+          });
+        }else{
+          wx.showToast({
+            icon: 'none',
+            title: res.msg,
+          });
+        }
+    });
   },
 
   addAddess : function () {
@@ -42,37 +50,21 @@ Page({
   onShow : function () {
     this.initShippingAddress();
   },
+  
   initShippingAddress: function () {
     var that = this;
     api.addrList().then(res => {
-      if (res.code == 0) {
+      if (res.code && res.code == 200) {
         that.setData({
           addressList: res.data
         });
       } else {
-        that.setData({
-          addressList: null
+        wx.showToast({
+          icon: 'none',
+          title: res.msg,
         });
       }
-      console.log(res)
     })
-    // wx.request({
-    //   url: 'https://api.it120.cc/'+ app.globalData.subDomain +'/user/shipping-address/list',
-    //   data: {
-    //     token: wx.getStorageSync('token')
-    //   },
-    //   success: (res) =>{
-    //     if (res.data.code == 0) {
-    //       that.setData({
-    //         addressList:res.data.data
-    //       });
-    //     } else if (res.data.code == 700){
-    //       that.setData({
-    //         addressList: null
-    //       });
-    //     }
-    //   }
-    // })
   }
 
 })

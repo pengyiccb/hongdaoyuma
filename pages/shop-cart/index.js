@@ -63,7 +63,7 @@ Page({
       wx.hideLoading();
       wx.showToast({
         icon: 'none',
-        title: res.msg,
+        title: '网络数据错误',
       })
     }).then(res => {
       wx.hideLoading();
@@ -298,7 +298,7 @@ Page({
     console.log(list);
     api.ModifyCart({itemId: list[that.data.curIndex].itemId, skuId: that.data.skuId}).then(res => {
       if(res.code && res.code == 200){
-        list.spec = that.data.selAttr.join("|");
+        list[that.data.curIndex].spec = that.data.selAttr.join("|");
         that.setGoodsList(list);
 
         that.setData({
@@ -485,6 +485,8 @@ Page({
                 return;
             }
 
+            console.log("carShopBean.unitPrice = " + carShopBean.unitPrice);
+            console.log("res.data.unitPrice = " + res.data.unitPrice);
             if(carShopBean.unitPrice != res.data.unitPrice){
               wx.showModal({
                 title: '提示',
@@ -508,7 +510,10 @@ Page({
             }
             doneNumber++;
             if (needDoneNUmber == doneNumber) {
-              wx.setStorageSync('ShopList', shopList);
+              var goodData = {};
+              goodData.list = shopList;
+              //goodData.totalPrice = that.getTotalPrice();
+              wx.setStorageSync('goodData', goodData);
               that.navigateToPayOrder();
             }
           }
