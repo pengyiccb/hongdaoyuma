@@ -18,15 +18,25 @@ Page({
     youhuijine: 0, //优惠券金额
     curCoupon: null, // 当前选择使用的优惠券
     curAddressData: null,    //用户当前地址
-    itemIdList: []
+    itemIdList: [],
+    typeId: 1                 //1为购物车购买，2为立即购买
   },
   onShow: function () {
     var that = this;
     let goodData = wx.getStorageSync('goodData');
-    goodData.list.forEach(e => {
-      this.data.itemIdList.push(e.itemId);
-    });
-    api.orderTotalPrice({cartItemList: this.data.itemIdList}).then(res => {
+    var submitData = {};
+    submitData.buyType = this.data.typeId;
+    if(this.data.typeId == 1){
+      goodData.list.forEach(e => {
+        this.data.itemIdList.push(e.itemId);
+      });
+      submitData.cartItemIdList = this.data.itemIdList;
+    }else if(this.data.typeId == 2){
+      submitData.buyCount = goodData.list[0].count;
+      submitData.skuId = goodData.list[0].skuId;
+    }
+    
+    api.orderTotalPrice(submitData).then(res => {
       if(res.code && res.code == 200){
         that.initShippingAddress();
         that.setData({
@@ -39,23 +49,37 @@ Page({
           title: res.msg,
         });
       }
-    });    
+    });
   },
 
-
-  getDistrictId: function (obj, aaa) {
-    if (!obj) {
-      return "";
+  onLoad: function(e){
+    if(e.typeId > 2 || e.typeId < 1){
+      wx.showModal({
+        title: '错误提示',
+        content: '数据参数错误'
+      });
+      return;
     }
-    if (!aaa) {
-      return "";
-    }
-    return aaa;
+    this.data.typeId = e.typeId;
   },
 
   createOrder: function (e) {
-    api.orderConfirm({customerName: this.data.curAddressData.userName, wxAppId: app.globalData.appId, mobile_phone: this.data.curAddressData.mobilePhone,
-      userAddressId: this.data.curAddressData.id, userRemark: e.detail.value.remark, cartItemIdList: this.data.itemIdList}).then(res => {
+    var submitData = {};
+    submitData.customerName = this.data.curAddressData.userName;
+    submitData.wxAppId = app.globalData.appId;
+    submitData.mobile_phone = this.data.curAddressData.mobilePhone;
+    submitData.userAddressId = this.data.curAddressData.id;
+    submitData.userRemark = e.detail.value.remark;
+    var goods = {};
+    goods.buyType = this.data.typeId;
+    if(this.data.typeId == 1){
+      goods.cartItemIdList = this.data.itemIdList;
+    }else if(this.data.typeId == 2){
+      goods.buyCount = this.data.goodsData.list[0].count;
+      goods.skuId = this.data.goodsData.list[0].skuId;
+    }
+    submitData.goods = goods;
+    api.orderConfirm(submitData).then(res => {
       if(res.code && res.code == 200){
         var orderId = res.data;
         api.playorder({orderId: orderId}).then(res => {

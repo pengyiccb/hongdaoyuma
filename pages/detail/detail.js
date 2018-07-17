@@ -117,11 +117,15 @@ Page({
   },
 
   toAddShopCar: function () {
-    this.setData({
-      shopType: "addShopCar",
-      isOkButton: true
-    })
-    this.bindGuiGeTap();
+    if(this.data.canSubmit){
+      this.addShopCar();
+    }else{
+      this.setData({
+        shopType: "addShopCar",
+        isOkButton: true
+      })
+      this.bindGuiGeTap();
+    }    
   },
 
   onGoodSelect: function(){
@@ -140,11 +144,15 @@ Page({
 
   },
   tobuy: function () {
-    this.setData({
-      shopType: "tobuy",
-      isOkButton: true
-    });
-    this.bindGuiGeTap();
+    if(this.data.canSubmit){
+      this.buyNow();
+    }else{
+      this.setData({
+        shopType: "tobuy",
+        isOkButton: true
+      });
+      this.bindGuiGeTap();
+    }
   },
   /**
    * 规格选择弹出框
@@ -289,6 +297,14 @@ Page({
   },
 
   buyNow: function () {
+    if (!this.data.canSubmit) {
+      wx.showModal({
+        title: '提示',
+        content: '请选择商品规格！',
+        showCancel: false
+      });
+      return;
+    }
     if (this.data.buyNumber < 1) {
       wx.showModal({
         title: '提示',
@@ -297,48 +313,30 @@ Page({
       })
       return;
     }
-    //组建立即购买信息
-    var buyNowInfo = this.buliduBuyNowInfo();
-    // 写入本地存储
-    wx.setStorage({
-      key: "buyNowInfo",
-      data: buyNowInfo
-    })
+
+    var goodData = {};
+    var shopData = {};
+    var list = this.data.select_string.split(",");
+    shopData.image = this.data.single_image;
+    shopData.desc = this.data.goodsDetail.sharetitle;
+    shopData.spec = list.join("|");
+    shopData.unitPrice = this.data.pop_goods_price;
+    shopData.count = this.data.buyNumber;
+    shopData.skuId = this.data.skuId;
+    goodData.list = [];
+    goodData.list.push(shopData);
+    wx.setStorageSync('goodData', goodData);
     this.closePopupTap();
-
-    let list = {
-      productSkuId: buyNowInfo['productSkuId'],
-      count: buyNowInfo['count'],
-      realMoney: buyNowInfo['realMoney']
-    }
-    let AccountList = {
-      data:[
-        { 
-          "id": buyNowInfo['id'],
-          "productSkuId": buyNowInfo['productSkuId'], 
-          "count": buyNowInfo['count'], 
-          "name": buyNowInfo['list'][0]['product']['title'], 
-          "image": buyNowInfo['list'][0]['product']['imgPrimaryUrl'],
-          "price": buyNowInfo['list'][0]['product']['priceUnderline'],
-          "color": "", 
-          "size": "" 
-        }
-      ], 
-      trolleyAccount: buyNowInfo['realMoney'] 
-    }
-
-    api.addorder(list, 0).then(res => {
-      wx.setStorageSync("AccountList", AccountList)
-      wx.navigateTo({
-        url: `/pages/to-pay-order/index?orderType=buyNow&orderId=${res.data}`
-      })
-    }).catch(err => {console.error(err)})
+    wx.navigateTo({
+      url:"/pages/to-pay-order/index?typeId=2"
+    })
   },
 
   onShareAppMessage: function () {
     return {
-      title: this.data.goodsDetail.basicInfo.name,
-      path: '/pages/goods-details/index?id=' + this.data.goodsDetail.basicInfo.id + '&inviter_id=' + wx.getStorageSync('uid'),
+      title: this.data.goodsDetail.sharetitle,
+      path: '/pages/carhome/carhome?productId=' + this.data.productId,
+      imageUrl: this.data.goodsDetail.imgPrimaryList[0],
       success: function (res) {
         // 转发成功
       },

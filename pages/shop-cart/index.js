@@ -484,9 +484,7 @@ Page({
                 wx.hideLoading();
                 return;
             }
-
-            console.log("carShopBean.unitPrice = " + carShopBean.unitPrice);
-            console.log("res.data.unitPrice = " + res.data.unitPrice);
+            
             if(carShopBean.unitPrice != res.data.unitPrice){
               wx.showModal({
                 title: '提示',
@@ -523,7 +521,7 @@ Page({
     navigateToPayOrder:function () {
       wx.hideLoading();
       wx.navigateTo({
-        url:"/pages/to-pay-order/index"
+        url:"/pages/to-pay-order/index?typeId=1"
       })
     }
 })

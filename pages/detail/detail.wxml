@@ -1,6 +1,6 @@
 <import src="../../wxParse/wxParse.wxml" />
 <scroll-view scroll-y="true" class="container" scroll-into-view="{{toView}}" style="height:{{scrollHeight}}px;"> 
-   <view class="swiper-container" wx:if="{{!goodsDetail.basicInfo.videoId}}">
+   <view class="swiper-container">
         <swiper class="swiper_box" 
                     autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="swiperchange" indicator-dots="true">
             <!-- <block wx:for="{{goodsDetail}}" wx:key="id"> -->

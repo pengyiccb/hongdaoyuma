@@ -275,8 +275,14 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    
     //this.selectcat();
     this.initCarsData();
+    if(options.productId){
+      wx.navigateTo({
+        url: "/pages/detail/detail?id=" + options.productId
+      });
+    }
   },
 
   /**

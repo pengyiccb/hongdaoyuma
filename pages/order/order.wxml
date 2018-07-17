@@ -1,44 +1,8 @@
-<!--pages/order/order.wxml-->
-<!-- <image class="bg" src="/images/bg.png"></image>
-<view wx:if="{{!userInfo}}">
-  <view class="unlogin-card">
-    <view class="unlogin-head"></view>
-    <view class="unlogin-info">
-      <view class="unlogin-text">未登录</view>
-      <view class="unlogin-tips">点击微信登录后可方便购物</view>
-    </view>
-  </view>
-  <button class="unlogin-btn" open-type="getUserInfo" bindgetuserinfo="onTapLogin">微信登录</button>
-</view>
-<view wx:elif="{{orderList.length > 0}}">
-  <view class="order-head">
-    <image class="order-head-line" src="/images/line-black.png"></image>
-    <view class="order-head-text">已完成</view>
-  </view>
-  <view wx:for="{{orderList}}" wx:for-index="bindex" wx:for-item="block" wx:key="id" class="order-block">
-    <view wx:for="{{block.list}}" wx:key="id" class="order-card">
-      <image class="order-image" mode="widthFix" src="{{item.image}}"></image>
-      <view class="order-info">
-        <view class="order-name">{{item.name}}</view>
-        <view class="order-price">¥ {{item.price}}</view>
-      </view>
-      <view class="order-opr">
-        <navigator class="order-btn" url="/pages/add-comment/add-comment?id={{item.product_id}}&price={{item.price}}&name={{item.name}}&image={{item.image}}">评价</navigator>
-        <view class="order-count">x{{item.count}}</view>
-      </view>
-    </view>
-  </view>
-</view>
-<view class="order-empty" wx:else>
-  <image class="empty-image" src="/images/order.png"></image>
-  <view class="empty-text">暂时还没有订单</view>
-</view> -->
-
 <view class="container">
     <view class="status-box">
         <view bindtap="statusTap" class="status-label {{index == currentType ? 'active' : ''}}" wx:for-items="{{statusType}}" wx:key="{{index}}" data-index="{{index}}">
             {{item}}
-            <view class="{{tabClass[index]}}"></view>
+            <!-- <view class="{{tabClass[index]}}"></view> -->
         </view>
     </view>
     <view class="no-order" hidden="{{orderList ? true : false}}">
@@ -46,33 +10,32 @@
         <view class="text">暂无订单</view>
     </view>
     <view class="order-list" hidden="{{orderList ? false : true}}">
-        <view class="a-order" wx:for-items="{{orderList}}" wx:key="{{index}}">
-            <view class="order-date">
-                <view class="date-box">下单时间：{{item.updateTime}}</view>
-                <view class="status {{(item.status==-1 || item.status==4) ? '':'red'}}">{{item.statusStr}}</view>
-            </view>
-            <view class="goods-info" bindtap="orderDetail" data-id="{{item.id}}">
-                <view class="goods-des">
-                   <view>订单号:{{item.roderSn}} </view>
-                   <view wx:if="{{item.remark && item.remark != ''}}">备注： {{item.remark}}</view>
+        <view class="a-order" wx:for="{{orderList}}" wx:for-item="orderItem" wx:key="{{index}}">
+            <view class="a-goods" bindtap="orderDetail" data-id="{{orderItem.orderId}}" wx:for="{{orderItem.goodsList}}" wx:key="{{index}}">
+                <view class="img-box">
+                    <image mode='aspectFit' src="{{item.imgUrl}}" class="img" />
+                </view>
+                <view class="text-box">
+                    <view class="goods-name">{{item.goodsName}}</view>
+                    <view class="goods-label">{{item.goodsAttrs}}</view>
+                    <view class="goods-arrow">
+                        <view class="goods-price">¥ {{item.unitPrice}}</view>
+                        <view class="goods-num">x {{item.count}}</view>
+                    </view>
                 </view>
             </view>
-            <view >
-                <scroll-view class="goods-img-container" scroll-x="true">
-                <view class="img-box" >
-                        <image src="{{item.eshopProducSkut.product.imgPrimaryUrl}}" class="goods-img"></image>
-                    </view>
-                    <!-- <view class="img-box" wx:for-items="{{goodsMap[item.id]}}" wx:key="{{index}}">
-                        <image src="{{item.pic}}" class="goods-img"></image>
-                    </view> -->
-                </scroll-view>
-            </view>
+            
             <view class="price-box">
-                <view class="total-price" wx:if="{{item.score <= 0}}">合计：¥ {{item.amountReal}}</view>
-                <view class="total-price" wx:if="{{item.score > 0}}">合计：¥ {{item.amountReal}} + {{item.score}} 积分</view>
-                <view class="btn cancel-btn" hidden="{{item.status==0? fslse : true}}" bindtap="cancelOrderTap"  data-id="{{item.id}}">取消订单</view>
-                <view class="btn topay-btn" hidden="{{item.status==0? fslse : true}}" bindtap="toPayTap" data-id="{{item.id}}" data-money="{{item.amountReal}}" data-score="{{item.score}}">马上付款</view>        
-            </view>  
+                <view class="total-num">共{{orderItem.goodsList.length}}件 合计: </view>
+                <view class="total-price">￥{{orderItem.actualNeedMoney}}</view>
+            </view>
+            <view class="btn-box">
+                <view class="order-status">{{orderItem.orderStatus >= 4 ? statusType[4] : statusType[orderItem.orderStatus]}}</view>
+                <block wx:if="{{orderItem.orderStatus == 1}}">
+                    <view class="btn cancel-btn" bindtap="cancelOrderTap"  data-id="{{orderItem.orderId}}">取消订单</view>
+                    <view class="btn topay-btn" bindtap="toPayTap" data-id="{{orderItem.orderId}}">马上付款</view>
+                </block>
+            </view>
         </view>
 
     </view>

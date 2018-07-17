@@ -1,71 +1,16 @@
-// pages/order/order.js
-// const qcloud = require('../../vendor/wafer2-client-sdk/index')
-/*
-const config = require('../../config')
-const app = getApp()
-
-Page({
-  data: {
-    userInfo: null,
-    orderList: [], // 订单列表
-  },
-
-  onTapLogin() {
-    app.login({
-      success: ({ userInfo }) => {
-        this.setData({
-          userInfo
-        })
-      }
-    })
-
-    this.getOrder()
-  },
-
-  getOrder() {
-    wx.showLoading({
-      title: '刷新订单数据...',
-    })
-  },
-  onLoad: function (options) {
-
-  },
-
-  onReady: function () {
-  
-  },
-  onShow: function () {
-    let Authorization = wx.getStorageSync('Authorization')
-    let key = wx.getStorageSync('key')
-    // console.log(key)
-    if (Authorization !== undefined && key !== undefined) {
-      let userInfo = JSON.parse(key['userInfo'])
-      this.setData({ userInfo });
-    }
-    // app.checkSession({
-    //   success: ({ userInfo }) => {
-    //     this.setData({
-    //       userInfo
-    //     })
-    //     this.getOrder()
-    //   }
-    // })
-  }
-
-})
-*/
-var wxpay = require('../../utils/pay.js')
 const api = require('../../utils/api')
 const util = require('../../utils/util')
 var app = getApp()
 Page({
   data: {
-    statusType: ["待付款", "待发货", "待收货", "待评价", "已完成"],
+    statusType: ["全部", "待付款", "待服务", "服务完成", "已关闭"],
     currentType: 0,
-    tabClass: ["", "", "", "", ""]
+    tabClass: ["", "", "", "", ""],
+    orderList: []
   },
   statusTap: function (e) {
     var curType = e.currentTarget.dataset.index;
+    if(curType == 0) curType = -1;
     this.data.currentType = curType
     this.setData({
       currentType: curType
@@ -74,6 +19,7 @@ Page({
   },
   orderDetail: function (e) {
     var orderId = e.currentTarget.dataset.id;
+    console.log("orderId = " + orderId);
     wx.navigateTo({
       url: "/pages/order-details/index?id=" + orderId
     })
@@ -87,19 +33,18 @@ Page({
       success: function (res) {
         if (res.confirm) {
           wx.showLoading();
-          wx.request({
-            url: 'https://api.it120.cc/' + app.globalData.subDomain + '/order/close',
-            data: {
-              token: wx.getStorageSync('token'),
-              orderId: orderId
-            },
-            success: (res) => {
+          api.orderCancel({}, orderId).then(res => {
+            if(res.code && res.code == 200){
               wx.hideLoading();
-              if (res.data.code == 0) {
-                that.onShow();
-              }
+              that.onShow();              
+            }else{
+              wx.hideLoading();
+              wx.showToast({
+                icon: 'none',
+                title: res.msg,
+              });
             }
-          })
+          });
         }
       }
     })
@@ -107,57 +52,41 @@ Page({
   toPayTap: function (e) {
     var that = this;
     var orderId = e.currentTarget.dataset.id;
-    var money = e.currentTarget.dataset.money;
-    var needScore = e.currentTarget.dataset.score;
-    wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/user/amount',
-      data: {
-        token: wx.getStorageSync('token')
-      },
-      success: function (res) {
-        if (res.data.code == 0) {
-          // res.data.data.balance
-          money = money - res.data.data.balance;
-          if (res.data.data.score < needScore) {
-            wx.showModal({
-              title: '错误',
-              content: '您的积分不足，无法支付',
-              showCancel: false
-            })
-            return;
-          }
-          if (money <= 0) {
-            // 直接使用余额支付
-            wx.request({
-              url: 'https://api.it120.cc/' + app.globalData.subDomain + '/order/pay',
-              method: 'POST',
-              header: {
-                'content-type': 'application/x-www-form-urlencoded'
-              },
-              data: {
-                token: wx.getStorageSync('token'),
-                orderId: orderId
-              },
-              success: function (res2) {
-                that.onShow();
-              }
-            })
-          } else {
-            wxpay.wxpay(app, money, orderId, "/pages/order-list/index");
-          }
-        } else {
-          wx.showModal({
-            title: '错误',
-            content: '无法获取用户资金信息',
-            showCancel: false
-          })
-        }
-      }
-    })
-  },
-  onLoad: function (options) {
-    // 生命周期函数--监听页面加载
 
+    api.playorder({orderId: orderId}).then(res => {
+      if(res.code && res.code == 200){
+        wx.requestPayment({
+          timeStamp: res.data.timeStamp,
+          nonceStr: res.data.nonceStr,
+          package: res.data.package,
+          signType: res.data.signType,
+          paySign: res.data.paySign,
+          success: function(res){
+            console.log(res);
+            },
+          fail: function (res) {
+            console.log(res);
+            // fail
+            },
+          complete: function (res) {
+            console.log(res);
+            // complete
+            }
+          });
+      }else{
+        wx.showToast({
+          icon: 'none',
+          title: res.msg,
+        });
+      }
+    });
+  },
+  onLoad: function (e) {
+    if(e && e.currentType){
+      this.data.currentType = e.currentType;
+    }else{
+      this.data.currentType = -1;
+    }
   },
   onReady: function () {
     // 生命周期函数--监听页面初次渲染完成
@@ -206,51 +135,30 @@ Page({
     })
   },
   onShow: function () {
+    var that = this;
     // 获取订单列表
     wx.showLoading();
-    var that = this;
-    var postData = {
-      token: wx.getStorageSync('token')
-    };
-    postData.status = that.data.currentType;
-    this.getOrderStatistics();
-    api.orderList({ orderType: that.data.currentType}).catch(res => {
-      wx.hideLoading()
+    /* postData.status = that.data.currentType; */
+    /* this.getOrderStatistics(); */
+    api.orderList({ orderStatus: this.data.currentType}).catch(res => {
+      wx.hideLoading();
       wx.showToast({
         icon: 'none',
         title: '数据加载错误',
       });
     }).then(res => {
-      // res.data.map(res => {
-      //   // console.log(new Date(res.updateTime))
-      //   res.updateTime = util.formatTime(new Date(res.createTime))
-      // })
-      that.setData({
-        orderList: res.data
-      });
-      console.log(res)
-    })
-    // wx.request({
-    //   url: 'https://api.it120.cc/' + app.globalData.subDomain + '/order/list',
-    //   data: postData,
-    //   success: (res) => {
-    //     wx.hideLoading();
-    //     if (res.data.code == 0) {
-    //       that.setData({
-    //         orderList: res.data.data.orderList,
-    //         logisticsMap: res.data.data.logisticsMap,
-    //         goodsMap: res.data.data.goodsMap
-    //       });
-    //     } else {
-    //       this.setData({
-    //         orderList: null,
-    //         logisticsMap: {},
-    //         goodsMap: {}
-    //       });
-    //     }
-    //   }
-    // })
-
+      wx.hideLoading();
+      if(res.code && res.code == 200){
+        that.setData({
+          orderList: res.data
+        });
+      }else{
+        wx.showToast({
+          icon: 'none',
+          title: res.msg
+        });
+      }
+    });
   },
   onHide: function () {
     // 生命周期函数--监听页面隐藏

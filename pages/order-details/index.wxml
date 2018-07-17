@@ -1,0 +1,51 @@
+<view class="container">
+    <view class="sec-wrap">
+    </view>
+        <view class="goods-list">
+            <form bindsubmit="submitReputation" report-submit="true">
+            <block wx:for-items="{{orderBasic.goodsList}}" wx:key="{{index}}">
+            <view class="a-goods">
+                <view class="img-box">
+                    <image src="{{item.imgUrl}}" class="img" />
+                </view>
+                <view class="text-box">
+                    <view class="arow arow01">
+                        <view class="goods-name">{{item.goodsName}}</view>
+                        <view class="goods-price">¥ {{item.unitPrice}}</view>
+                    </view>
+                    <view class="arow">
+                        <view class="goods-label">{{item.goodsAttrs}}</view>
+                        <view class="goods-num">x {{item.count}}</view>
+                    </view>
+                </view>
+            </view>
+            </block>
+            </form>
+        </view>
+        <view class="peisong-way" hidden="true">
+            <view class="row-box">
+                <view class="row-label">配送方式</view>
+                <view class="right-text">顺丰快递</view>
+            </view>
+            <view class="row-box">
+                <view class="row-label">留言</view>
+                <view class="right-text">
+                    <input name="remark" type="text" class="liuyan" placeholder="如需留言请输入" />
+                </view>
+            </view>
+        </view>
+        <view class="goods-info">
+            <view class="row-box">
+                <view class="row-label">商品金额</view>
+                <view class="right-text">¥ {{orderBasic.actualNeedMoney}}</view>
+            </view>
+            <view class="row-box">
+                <view class="row-label">运费</view>
+                <view class="right-text">+ ¥ {{orderDetail.deliverMoney}}</view>
+            </view>
+            <view class="row-box">
+                <view class="row-label">应付总额</view>
+                <view class="right-text">¥ {{orderBasic.actualNeedMoney}}</view>
+            </view>
+        </view>
+</view>

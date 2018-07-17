@@ -82,10 +82,10 @@ const playorder = data => RequestServer(data, `/api/v1/wechat/pay/prepay`)
 const orderList = data => RequestServer(data, `/api/v1/wechat/order/list`)
 //确认订单
 const orderConfirm = data => RequestServer(data, `/api/v1/wechat/order/confirm`, 'POST')
-//关闭订单
-const orderClose = data => RequestServer(data, `/api/v1/wechat/order/close`, 'DELETE')
+//取消订单
+const orderCancel = (data, orderId) => RequestServer(data, `/api/v1/wechat/order/cancel?orderId=${orderId}`, 'DELETE')
 //微信获取订单详情
-const orderDetail = data => RequestServer(data, `/api/v1/wechat/order/detail`)
+const orderDetail = (data, orderId) => RequestServer(data, `/api/v1/wechat/order/detail?orderId=${orderId}`)
 //计算订单总价
 const orderTotalPrice = data => RequestServer(data, `/api/v1/wechat/order/price/total`, 'POST')
 
@@ -131,7 +131,7 @@ module.exports= {
   getAddrById,
   playorder,
   orderList,
-  orderClose,
+  orderCancel,
   orderDetail,
   orderConfirm,
   orderTotalPrice,
