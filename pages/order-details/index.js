@@ -4,9 +4,10 @@ Page({
     data:{
         orderId:0,
         goodsList:[],
-        yunPrice:"0.00",
         orderBasic: {},
-        orderDetail: {}
+        orderDetail: {},
+        statusType: ["全部", "待付款", "待服务", "服务完成", "已关闭"],
+        shopTitle: "宏道御马"
     },
     onLoad:function(e){
       var orderId = e.id;
@@ -23,7 +24,8 @@ Page({
         if(res.code && res.code == 200){
           that.setData({
             orderBasic: res.data.orderBasic,
-            orderDetail: res.data.orderDetail
+            orderDetail: res.data.orderDetail,
+            shopTitle: app.globalData.shopTitle
           });
         }else{
           wx.showToast({
@@ -33,92 +35,35 @@ Page({
         }
       });
     },
-    wuliuDetailsTap:function(e){
-      var orderId = e.currentTarget.dataset.id;
-      wx.navigateTo({
-        url: "/pages/wuliu/index?id=" + orderId
-      })
-    },
-    confirmBtnTap:function(e){
-      let that = this;
-      let orderId = this.data.orderId;
-      let formId = e.detail.formId;
-      wx.showModal({
-          title: '确认您已收到商品？',
-          content: '',
-          success: function(res) {
-            if (res.confirm) {
-              wx.showLoading();
-              wx.request({
-                url: 'https://api.it120.cc/' + app.globalData.subDomain + '/order/delivery',
-                data: {
-                  token: wx.getStorageSync('token'),
-                  orderId: orderId
-                },
-                success: (res) => {
-                  if (res.data.code == 0) {
-                    that.onShow();
-                    // 模板消息，提醒用户进行评价
-                    let postJsonString = {};
-                    postJsonString.keyword1 = { value: that.data.orderDetail.orderInfo.orderNumber, color: '#173177' }
-                    let keywords2 = '您已确认收货，期待您的再次光临！';
-                    if (app.globalData.order_reputation_score) {
-                      keywords2 += '立即好评，系统赠送您' + app.globalData.order_reputation_score +'积分奖励。';
-                    }
-                    postJsonString.keyword2 = { value: keywords2, color: '#173177' }
-                    app.sendTempleMsgImmediately('uJL7D8ZWZfO29Blfq34YbuKitusY6QXxJHMuhQm_lco', formId,
-                      '/pages/order-details/index?id=' + orderId, JSON.stringify(postJsonString));
-                  }
-                }
-              })
-            }
-          }
-      })
-    },
-    submitReputation: function (e) {
-      let that = this;
-      let formId = e.detail.formId;
-      let postJsonString = {};
-      postJsonString.token = wx.getStorageSync('token');
-      postJsonString.orderId = this.data.orderId;
-      let reputations = [];
-      let i = 0;
-      while (e.detail.value["orderGoodsId" + i]) {
-        let orderGoodsId = e.detail.value["orderGoodsId" + i];
-        let goodReputation = e.detail.value["goodReputation" + i];
-        let goodReputationRemark = e.detail.value["goodReputationRemark" + i];
-
-        let reputations_json = {};
-        reputations_json.id = orderGoodsId;
-        reputations_json.reputation = goodReputation;
-        reputations_json.remark = goodReputationRemark;
-
-        reputations.push(reputations_json);
-        i++;
-      }
-      postJsonString.reputations = reputations;
-      wx.showLoading();
-      wx.request({
-        url: 'https://api.it120.cc/' + app.globalData.subDomain + '/order/reputation',
-        data: {
-          postJsonString: postJsonString
+    
+    onCopy: function(){
+      var copyData = 
+      "订单编号：" + 
+      (this.data.orderBasic.orderId ? this.data.orderBasic.orderId : "") + 
+      "\n微信交易号：" + 
+      (this.data.orderDetail.paymentSerialNo ? this.data.orderDetail.paymentSerialNo : "") + 
+      "\n订单创建时间：" + 
+      (this.data.orderBasic.orderCreateTime ? this.data.orderBasic.orderCreateTime : "") +
+      "\n订单付款时间：" + 
+      (this.data.orderDetail.paymentCompletedTime ? this.data.orderDetail.paymentCompletedTime : "") + 
+      "\n服务开始时间：" + 
+      (this.data.orderDetail.appointmentServiceTimeBegin ? this.data.orderDetail.appointmentServiceTimeBegin : "") + 
+      "\n服务完成时间：" + 
+      (this.data.orderDetail.appointmentServiceTimeEnd ? this.data.orderDetail.appointmentServiceTimeEnd : "");
+      wx.setClipboardData({
+        data: copyData,
+        success: function(res) {
+          wx.showToast({
+            icon: 'none',
+            title: '复制成功',
+          });
         },
-        success: (res) => {
-          wx.hideLoading();
-          if (res.data.code == 0) {
-            that.onShow();
-            // 模板消息，通知用户已评价
-            let postJsonString = {};
-            postJsonString.keyword1 = { value: that.data.orderDetail.orderInfo.orderNumber, color: '#173177' }
-            let keywords2 = '感谢您的评价，期待您的再次光临！';
-            if (app.globalData.order_reputation_score) {
-              keywords2 += app.globalData.order_reputation_score + '积分奖励已发放至您的账户。';
-            }
-            postJsonString.keyword2 = { value: keywords2, color: '#173177' }
-            app.sendTempleMsgImmediately('uJL7D8ZWZfO29Blfq34YbuKitusY6QXxJHMuhQm_lco', formId,
-              '/pages/order-details/index?id=' + that.data.orderId, JSON.stringify(postJsonString));
-          }
+        fail: function(res){
+          wx.showToast({
+            icon: 'none',
+            title: '复制失败',
+          });
         }
-      })
-    }
+      });
+    }    
 })

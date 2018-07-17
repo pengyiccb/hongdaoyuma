@@ -99,12 +99,8 @@ App({
     globalData: {
       appId:"wxdda83d03c2d1521c",
       userInfo: null,
-      serverSessionKey: null
-      //是自己的服务器维护的sessionKey。发自己的服务器消息需要带上。 
-      //（不是腾讯的！腾讯的保存在自己的服务器上redis）
-
-
-
+      serverSessionKey: null,
+      shopTitle: "宏道御马"
     },
 })
 

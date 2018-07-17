@@ -19,7 +19,6 @@ Page({
   },
   orderDetail: function (e) {
     var orderId = e.currentTarget.dataset.id;
-    console.log("orderId = " + orderId);
     wx.navigateTo({
       url: "/pages/order-details/index?id=" + orderId
     })
@@ -62,16 +61,20 @@ Page({
           signType: res.data.signType,
           paySign: res.data.paySign,
           success: function(res){
-            console.log(res);
-            },
+            wx.showToast({
+              icon: 'none',
+              title: '支付成功',
+            });
+            wx.navigateTo({
+              url: "/pages/order-details/index?id=" + orderId
+            })
+          },
           fail: function (res) {
-            console.log(res);
-            // fail
-            },
-          complete: function (res) {
-            console.log(res);
-            // complete
-            }
+            wx.showToast({
+              icon: 'none',
+              title: '支付失败',
+            });
+          },
           });
       }else{
         wx.showToast({

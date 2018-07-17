@@ -10,20 +10,13 @@
         </view>
      </view>
      <view class="goods-list">
-        <!-- <view class="list-title">商品列表</view> -->
-        <view class="a-goods" wx:for-items="{{goodsData.list}}" wx:key="{{index}}">
+        <view class="a-goods" wx:for="{{goodsData.list}}" wx:key="{{index}}">
             <view class="img-box">
                 <image mode='aspectFit' src="{{item.image}}" class="img" />
             </view>
             <view class="text-box">
-                <!-- <view class="arow arow01"> -->
-                    <view class="goods-name">{{item.desc}}</view>
-                    <!-- <view class="goods-price">¥ {{item.unitPrice}}</view> -->
-                <!-- </view> -->
-                <!-- <view class="arow"> -->
-                    <view class="goods-label">{{item.spec}}</view>
-                    <!-- <view class="goods-num">x {{item.count}}</view> -->
-                <!-- </view> -->
+                <view class="goods-name">{{item.desc}}</view>
+                <view class="goods-label">{{item.spec}}</view>
                 <view class="goods-arrow">
                     <view class="goods-price">¥ {{item.unitPrice}}</view>
                     <view class="goods-num">x {{item.count}}</view>

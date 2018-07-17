@@ -91,16 +91,23 @@ Page({
               signType: res.data.signType,
               paySign: res.data.paySign,
               success: function(res){
-                console.log(res);
+                  wx.showToast({
+                    icon: 'none',
+                    title: '支付成功',
+                  });
+                  wx.redirectTo({
+                    url: "/pages/order-details/index?id=" + orderId
+                  });
                 },
               fail: function (res) {
-                console.log(res);
-                // fail
+                  wx.showToast({
+                    icon: 'none',
+                    title: '支付失败',
+                  });
+                  wx.redirectTo({
+                    url: "/pages/order-details/index?id=" + orderId
+                  });
                 },
-              complete: function (res) {
-                console.log(res);
-                // complete
-                }
               });
           }else{
             wx.showToast({

@@ -1,6 +1,6 @@
 <view class="container">
     <view class="address-list">
-        <view class="a-address"  wx:for-items="{{addressList}}" wx:key="{{index}}">
+        <view class="a-address"  wx:for="{{addressList}}" wx:key="{{index}}">
              <view class="left-text {{item.isDefault == 1? 'active':''}}" bindtap="selectTap" data-index="{{index}}">
                  <view class="name-tel">
                     {{item.userName}}  {{item.mobilePhone}}

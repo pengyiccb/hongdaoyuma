@@ -1,51 +1,63 @@
 <view class="container">
     <view class="sec-wrap">
+        <view class="shop-title">{{shopTitle}}</view>
+        <view class="order-status">{{orderBasic.orderStatus >= 4 ? statusType[4] : statusType[orderBasic.orderStatus]}}</view>
     </view>
-        <view class="goods-list">
-            <form bindsubmit="submitReputation" report-submit="true">
-            <block wx:for-items="{{orderBasic.goodsList}}" wx:key="{{index}}">
-            <view class="a-goods">
-                <view class="img-box">
-                    <image src="{{item.imgUrl}}" class="img" />
-                </view>
-                <view class="text-box">
-                    <view class="arow arow01">
-                        <view class="goods-name">{{item.goodsName}}</view>
-                        <view class="goods-price">¥ {{item.unitPrice}}</view>
-                    </view>
-                    <view class="arow">
-                        <view class="goods-label">{{item.goodsAttrs}}</view>
-                        <view class="goods-num">x {{item.count}}</view>
-                    </view>
-                </view>
+    <view class="goods-list">
+        <view class="a-goods" wx:for="{{orderBasic.goodsList}}" wx:key="{{index}}">
+            <view class="img-box">
+                <image mode='aspectFit' src="{{item.imgUrl}}" class="img" />
             </view>
-            </block>
-            </form>
-        </view>
-        <view class="peisong-way" hidden="true">
-            <view class="row-box">
-                <view class="row-label">配送方式</view>
-                <view class="right-text">顺丰快递</view>
-            </view>
-            <view class="row-box">
-                <view class="row-label">留言</view>
-                <view class="right-text">
-                    <input name="remark" type="text" class="liuyan" placeholder="如需留言请输入" />
-                </view>
+            <view class="text-box">
+                <view class="goods-name">{{item.goodsName}}</view>
+                <view class="goods-label">{{item.goodsAttrs}}</view>
+                <view class="goods-arrow">
+                    <view class="goods-price">¥ {{item.unitPrice}}</view>
+                    <view class="goods-num">x {{item.count}}</view>
+                </view>                
             </view>
         </view>
-        <view class="goods-info">
-            <view class="row-box">
-                <view class="row-label">商品金额</view>
-                <view class="right-text">¥ {{orderBasic.actualNeedMoney}}</view>
-            </view>
-            <view class="row-box">
-                <view class="row-label">运费</view>
-                <view class="right-text">+ ¥ {{orderDetail.deliverMoney}}</view>
-            </view>
-            <view class="row-box">
-                <view class="row-label">应付总额</view>
-                <view class="right-text">¥ {{orderBasic.actualNeedMoney}}</view>
-            </view>
+     </view>
+    <view class="goods-info">
+        <view class="row-box">
+            <view >订单总价：</view>
+            <view class="right-text">¥ {{orderBasic.totalMoney}}</view>
         </view>
+        <view class="row-box">
+            <view >优惠金额：</view>
+            <view class="right-text">¥ {{orderBasic.discountMoney}}</view>
+        </view>
+        <view class="row-box">
+            <view class="row-label">实付款：</view>
+            <view class="right-text hot">¥ {{orderBasic.actualNeedMoney}}</view>
+        </view>
+    </view>
+
+    <view class="goods-time">
+        <view class="goods-box">
+            <view >订单编号：</view>
+            <view >{{orderBasic.orderId ? orderBasic.orderId : ''}}</view>
+        </view>
+        <view class="goods-box">
+            <view >微信交易号：</view>
+            <view >{{orderDetail.paymentSerialNo ? orderDetail.paymentSerialNo : ''}}</view>
+        </view>
+        <view class="goods-box">
+            <view >订单创建时间：</view>
+            <view >{{orderBasic.orderCreateTime ? orderBasic.orderCreateTime : ''}}</view>
+        </view>
+        <view class="goods-box">
+            <view >订单付款时间：</view>
+            <view >{{orderDetail.paymentCompletedTime ? orderDetail.paymentCompletedTime : ''}}</view>
+        </view>
+        <view class="goods-box">
+            <view >服务开始时间：</view>
+            <view >{{orderDetail.appointmentServiceTimeBegin ? orderDetail.appointmentServiceTimeBegin : ''}}</view>
+        </view>
+        <view class="goods-box">
+            <view >服务完成时间：</view>
+            <view style="width: 240rpx; height: 47rpx">{{orderDetail.appointmentServiceTimeEnd ? orderDetail.appointmentServiceTimeEnd : ''}}</view>
+            <view bindtap="onCopy" class="copy-btn">复制</view>
+        </view>
+    </view>
 </view>
