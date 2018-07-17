@@ -79,7 +79,7 @@ Page({
       goods.skuId = this.data.goodsData.list[0].skuId;
     }
     submitData.goods = goods;
-    api.orderConfirm(submitData).then(res => {
+    api.orderCreate(submitData).then(res => {
       if(res.code && res.code == 200){
         var orderId = res.data;
         api.playorder({orderId: orderId}).then(res => {

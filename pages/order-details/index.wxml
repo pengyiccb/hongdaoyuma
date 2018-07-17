@@ -36,7 +36,7 @@
     <view class="goods-time">
         <view class="goods-box">
             <view >订单编号：</view>
-            <view >{{orderBasic.orderId ? orderBasic.orderId : ''}}</view>
+            <view >{{orderBasic.orderSerialNo ? orderBasic.orderSerialNo : ''}}</view>
         </view>
         <view class="goods-box">
             <view >微信交易号：</view>

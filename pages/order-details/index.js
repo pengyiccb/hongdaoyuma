@@ -39,7 +39,7 @@ Page({
     onCopy: function(){
       var copyData = 
       "订单编号：" + 
-      (this.data.orderBasic.orderId ? this.data.orderBasic.orderId : "") + 
+      (this.data.orderBasic.orderSerialNo ? this.data.orderBasic.orderSerialNo : "") + 
       "\n微信交易号：" + 
       (this.data.orderDetail.paymentSerialNo ? this.data.orderDetail.paymentSerialNo : "") + 
       "\n订单创建时间：" + 
