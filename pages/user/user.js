@@ -10,25 +10,26 @@ Page({
    * 页面的初始数据
    */
   data: {
+    showPopup: false,
     userInfo: null,
     icons: [
       {
-        icon: 'pending-payment',
+        icon: '/images/user/order_wait_for_pay.png',
         name: '待付款',
         url : '/pages/order/order'
       },
       {
-        icon: 'tosend',
+        icon: '/images/user/order_wait_for_service.png',
         name: '待发货',
         url: '/pages/order/order'
       },
       {
-        icon: 'logistics',
+        icon: '/images/user/order_completed.png',
         name: '已发货',
         url: '/pages/order/order'
       },
       {
-        icon: 'sign',
+        icon: '/images/user/order_cancel.png',
         name: '已完成',
         url: '/pages/order/order'
       }
@@ -60,6 +61,12 @@ Page({
       }
     });
   },
+  togglePopup(){
+    console.log("xx");
+      this.setData({
+        showPopup: !this.data.showPopup
+      });
+    },
   
   onTapTestPay() {
     api.getPrepayOrderInfo({tradeNo:7654324}).then(res=> {
