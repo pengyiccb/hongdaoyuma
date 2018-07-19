@@ -1,1 +1,13 @@
-{"navigationBarTitleText": "个人中心"}
+{
+  "navigationBarTitleText": "个人中心",
+  "usingComponents": {
+    "zan-panel": "../../zanui/panel/index",
+    "zan-cell": "../../zanui/cell/index",
+    "zan-cell-group": "../../zanui/cell-group/index",
+    "zan-popup": "../../zanui/popup/index",
+    "zan-dialog": "../../zanui/dialog/index",
+    "zan-icon": "../../zanui/icon/index",
+    "zan-field": "../../zanui/field/index",
+    "zan-button": "../../zanui/btn/index"
+  }
+}

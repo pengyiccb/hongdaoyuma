@@ -1,16 +1,25 @@
 /* pages/user/user.wxss */
 
 .user-card {
-  margin: 50rpx 27rpx 0;
+  margin: 5rpx 27rpx 0;
   background: #FFFFFF;
   box-shadow: 0 2rpx 13rpx 5rpx rgba(0, 0, 0, 0.02);
   border-radius: 13rpx;
 }
 
 .user-info {
+  /*box-shadow:0 0 5px rgba(0,0,0,.1);*/
   display: flex;
   align-items: center;
   height: 200rpx;
+}
+
+
+.user-card-info {
+     /*box-shadow:0 0 5px rgba(0,0,0,.1);*/
+  display: flex;
+  align-items: center;
+  height: 10rpx;
 }
 
 .user-head {
@@ -18,8 +27,11 @@
   margin-left: 53rpx;
   height: 100rpx;
   width: 100rpx;
-  background: #F5E069;
+  /*background: #F5E069;*/
+  background: #FFFFFF;
   border-radius: 50%;
+  border: 0 solid #ffffff;
+  box-shadow: 0rpx 0rpx 10rpx #FFFFFF;
 }
 
 .user-name {
@@ -29,10 +41,16 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: #FFFFFF;
 }
 
 .user-split {
-  height: 8rpx;
+  height: 2rpx;
+  background: #F9F9F9;
+}
+
+.user-split-big {
+  height: 10rpx;
   background: #F9F9F9;
 }
 
@@ -59,3 +77,141 @@
   width: 11rpx;
   height: 18rpx;
 }
+
+.icon-wrap {
+  width: 25%;
+  /* height: 100px; */
+  float: left;
+  text-align: center;
+}
+
+.example-icon {
+  font-size: 24px;
+  padding: 0px;
+  color: rgba(69, 90, 100, .8);
+}
+
+.icon-classname {
+  color: #999;
+  font-size: 10px;
+}
+
+.right-icon {
+  position:absolute;
+  top:10px;
+  right:10px;
+  /*font: ;*/
+
+  vertical-align: bottom;
+  color: #FFFFFF;
+  font-size:15px;
+  text-align:center;
+  /*alignment: center;*/
+  /*line-height:1;*/
+  /*margin: 0;*/
+  background: #FF3131;
+  box-shadow: 0 2rpx 13rpx 5rpx rgba(0, 0, 0, 0.02);
+  border-radius: 13rpx;
+  width: 200rpx;
+  /*height: 60rpx;*/
+}
+
+.order-icon {
+  width: 40rpx;
+  height: 32rpx;
+
+}
+
+.top {
+  display: inline-block;
+  width: 100%;
+  background-color: #fff;
+  padding-bottom: 10px;
+}
+button {
+  padding:0;
+  margin:0;
+  background:#fff;
+}
+
+.top button:after {
+  display: none;
+}
+
+.logo {
+  display: block;
+  margin: 40px auto 5px;
+  width: 82px;
+  height: 82px;
+  border-radius: 50%;
+}
+.name {
+  text-align: center;
+  display: block;
+}
+
+.iphone{
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+  vertical-align: middle;
+}
+text {
+  vertical-align: middle;
+}
+.toIPhone {
+  font-size: 12px;
+  float: right;
+  border: 1rpx solid #e20809;
+  padding:2px;
+  color:#e20809;
+}
+
+.icon-wrap {
+  width: 25%;
+  /* height: 100px; */
+  float: left;
+  text-align: center;
+}
+
+.example-icon {
+  font-size: 24px;
+  padding: 10px;
+  color: rgba(69, 90, 100, .8);
+}
+
+.icon-classname {
+  color: #999;
+  font-size: 10px;
+}
+
+.zan-btns{
+  padding: 10px;
+}
+.hander text {
+  float: right;
+}
+.save-btn{
+  margin-top: 10px;
+}
+
+.view-noticebar {
+  color: #fff;
+  background-color: #5D5D5D;
+  font-size:15px;
+  height: 82rpx;
+  font-family: 'PingFang SC'
+}
+
+.text-noticebar-tips {
+  position: absolute;
+  left:30rpx;top:22rpx;
+  color:#FFFFFF;
+  font-size: 12px;
+}
+
+.pop-container {
+  width:80vw;font-size:16px;overflow:hidden;border-radius:4px;background-color:#fff;color:#333;
+}
+
+

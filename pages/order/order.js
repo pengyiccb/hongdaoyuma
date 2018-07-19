@@ -103,6 +103,7 @@ Page({
   },
 
   onLoad: function (e) {
+    console.log("e " + JSON.stringify(e))
     if(e && e.currentType){
       this.data.currentType = e.currentType;
     }
