@@ -1,8 +1,8 @@
 {
   "pages":[
+    "pages/user/user",
     "pages/carhome/carhome",
     "pages/home/home",
-    "pages/user/user",
     "pages/detail/detail",
     "pages/order/order",
     "pages/trolley/trolley",
@@ -28,12 +28,6 @@
       "text": "首页",
       "iconPath": "images/home.png",
       "selectedIconPath": "images/home-sel.png"
-    },
-    {
-      "text": "订单",
-      "pagePath": "pages/order/order",
-      "iconPath": "images/order.png",
-      "selectedIconPath": "images/order-sel.png"
     },
     {
       "text": "购物车",

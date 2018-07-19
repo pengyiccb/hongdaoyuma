@@ -11,6 +11,28 @@ Page({
    */
   data: {
     userInfo: null,
+    icons: [
+      {
+        icon: 'pending-payment',
+        name: '待付款',
+        url : '/pages/order/order'
+      },
+      {
+        icon: 'tosend',
+        name: '待发货',
+        url: '/pages/order/order'
+      },
+      {
+        icon: 'logistics',
+        name: '已发货',
+        url: '/pages/order/order'
+      },
+      {
+        icon: 'sign',
+        name: '已完成',
+        url: '/pages/order/order'
+      }
+    ]
   },
 
   onTapLogin: function(e) {

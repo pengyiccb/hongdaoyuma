@@ -1,0 +1,99 @@
+<view class="container">
+
+  <view class='top'>
+    <button open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">
+      <image class="logo" src="{{userInfo.avatarUrl}}"></image>
+      <text class="name">{{userInfo.nickName}}</text>
+    </button>
+  </view>
+
+  <block>
+    <!-- <zan-panel title=" ">
+      <zan-cell-group>
+        <zan-cell>
+          <image class='iphone' src="../../images/iphone.png"></image>
+          <text>找不到订单或优惠券？绑定手机号试试看</text>
+          <text class='toIPhone' bindtap="toggleBaseDialog">立即绑定</text>
+        </zan-cell> 
+      </zan-cell-group>
+    </zan-panel>
+    <zan-dialog id="zan-base-dialog"></zan-dialog> -->
+    <zan-panel title=" ">
+      <zan-cell-group>
+        <zan-cell>
+          <image class='iphone' src="../../images/iphone.png"></image>
+          <text>找不到订单或优惠券？绑定手机号试试看</text>
+          <text class='toIPhone' bindtap="togglePopup">立即绑定</text>
+        </zan-cell> 
+      </zan-cell-group>
+    </zan-panel>
+    <zan-popup show="{{ showPopup }}">
+      <view class="pop-example__container" style='width:80vw;font-size:16px;overflow:hidden;border-radius:4px;background-color:#fff;color:#333;'>
+        <view class="zan-btns">
+          <view class='hander'>绑定手机号<text bindtap="togglePopup">×</text></view>
+          <zan-field
+            placeholder="请输入手机号"
+            mode="wrapped"
+            input-type="number"
+          >
+          </zan-field>
+          <zan-field
+            placeholder="请输入验证码"
+            mode="wrapped"
+            input-type="number"
+          >
+          </zan-field>
+          <button>获取验证码</button>
+          <button type="primary" class="save-btn" bindtap="readFromWx">确定</button>
+        </view>
+      </view>
+    </zan-popup> 
+  </block>
+
+  <block>
+    <zan-panel title=" ">
+      <zan-cell-group style="border-bottom: 1rpx solid #e20809;">
+        <zan-cell
+          is-link
+          url="/pages/order-list/index"
+          title="我的订单"
+        ><text style='position:absolute;right:30px;top:15px;color:#999;'>查看全部订单</text></zan-cell>
+      </zan-cell-group>
+      <zan-cell-group>
+        <zan-cell>
+          <view wx:for="{{ icons }}" wx:for-item="item" wx:key="item.icon" class="icon-wrap">
+            <navigator url='{{ item.url }}' hover-class="navigator-hover">
+              <view class="example-icon">
+                <zan-icon type="{{ item.icon }}"></zan-icon>
+              </view>
+              <view class="icon-classname">{{ item.name }}</view>
+            </navigator>
+          </view>
+        </zan-cell>
+      </zan-cell-group>
+    </zan-panel>    
+  </block>
+
+  <block wx:for="{{ list }}" wx:for-item="group" wx:key="title">
+    <zan-panel title="{{ group.title }}">
+      <zan-cell
+        wx:if="{{ item.name === '购物车' }}"
+        wx:for="{{ group.content }}"
+        wx:key="name"
+        url="{{ item.path }}"
+        title="{{ item.name }}"
+      ></zan-cell>
+      <zan-cell-group>
+        <zan-cell
+          wx:if="{{ item.name !== '购物车' }}"
+          wx:for="{{ group.content }}"
+          wx:key="name"
+          is-link
+          url="{{ item.path }}"
+          title="{{ item.name }}"
+        ></zan-cell>
+      </zan-cell-group>
+    </zan-panel>
+  </block>
+  
+</view>

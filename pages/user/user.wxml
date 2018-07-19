@@ -1,34 +1,180 @@
-<!--pages/user/user.wxml-->
-<image class="bg" src="/images/bg.png"></image>
+<view
+        class="zan-noticebar"
+        style="color: #fff;background-color: 	#5D5D5D; font-size:15px; height: 82rpx;">
+  <!--<view wx:if="{{ leftIcon }}" class="zan-noticebar__left-icon">-->
+    <!--<image src="{{ leftIcon }}" />-->
+  <!--</view>-->
+  <view class="zan-noticebar__content-wrap">
+    <view class="zan-noticebar__content">
+
+      <text style='position: absolute; left:30rpx;top:22rpx;color:#FFFFFF; font-size: 12px'>找不到订单或优惠券？绑定手机号试试</text>
+    </view>
+  </view>
+  <!--<button type="warn">立即绑定 </button>-->
+  <view class="right-icon" >
+    立即绑定
+    <!--<text style='border-right:30rpx;top:15rpx;color:#FFFFFF;'></text>-->
+    </view>
+    <!--<block>-->
+      <!--<zan-icon-->
+
+              <!--class="zan-noticebar__right-icon"-->
+              <!--type="close"-->
+              <!--bindtap="_handleButtonClick"-->
+      <!--/>-->
+    <!--</block>-->
+
+
+</view>
+<image class="bg" src="/images/user/background.png"></image>
 <view wx:if="{{!userInfo}}">
   <view class="unlogin-card">
-    <view class="unlogin-head"></view>
+    <!--<view class="unlogin-head"></view>-->
     <view class="unlogin-info">
-      <view class="unlogin-text">未登录</view>
+      <!--<view class="unlogin-text">未登录</view>-->
+      <button class="unlogin-btn" open-type='getUserInfo' bindgetuserinfo='onTapLogin'>微信登录</button>
       <view class="unlogin-tips">点击微信登录后可方便购物</view>
     </view>
   </view>
-  <button class="unlogin-btn" open-type='getUserInfo' bindgetuserinfo='onTapLogin'>微信登录</button>
 </view>
-<view wx:else class="user-card">
+<view wx:else>
   <view class="user-info">
     <image class="user-head" src="{{userInfo.avatarUrl}}"></image>
     <view class="user-name">{{userInfo.nickName}}</view>
   </view>
-  <view class="user-split"></view>
-  <view class="user-options">
-    <view class="option" bindtap="onTapAddress">
-      <view class="option-title">收货地址</view>
-      <image class="option-arrow" src="/images/grey-arrow.png"></image>
+  <view class="user-card">
+    <view class="user-card-info">
     </view>
-    <view class="option" bindtap="onTapKf">
-      <view class="option-title">联系客服</view>
-      <image class="option-arrow" src="/images/grey-arrow.png"></image>
-    </view>
-      
-    <view class="option" bindtap="onTapTestPay">
-      <view class="option-title">测试支付</view>
-      <image class="option-arrow" src="/images/grey-arrow.png"></image>
+
+    <view class="user-options">
+  <!--     <view class="option" bindtap="onTapAddress">
+        <view class="option-title">收货地址</view>
+        <image class="option-arrow" src="/images/grey-arrow.png"></image>
+      </view>
+      <view class="option" bindtap="onTapKf">
+        <view class="option-title">联系客服</view>
+        <image class="option-arrow" src="/images/grey-arrow.png"></image>
+      </view>
+
+      <!--<view class="option" bindtap="onTapTestPay">-->
+        <!--<view class="option-title">测试支付</view>-->
+        <!--<image class="option-arrow" src="/images/grey-arrow.png"></image>-->
+      <!--</view> &ndash;&gt;-->
+
+      <block>
+      <!-- <zan-panel title=" "> -->
+        <zan-cell-group style="border-bottom: 1rpx solid #e20809;">
+          <zan-cell
+            is-link
+            url="/pages/order/order"
+            title="我的订单"
+          ><text style='position:absolute;right:30px;top:15px;color:#999;'>查看全部订单</text></zan-cell>
+        </zan-cell-group>
+        <view class="user-split"></view>
+        <zan-cell-group>
+          <zan-cell>
+            <view wx:for="{{ icons }}" wx:for-item="item" wx:key="item.icon" class="icon-wrap">
+              <navigator url='{{ item.url }}' hover-class="navigator-hover">
+                <view class="example-icon">
+                  <zan-icon type="{{ item.icon }}"></zan-icon>
+                </view>
+                <view class="icon-classname">{{ item.name }}</view>
+              </navigator>
+            </view>
+          </zan-cell>
+        </zan-cell-group>
+      <!-- </zan-panel>     -->
+    </block>
+
     </view>
   </view>
 </view>
+<!--<zan-cell-group>-->
+<view wx:if="{{userInfo}}" style="border-top: 10rpx">
+  <view class="user-split-big"></view>
+  <zan-cell-group style="border-top: 10rpx solid #e20809;">
+    <zan-cell
+            linkType="switchTab"
+            is-link
+            url="/pages/shop-cart/index"
+            title="购物车"
+    ><text style='position:absolute;right:30px;top:15px;color:#999;'></text></zan-cell>
+  </zan-cell-group>
+   <view class="user-split-big"></view>
+  <zan-cell-group style="border-top: 10rpx solid #e20809;">
+    <zan-cell
+            linkType="switchTab"
+            is-link
+            url="/pages/shop-cart/index"
+            title="购物车"
+    ><text style='position:absolute;right:30px;top:15px;color:#999;'></text></zan-cell>
+  </zan-cell-group>
+   <view class="user-split"></view>
+  <zan-cell-group style="border-top: 10rpx solid #e20809;">
+    <zan-cell
+            linkType="switchTab"
+            is-link
+            url="/pages/shop-cart/index"
+            title="购物车"
+    ><text style='position:absolute;right:30px;top:15px;color:#999;'></text></zan-cell>
+  </zan-cell-group>
+   <view class="user-split"></view>
+  <zan-cell-group style="border-top: 10rpx solid #e20809;">
+    <zan-cell
+            linkType="switchTab"
+            is-link
+            url="/pages/shop-cart/index"
+            title="购物车"
+    ><text style='position:absolute;right:30px;top:15px;color:#999;'></text></zan-cell>
+  </zan-cell-group>
+   <view class="user-split"></view>
+  <zan-cell-group style="border-top: 10rpx solid #e20809;">
+    <zan-cell
+            linkType="switchTab"
+            is-link
+            url="/pages/shop-cart/index"
+            title="购物车"
+    ><text style='position:absolute;right:30px;top:15px;color:#999;'></text></zan-cell>
+  </zan-cell-group>
+   <view class="user-split"></view>
+  <zan-cell-group style="border-top: 10rpx solid #e20809;">
+    <zan-cell
+            linkType="switchTab"
+            is-link
+            url="/pages/shop-cart/index"
+            title="购物车"
+    ><text style='position:absolute;right:30px;top:15px;color:#999;'></text></zan-cell>
+  </zan-cell-group>
+   <view class="user-split"></view>
+  <zan-cell-group style="border-top: 10rpx solid #e20809;">
+    <zan-cell
+            linkType="switchTab"
+            is-link
+            url="/pages/shop-cart/index"
+            title="购物车"
+    ><text style='position:absolute;right:30px;top:15px;color:#999;'></text></zan-cell>
+  </zan-cell-group>
+   <view class="user-split"></view>
+  <zan-cell-group style="border-top: 10rpx solid #e20809;">
+    <zan-cell
+            linkType="switchTab"
+            is-link
+            url="/pages/shop-cart/index"
+            title="购物车"
+    ><text style='position:absolute;right:30px;top:15px;color:#999;'></text></zan-cell>
+  </zan-cell-group>
+   <view class="user-split"></view>
+  <zan-cell-group style="border-top: 10rpx solid #e20809;">
+    <zan-cell
+            linkType="switchTab"
+            is-link
+            url="/pages/shop-cart/index"
+            title="购物车"
+    ><text style='position:absolute;right:30px;top:15px;color:#999;'></text></zan-cell>
+  </zan-cell-group>
+   <view class="user-split"></view>
+
+
+
+</view>
+<!--</zan-cell-group>-->
