@@ -1,5 +1,9 @@
 /* pages/user/user.wxss */
 
+page {
+  font-family: 'PingFang SC';
+}
+
 .user-card {
   margin: 5rpx 27rpx 0;
   background: #FFFFFF;
@@ -7,7 +11,7 @@
   border-radius: 13rpx;
 }
 
-.user-info {
+.avatar-info {
   /*box-shadow:0 0 5px rgba(0,0,0,.1);*/
   display: flex;
   align-items: center;
@@ -79,17 +83,21 @@
 }
 
 .icon-wrap {
+  transform:translateY(25%);
   width: 25%;
+  /*margin-left: 7%;*/
+  /*margin-right: 7%;*/
   /* height: 100px; */
   float: left;
   text-align: center;
 }
 
-.example-icon {
-  font-size: 24px;
-  padding: 0px;
-  color: rgba(69, 90, 100, .8);
-}
+
+/*.example-icon {*/
+  /*font-size: 24px;*/
+  /*padding: 0px;*/
+  /*color: rgba(69, 90, 100, .8);*/
+/*}*/
 
 .icon-classname {
   color: #999;
@@ -167,19 +175,6 @@ text {
   color:#e20809;
 }
 
-.icon-wrap {
-  width: 25%;
-  /* height: 100px; */
-  float: left;
-  text-align: center;
-}
-
-.example-icon {
-  font-size: 24px;
-  padding: 10px;
-  color: rgba(69, 90, 100, .8);
-}
-
 .icon-classname {
   color: #999;
   font-size: 10px;
@@ -210,8 +205,28 @@ text {
   font-size: 12px;
 }
 
+.text-cart-tips {
+  position:absolute;right:30px;top:15px;color:#999;
+}
+
 .pop-container {
   width:80vw;font-size:16px;overflow:hidden;border-radius:4px;background-color:#fff;color:#333;
 }
+
+.order-badge-container {
+  transform:translateX(-30%);
+
+}
+
+.cart-badge-container {
+  position: absolute;
+  top: 50rpx;
+  right: 80rpx;
+  /*transform: translateX(-12%);*/
+  /*margin-top: -10rpx;*/
+  /*transform:translateY(50%)*/
+
+}
+
 
 

@@ -8,6 +8,7 @@
     "zan-dialog": "../../zanui/dialog/index",
     "zan-icon": "../../zanui/icon/index",
     "zan-field": "../../zanui/field/index",
-    "zan-button": "../../zanui/btn/index"
+    "zan-button": "../../zanui/btn/index",
+    "zan-badge": "../../zanui/badge/index"
   }
 }

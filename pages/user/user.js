@@ -16,24 +16,70 @@ Page({
       {
         icon: '/images/user/order_wait_for_pay.png',
         name: '待付款',
-        url : '/pages/order/order'
+        url : '/pages/order/order?currentType=1'
       },
       {
         icon: '/images/user/order_wait_for_service.png',
-        name: '待发货',
-        url: '/pages/order/order'
+        name: '待服务',
+        url: '/pages/order/order?currentType=2'
       },
       {
         icon: '/images/user/order_completed.png',
-        name: '已发货',
-        url: '/pages/order/order'
+        name: '已服务',
+        url: '/pages/order/order?currentType=3'
       },
       {
         icon: '/images/user/order_cancel.png',
         name: '已完成',
-        url: '/pages/order/order'
+        url: '/pages/order/order?currentType=4'
       }
+    ],
+    userRouter: [
+      {
+        name: "会员卡",
+        url: "",
+        tapFunction:"onTapCloseTips"
+      },
+      {
+        name: "绑定车型",
+        url: "",
+        tapFunction:"onTapCloseTips"
+      },
+      {
+        name: "优惠券",
+        url: "",
+        tapFunction:"onTapCloseTips"
+      },
+      {
+        name: "常用地址",
+        url: "",
+        tapFunction:"onTapCloseTips"
+      },
+      {
+        name: "联系客服",
+        url: "",
+        tapFunction:"onTapCloseTips"
+      },
+      {
+        name: "建议反馈",
+        url: "",
+        tapFunction:"onTapCloseTips"
+      },
     ]
+  },
+
+  onTapCloseTips() {
+    wx.showToast({
+      icon: 'none',
+      title: '此功能暂未开放'
+    })
+  },
+
+  onTapCustomService() {
+    wx.showToast({
+      icon: 'none',
+      title: '此功能暂未开放'
+    })
   },
 
   onTapLogin: function(e) {
@@ -61,6 +107,7 @@ Page({
       }
     });
   },
+
   togglePopup(){
     console.log("xx");
       this.setData({
@@ -98,19 +145,7 @@ Page({
     });
   },
 
-  onTapAddress() {
-    wx.showToast({
-      icon: 'none',
-      title: '此功能暂未开放'
-    })
-  },
 
-  onTapKf() {
-    wx.showToast({
-      icon: 'none',
-      title: '此功能暂未开放'
-    })
-  },
 
 
   /**

@@ -48,7 +48,7 @@
 </view>
 
 <image class="bg" src="/images/user/background.png"></image>
-<view style="margin-top: 100rpx; font-family: 'PingFang SC'" wx:if="{{!userInfo}}">
+<view style="margin-top: 100rpx;" wx:if="{{!userInfo}}">
   <view class="unlogin-card">
     <!--<view class="unlogin-head"></view>-->
     <view class="unlogin-info">
@@ -59,15 +59,15 @@
   </view>
 </view>
 <view wx:else>
-  <view class="user-info">
+  <view class="avatar-info">
     <image class="user-head" src="{{userInfo.avatarUrl}}"></image>
     <view class="user-name">{{userInfo.nickName}}</view>
   </view>
-  <view class="user-card">
+  <view class="user-card" >
     <view class="user-card-info">
     </view>
 
-    <view class="user-options">
+    <view class="user-options" >
   <!--     <view class="option" bindtap="onTapAddress">
         <view class="option-title">收货地址</view>
         <image class="option-arrow" src="/images/grey-arrow.png"></image>
@@ -82,120 +82,76 @@
         <!--<image class="option-arrow" src="/images/grey-arrow.png"></image>-->
       <!--</view> &ndash;&gt;-->
 
-      <block>
+      <!--<block>-->
       <!-- <zan-panel title=" "> -->
-        <zan-cell-group style="border-bottom: 1rpx solid #e20809;">
+        <!--<zan-cell-group>-->
           <zan-cell
             is-link
             url="/pages/order/order"
             title="我的订单"
           ><text style='position:absolute;right:30px;top:15px;color:#999;'>查看全部订单</text></zan-cell>
-        </zan-cell-group>
+        <!--</zan-cell-group>-->
         <view class="user-split"></view>
         <zan-cell-group>
           <zan-cell>
             <view wx:for="{{ icons }}" wx:for-item="item" wx:key="item.icon" class="icon-wrap">
-              <navigator url='{{ item.url }}' hover-class="navigator-hover">
-                <view class="example-icon">
-                    <image class="order-icon" src="{{item.icon}}"></image>
+              <navigator url='{{ item.url }}'  style="height: 100rpx">
+                <view  class="badge-container order-badge-container">
+                    <zan-badge>
+                      10
+                    </zan-badge>
+                </view>
+                <image class="order-icon" src="{{item.icon}}"></image>
                   <!--<zan-icon>-->
                   <!--</zan-icon>-->
-                </view>
                 <view class="icon-classname">{{ item.name }}</view>
               </navigator>
             </view>
           </zan-cell>
         </zan-cell-group>
       <!-- </zan-panel>     -->
-    </block>
+    <!--</block>-->
 
     </view>
+      <view class="user-card-info"></view>
   </view>
 </view>
 <!--<zan-cell-group>-->
-<view wx:if="{{userInfo}}" style="border-top: 10rpx">
+<view wx:if="{{userInfo}}" style="border-top: 10rpx;">
+
   <view class="user-split-big"></view>
-  <zan-cell-group style="border-top: 10rpx solid #e20809;">
+
+  <zan-cell-group style="position: relative">
     <zan-cell
             linkType="switchTab"
             is-link
             url="/pages/shop-cart/index"
             title="购物车"
-    ><text style='position:absolute;right:30px;top:15px;color:#999;'></text></zan-cell>
+    >
+      <view  class="badge-container cart-badge-container">
+        <zan-badge>2</zan-badge>
+      </view>
+
+    </zan-cell>
+
   </zan-cell-group>
    <view class="user-split-big"></view>
-  <zan-cell-group style="border-top: 10rpx solid #e20809;">
-    <zan-cell
-            linkType="switchTab"
-            is-link
-            url="/pages/shop-cart/index"
-            title="购物车"
-    ><text style='position:absolute;right:30px;top:15px;color:#999;'></text></zan-cell>
+
+
+  <zan-cell-group style="">
+    <view wx:for="{{ userRouter }}" wx:for-item="item">
+      <zan-cell
+              linkType="navigateTo"
+              is-link
+              url="{{item.url}}"
+              title="{{item.name}}"
+              bindtap="{{item.tapFunction}}"
+      ><text></text></zan-cell>
+     <!--<view class="user-split"></view>-->
+    </view>
   </zan-cell-group>
-   <view class="user-split"></view>
-  <zan-cell-group style="border-top: 10rpx solid #e20809;">
-    <zan-cell
-            linkType="switchTab"
-            is-link
-            url="/pages/shop-cart/index"
-            title="购物车"
-    ><text style='position:absolute;right:30px;top:15px;color:#999;'></text></zan-cell>
-  </zan-cell-group>
-   <view class="user-split"></view>
-  <zan-cell-group style="border-top: 10rpx solid #e20809;">
-    <zan-cell
-            linkType="switchTab"
-            is-link
-            url="/pages/shop-cart/index"
-            title="购物车"
-    ><text style='position:absolute;right:30px;top:15px;color:#999;'></text></zan-cell>
-  </zan-cell-group>
-   <view class="user-split"></view>
-  <zan-cell-group style="border-top: 10rpx solid #e20809;">
-    <zan-cell
-            linkType="switchTab"
-            is-link
-            url="/pages/shop-cart/index"
-            title="购物车"
-    ><text style='position:absolute;right:30px;top:15px;color:#999;'></text></zan-cell>
-  </zan-cell-group>
-   <view class="user-split"></view>
-  <zan-cell-group style="border-top: 10rpx solid #e20809;">
-    <zan-cell
-            linkType="switchTab"
-            is-link
-            url="/pages/shop-cart/index"
-            title="购物车"
-    ><text style='position:absolute;right:30px;top:15px;color:#999;'></text></zan-cell>
-  </zan-cell-group>
-   <view class="user-split"></view>
-  <zan-cell-group style="border-top: 10rpx solid #e20809;">
-    <zan-cell
-            linkType="switchTab"
-            is-link
-            url="/pages/shop-cart/index"
-            title="购物车"
-    ><text style='position:absolute;right:30px;top:15px;color:#999;'></text></zan-cell>
-  </zan-cell-group>
-   <view class="user-split"></view>
-  <zan-cell-group style="border-top: 10rpx solid #e20809;">
-    <zan-cell
-            linkType="switchTab"
-            is-link
-            url="/pages/shop-cart/index"
-            title="购物车"
-    ><text style='position:absolute;right:30px;top:15px;color:#999;'></text></zan-cell>
-  </zan-cell-group>
-   <view class="user-split"></view>
-  <zan-cell-group style="border-top: 10rpx solid #e20809;">
-    <zan-cell
-            linkType="switchTab"
-            is-link
-            url="/pages/shop-cart/index"
-            title="购物车"
-    ><text style='position:absolute;right:30px;top:15px;color:#999;'></text></zan-cell>
-  </zan-cell-group>
-   <view class="user-split"></view>
+
+
 
 
 
