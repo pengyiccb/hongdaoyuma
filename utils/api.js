@@ -88,6 +88,8 @@ const orderCancel = (data, orderId) => RequestServer(data, `/api/v1/wechat/order
 const orderDetail = (data, orderId) => RequestServer(data, `/api/v1/wechat/order/detail?orderId=${orderId}`)
 //计算订单总价
 const orderTotalPrice = data => RequestServer(data, `/api/v1/wechat/order/price/total`, 'POST')
+//确认服务
+const orderConfirm = (data, orderId) => RequestServer(data, `/api/v1/wechat/order/confirm?orderId=${orderId}`, 'PUT')
 
 
 const loginToServer = (params = {data, success, fail}) => {
@@ -135,6 +137,7 @@ module.exports= {
   orderDetail,
   orderCreate,
   orderTotalPrice,
+  orderConfirm,
   getCarKinds,
   getCarMainProduct
 }

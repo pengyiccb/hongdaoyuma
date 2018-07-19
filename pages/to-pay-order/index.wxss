@@ -194,6 +194,7 @@ form{
     border-radius: 0;
 }
 
+
 .jiesuan-box  .left-price{
     display: flex;
     width: 500rpx;

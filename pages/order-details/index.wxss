@@ -182,7 +182,7 @@ view {
     color: #828282;
 }
 
-.goods-time .goods-box .copy-btn{
+.goods-time .copy-btn{
     width: 108rpx;
     height: 36rpx;
     line-height: 36rpx;
@@ -191,8 +191,9 @@ view {
     border-radius: 8rpx;
     text-align: center;
     border: 1rpx solid;
-    margin-left: 137rpx;
-    margin-bottom: 10rpx;
+    position: absolute;
+    right: 25rpx;
+    bottom: -330rpx;
 }
 
 .goods-info{

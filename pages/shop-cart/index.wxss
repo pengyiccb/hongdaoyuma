@@ -137,7 +137,7 @@ view {
   font-size: 26rpx;
   color:#e64340;
   position: absolute;
-  bottom: 0rpx;
+  bottom: -20rpx;
 }
 .goods-info .text-box .buy-num{
   width: 164rpx;
@@ -145,7 +145,7 @@ view {
   line-height: 48rpx;
   position: absolute;
   right: 30rpx;
-  bottom: -10rpx;
+  bottom: -20rpx;
   display: flex;
   /*justify-content: space-between;*/
   font-size: 24rpx;

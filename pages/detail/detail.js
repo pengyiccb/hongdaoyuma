@@ -40,6 +40,7 @@ Page({
 
     shopCarInfo: {},
     shopType: "addShopCar",//购物类型，加入购物车或立即购买，默认为加入购物车
+    attrCount: 0
   },
 
   //事件处理函数
@@ -62,7 +63,6 @@ Page({
 
   onLoad: function (e) {
     var that = this;
-
     this.setData({
       productId: e.id
     });
@@ -82,14 +82,19 @@ Page({
         productId: that.data.goodsDetail.id,
       }).then(res=>{
         let productskuPriceMap = this.data.productskuPriceMap;
-        if (res.code==200) {
+        if (res.code && res.code==200) {
+          that.data.attrCount = res.data.length;
           res.data.forEach(element => {
             productskuPriceMap[element.attrOption] = element;
           });
           let pirceList = res.data.map(e => {return e.unitPrice});
           let max = Math.max.apply(null, pirceList);
           let min = Math.min.apply(null, pirceList);
-          this.setData({ price_section: min + "-" + max});
+          if(max != min){
+            this.setData({ price_section: min + "-" + max});
+          }else{
+            this.setData({ price_section: max});
+          }
         }
     });
     });
@@ -117,15 +122,11 @@ Page({
   },
 
   toAddShopCar: function () {
-    if(this.data.canSubmit){
-      this.addShopCar();
-    }else{
-      this.setData({
-        shopType: "addShopCar",
-        isOkButton: true
-      })
-      this.bindGuiGeTap();
-    }    
+    this.setData({
+      shopType: "addShopCar",
+      isOkButton: true
+    })
+    this.bindGuiGeTap();
   },
 
   onGoodSelect: function(){
@@ -141,7 +142,6 @@ Page({
     }else if(this.data.shopType === "tobuy"){
       this.buyNow();
     }
-
   },
   tobuy: function () {
     if(this.data.canSubmit){
@@ -158,6 +158,48 @@ Page({
    * 规格选择弹出框
    */
   bindGuiGeTap: function () {
+    var selAttr = [];
+    if(this.data.attrCount == 1){
+      for(let i = 0; i < this.data.attrs.length; i++){
+        for(let j = 0; j < this.data.attrs[i].children.length; j++){
+          var children = this.data.attrs[i].children[j];
+          children.active = true;
+          selAttr.push(children.attrName);
+        }
+      }
+      this.setData({
+        attrs: this.data.attrs,
+        select_string:selAttr.join(",")
+      });
+
+      //获取所有的选中规格尺寸数据
+      let needSelectNumber = this.data.attrs.length;
+      let currentSelectNumber = 0;
+      let attrOptionString =[];
+      for (var i=0; i<needSelectNumber; ++i) {
+        let children = this.data.attrs[i].children;
+        for(var j=0; j<children.length; ++j) {
+          if(children[j].active) {
+            currentSelectNumber++;
+            attrOptionString.push(children[j].id);
+          }
+        }
+      }
+      if (needSelectNumber == currentSelectNumber) {
+        this.data.canSubmit = true;
+
+        let sku = this.data.productskuPriceMap[attrOptionString.join("|")];
+        if (sku) {
+          this.setData({
+            pop_goods_price: sku.unitPrice,       //单品价格
+            stock_amount: sku.stockAmount,         //单品库存
+            sale_amount: sku.saleAmount,          //单品销售
+            single_image: sku.imageSelect,         //单品图片
+            skuId: sku.id         
+          });
+        }
+      }
+    }
     this.setData({
       hideShopPopup: false
     })
@@ -266,7 +308,16 @@ Page({
         showCancel: false
       })
       return;
-    }    
+    }
+
+    if(this.data.stock_amount < 1){
+      wx.showModal({
+        title: '提示',
+        content: '库存数量为0！',
+        showCancel: false
+      })
+      return;
+    }
 
     api.AddCart({
       productId: that.data.productId,
@@ -309,6 +360,15 @@ Page({
       wx.showModal({
         title: '提示',
         content: '购买数量不能为0！',
+        showCancel: false
+      })
+      return;
+    }
+
+    if(this.data.stock_amount < 1){
+      wx.showModal({
+        title: '提示',
+        content: '库存数量为0！',
         showCancel: false
       })
       return;

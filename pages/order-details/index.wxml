@@ -56,8 +56,8 @@
         </view>
         <view class="goods-box">
             <view >服务完成时间：</view>
-            <view style="width: 240rpx; height: 47rpx">{{orderDetail.appointmentServiceTimeEnd ? orderDetail.appointmentServiceTimeEnd : ''}}</view>
-            <view bindtap="onCopy" class="copy-btn">复制</view>
+            <view >{{orderDetail.appointmentServiceTimeEnd ? orderDetail.appointmentServiceTimeEnd : ''}}</view>
         </view>
+        <view bindtap="onCopy" class="copy-btn">复制</view>
     </view>
 </view>

@@ -1,16 +1,22 @@
 <view class="container">
+    <!-- <view class="bindphone">
+        
+    </view> -->
     <view class="status-box">
         <view bindtap="statusTap" class="status-label {{index == currentType ? 'active' : ''}}" wx:for="{{statusType}}" wx:key="{{index}}" data-index="{{index}}">
             {{item}}
-            <!-- <view class="{{tabClass[index]}}"></view> -->
         </view>
     </view>
-    <view class="no-order" hidden="{{orderList ? true : false}}">
+    <view class="no-order" hidden="{{orderList.length != 0 ? true : false}}">
         <image src="/images/no-order.png" class="no-order-img"></image>
         <view class="text">暂无订单</view>
     </view>
-    <view class="order-list" hidden="{{orderList ? false : true}}">
+    <view class="order-list" hidden="{{orderList.length != 0 ? false : true}}">
         <view class="a-order" wx:for="{{orderList}}" wx:for-item="orderItem" wx:key="{{index}}">
+            <view class="sec-wrap">
+                <view class="shop-title">{{shopTitle}}</view>
+                <view class="order-status">{{orderItem.orderStatus >= 4 ? statusType[4] : statusType[orderItem.orderStatus]}}</view>
+            </view>
             <view class="a-goods" bindtap="orderDetail" data-id="{{orderItem.orderId}}" wx:for="{{orderItem.goodsList}}" wx:key="{{index}}">
                 <view class="img-box">
                     <image mode='aspectFit' src="{{item.imgUrl}}" class="img" />
@@ -26,15 +32,15 @@
             </view>
             
             <view class="price-box">
-                <view class="total-num">共{{orderItem.goodsList.length}}件 合计: </view>
+                <view class="total-num">共{{orderItem.goodsList.length}}件商品 合计: </view>
                 <view class="total-price">￥{{orderItem.actualNeedMoney}}</view>
             </view>
-            <view class="btn-box">
-                <view class="order-status">{{orderItem.orderStatus >= 4 ? statusType[4] : statusType[orderItem.orderStatus]}}</view>
-                <block wx:if="{{orderItem.orderStatus == 1}}">
-                    <view class="btn cancel-btn" bindtap="cancelOrderTap"  data-id="{{orderItem.orderId}}">取消订单</view>
-                    <view class="btn topay-btn" bindtap="toPayTap" data-id="{{orderItem.orderId}}">马上付款</view>
-                </block>
+            <view class="btn-box" wx:if="{{orderItem.orderStatus == 1}}">
+                <view class="btn cancel-btn" bindtap="cancelOrderTap"  data-id="{{orderItem.orderId}}">取消订单</view>
+                <view class="btn topay-btn" bindtap="toPayTap" data-id="{{orderItem.orderId}}">马上付款</view>
+            </view>
+            <view class="btn-box" wx:elif="{{orderItem.orderStatus == 3}}">
+                <view class="btn cancel-btn" bindtap="ConfirmOrder" data-id="{{orderItem.orderId}}">确认服务</view>
             </view>
         </view>
 

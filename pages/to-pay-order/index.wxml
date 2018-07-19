@@ -6,7 +6,7 @@
         </view>
         <view class="show-address" hidden="{{!curAddressData}}" bindtap="selectAddress">
             <view class="name-tel">{{curAddressData.userName}}  {{curAddressData.mobilePhone}}</view>
-            <view class="addr-text">{{curAddressData.areaAddress1}} {{curAddressData.areaAddress2}}</view>
+            <view class="addr-text">{{curAddressData.areaAddress1}} {{curAddressData.areaAddress2}} {{curAddressData.areaAddress3}} {{curAddressData.addressDetail}}</view>
         </view>
      </view>
      <view class="goods-list">
