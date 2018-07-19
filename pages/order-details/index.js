@@ -7,7 +7,7 @@ Page({
         orderBasic: {},
         orderDetail: {},
         statusType: ["全部", "待付款", "待服务", "服务完成", "已关闭"],
-        shopTitle: "宏道御马"
+        shopTitle: "红道御马"
     },
     onLoad:function(e){
       var orderId = e.id;

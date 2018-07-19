@@ -2,7 +2,7 @@
 <scroll-view scroll-y="true" class="container" scroll-into-view="{{toView}}" style="height:{{scrollHeight}}px;"> 
    <view class="swiper-container">
         <swiper class="swiper_box" 
-                    autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="swiperchange" indicator-dots="true">
+                    autoplay="{{autoplay}}" interval="{{interval}}" indicator-active-color="#ffffff" duration="{{duration}}" bindchange="swiperchange" indicator-dots="true">
             <!-- <block wx:for="{{goodsDetail}}" wx:key="id"> -->
             <block wx:for="{{goodsDetail.imgPrimaryList}}">
                 <swiper-item>
@@ -42,17 +42,18 @@
         <view bindtap="goodSize" class="label-title {{toView==='goodSize'?'active':''}}">商品参数</view>
     </view>
     <view class="goods-des-info" >        
-        <view id="goodDesc" wx:for="{{goodsDetail.imgDescList}}">
-            <image mode="aspectFit" class="des-imgs" src="{{item.url}}" />
+        <view id="goodDesc" class="img-box" wx:for="{{goodsDetail.imgDescList}}">
+            <image mode="widthFix" class="des-imgs" src="{{item.url}}" />
         </view>        
-        <view id="goodSize" wx:for="{{goodsDetail.imgSpecList}}">
-            <image mode="aspectFit" class="des-imgs" src="{{item.url}}" />
+        <view id="goodSize" class="img-box" wx:for="{{goodsDetail.imgSpecList}}">
+            <image mode="widthFix" class="des-imgs" src="{{item.url}}" />
         </view>
     </view>
     <view class="footer-box">        
         <view class="join-shop-cart" bindtap="toAddShopCar">加入购物车</view>
         <view class="now-buy" bindtap="tobuy">立即购买</view>
    </view>
+   <view class="empty-box"></view>
     <view catchtouchmove="true" class="show-popup" hidden="{{hideShopPopup}}" >
         <view class="popup-mask" bindtap="closePopupTap"></view>
         <view class="popup-contents">

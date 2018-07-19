@@ -6,12 +6,11 @@ Page({
     statusType: ["全部", "待付款", "待服务", "服务完成", "已关闭"],
     currentType: 0,
     tabClass: ["", "", "", "", ""],
-    orderList: []
+    orderList: [],
+    shopTitle: "红道御马"
   },
   statusTap: function (e) {
     var curType = e.currentTarget.dataset.index;
-    if(curType == 0) curType = -1;
-    this.data.currentType = curType
     this.setData({
       currentType: curType
     });
@@ -84,85 +83,85 @@ Page({
       }
     });
   },
+
+  ConfirmOrder: function(e){
+    var orderId = e.currentTarget.dataset.id;
+    wx.showLoading();
+    api.orderConfirm({}, orderId).then(res => {
+      wx.hideLoading();
+      if(res.code && res.code == 200){
+        wx.navigateTo({
+          url: "/pages/order-details/index?id=" + orderId
+        });
+      }else{
+        wx.showToast({
+          icon: 'none',
+          title: res.msg,
+        });
+      }
+    });
+  },
+
   onLoad: function (e) {
     console.log("e " + JSON.stringify(e))
     if(e && e.currentType){
       this.data.currentType = e.currentType;
-    }else{
-      this.data.currentType = -1;
     }
   },
   onReady: function () {
     // 生命周期函数--监听页面初次渲染完成
 
   },
-  getOrderStatistics: function () {
-    var that = this;
-    wx.request({
-      url: 'https://api.it120.cc/' + app.globalData.subDomain + '/order/statistics',
-      data: { token: wx.getStorageSync('token') },
-      success: (res) => {
-        wx.hideLoading();
-        if (res.data.code == 0) {
-          var tabClass = that.data.tabClass;
-          if (res.data.data.count_id_no_pay > 0) {
-            tabClass[0] = "red-dot"
-          } else {
-            tabClass[0] = ""
-          }
-          if (res.data.data.count_id_no_transfer > 0) {
-            tabClass[1] = "red-dot"
-          } else {
-            tabClass[1] = ""
-          }
-          if (res.data.data.count_id_no_confirm > 0) {
-            tabClass[2] = "red-dot"
-          } else {
-            tabClass[2] = ""
-          }
-          if (res.data.data.count_id_no_reputation > 0) {
-            tabClass[3] = "red-dot"
-          } else {
-            tabClass[3] = ""
-          }
-          if (res.data.data.count_id_success > 0) {
-            //tabClass[4] = "red-dot"
-          } else {
-            //tabClass[4] = ""
-          }
-
-          that.setData({
-            tabClass: tabClass,
-          });
-        }
-      }
-    })
-  },
+  
   onShow: function () {
     var that = this;
     // 获取订单列表
     wx.showLoading();
     /* postData.status = that.data.currentType; */
     /* this.getOrderStatistics(); */
-    api.orderList({ orderStatus: this.data.currentType}).catch(res => {
-      wx.hideLoading();
-      wx.showToast({
-        icon: 'none',
-        title: '数据加载错误',
-      });
-    }).then(res => {
-      wx.hideLoading();
-      if(res.code && res.code == 200){
-        that.setData({
-          orderList: res.data
-        });
-      }else{
+    if(this.data.currentType == 0){
+      api.orderList({}).catch(res => {
+        wx.hideLoading();
         wx.showToast({
           icon: 'none',
-          title: res.msg
+          title: '数据加载错误',
         });
-      }
-    });
+      }).then(res => {
+        wx.hideLoading();
+        if(res.code && res.code == 200){
+          that.setData({
+            orderList: res.data,
+            shopTitle: app.globalData.shopTitle
+          });
+        }else{
+          wx.showToast({
+            icon: 'none',
+            title: res.msg
+          });
+        }
+      });
+    }else{
+      api.orderList({ orderStatus: this.data.currentType}).catch(res => {
+        wx.hideLoading();
+        wx.showToast({
+          icon: 'none',
+          title: '数据加载错误',
+        });
+      }).then(res => {
+        wx.hideLoading();
+        if(res.code && res.code == 200){
+          that.setData({
+            orderList: res.data,
+            shopTitle: app.globalData.shopTitle
+          });
+        }else{
+          wx.showToast({
+            icon: 'none',
+            title: res.msg
+          });
+        }
+      });
+    }
   },
   onHide: function () {
     // 生命周期函数--监听页面隐藏

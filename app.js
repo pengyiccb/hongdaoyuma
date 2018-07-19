@@ -100,7 +100,7 @@ App({
       appId:"wxdda83d03c2d1521c",
       userInfo: null,
       serverSessionKey: null,
-      shopTitle: "宏道御马"
+      shopTitle: "红道御马"
     },
 })
 

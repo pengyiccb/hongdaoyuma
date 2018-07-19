@@ -13,7 +13,8 @@ Page({
     selDistrict:'请选择',
     selProvinceIndex:0,
     selCityIndex:0,
-    selDistrictIndex:0
+    selDistrictIndex:0,
+    isDefault: 1
   },
   bindCancel:function () {
     wx.navigateBack({})
@@ -78,26 +79,48 @@ Page({
       addressDetail: address,
       postalCode: code, 
       nationalCode: 86,
-      isDefault: 1
+      isDefault: this.data.isDefault
     }
 
-    api.addaddr(data).then(res => {
-      if (res.code && res.code == 200) {
-        wx.showToast({
-          icon: 'none',
-          title: '添加成功',
-        });
-        wx.navigateBack({});
-      }else{
+    wx.showLoading();
+    if(this.data.addressId){
+      data.id = this.data.addressId;
+      api.modifyAddr(data).then(res => {
         wx.hideLoading();
-        wx.showModal({
-          title: '失败',
-          content: res.msg,
-          showCancel: false
-        })
-        return;
-      }
-    })
+        if (res.code && res.code == 200) {
+          wx.showToast({
+            icon: 'none',
+            title: '修改成功',
+          });
+          wx.navigateBack({});
+        }else{          
+          wx.showModal({
+            title: '修改失败',
+            content: res.msg,
+            showCancel: false
+          })
+          return;
+        }
+      });
+    }else{
+      wx.hideLoading();
+      api.addaddr(data).then(res => {
+        if (res.code && res.code == 200) {
+          wx.showToast({
+            icon: 'none',
+            title: '添加成功',
+          });
+          wx.navigateBack({});
+        }else{          
+          wx.showModal({
+            title: '添加失败',
+            content: res.msg,
+            showCancel: false
+          })
+          return;
+        }
+      });
+    }    
 
   },
   initCityData:function(level, obj){
@@ -166,13 +189,16 @@ Page({
     this.initCityData(1);
     var id = e.id;
     if (id) {
+      this.data.addressId = id;
       // 初始化原数据
       wx.showLoading();
       api.getAddrById({}, id).then(res => {
+        wx.hideLoading();
         if(res.code && res.code == 200){
           let provinceName = res.data.areaAddress1;
           let cityName = res.data.areaAddress2;
           let diatrictName = res.data.areaAddress3;
+          that.data.isDefault = res.data.isDefault;
   
           for (var i = 0; i < commonCityData.cityData.length; i++) {
             if (provinceName == commonCityData.cityData[i].name) {
@@ -198,8 +224,7 @@ Page({
           }
           that.setData({
             addressData: res.data
-          });
-          wx.hideLoading();
+          });          
         }else{
           wx.showToast({
             icon: 'none',

@@ -64,6 +64,14 @@ Page({
   },
 
   createOrder: function (e) {
+    if(this.data.curAddressData === null){
+      wx.showToast({
+        icon: 'none',
+        title: "请选择地址",
+      });
+      return;
+    }
+
     var submitData = {};
     submitData.customerName = this.data.curAddressData.userName;
     submitData.wxAppId = app.globalData.appId;
