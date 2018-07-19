@@ -71,6 +71,7 @@ view {
     width: 100%;
     position: absolute;
     top: 88rpx;
+    transition: left 0.2s ease-in-out;
 }
 .order-list .a-order{
     width: 100%;

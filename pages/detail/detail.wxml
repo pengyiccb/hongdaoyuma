@@ -2,7 +2,7 @@
 <scroll-view scroll-y="true" class="container" scroll-into-view="{{toView}}" style="height:{{scrollHeight}}px;"> 
    <view class="swiper-container">
         <swiper class="swiper_box" 
-                    autoplay="{{autoplay}}" interval="{{interval}}" indicator-active-color="#ffffff" duration="{{duration}}" bindchange="swiperchange" indicator-dots="true">
+                    autoplay="{{autoplay}}" interval="{{interval}}" circular="true" indicator-active-color="#ffffff" duration="{{duration}}" bindchange="swiperchange" indicator-dots="true">
             <!-- <block wx:for="{{goodsDetail}}" wx:key="id"> -->
             <block wx:for="{{goodsDetail.imgPrimaryList}}">
                 <swiper-item>

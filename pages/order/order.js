@@ -7,7 +7,9 @@ Page({
     currentType: 0,
     tabClass: ["", "", "", "", ""],
     orderList: [],
-    shopTitle: "红道御马"
+    shopTitle: "红道御马",
+    leftStyle: "0px",
+    changeWidth: 250
   },
   statusTap: function (e) {
     var curType = e.currentTarget.dataset.index;
@@ -103,8 +105,6 @@ Page({
   },
 
   onLoad: function (e) {
-    console.log("e " + JSON.stringify(e))
-
     if(e && e.currentType){
       this.data.currentType = e.currentType;
       this.setData({
@@ -112,17 +112,16 @@ Page({
       });
     }
   },
-  onReady: function () {
-    // 生命周期函数--监听页面初次渲染完成
-
-  },
   
   onShow: function () {
     var that = this;
     // 获取订单列表
     wx.showLoading();
-    /* postData.status = that.data.currentType; */
-    /* this.getOrderStatistics(); */
+    /* var w = wx.getSystemInfoSync().windowWidth / 3;
+    this.setData({
+      leftStyle: "left:0px",
+      changeWidth:w
+    }); */
     if(this.data.currentType == 0){
       api.orderList({}).catch(res => {
         wx.hideLoading();
@@ -135,7 +134,7 @@ Page({
         if(res.code && res.code == 200){
           that.setData({
             orderList: res.data,
-            shopTitle: app.globalData.shopTitle
+            shopTitle: app.globalData.shopTitle,
           });
         }else{
           wx.showToast({
@@ -167,20 +166,60 @@ Page({
       });
     }
   },
-  onHide: function () {
-    // 生命周期函数--监听页面隐藏
 
+  /* touchS:function(e){
+    if(e.touches.length==1){
+      this.setData({
+        startX:e.touches[0].clientX
+      });
+    }
   },
-  onUnload: function () {
-    // 生命周期函数--监听页面卸载
 
-  },
-  onPullDownRefresh: function () {
-    // 页面相关事件处理函数--监听用户下拉动作
+  touchM:function(e){
+      if(e.touches.length==1){
+        var moveX = e.touches[0].clientX;
+        var disX = this.data.startX - moveX;
+        var left = "";
+        if(disX == 0 || disX < 0){
+          if(this.data.currentType <= 0) return;
+          left = "left:" + (0-disX) + "px";
+        }else if(disX > 0 ){
+          if(this.data.currentType >= 4) return;
+          left = "left:-"+disX+"px";
+        }
 
-  },
-  onReachBottom: function () {
-    // 页面上拉触底事件的处理函数
+        this.setData({
+          leftStyle: left
+        });
+      }
+    },
+  
+    touchE:function(e){
+      if(e.changedTouches.length==1){
+        var endX = e.changedTouches[0].clientX;
+        var disX = this.data.startX - endX;
+        var left = "";
+        if(disX >= this.data.changeWidth){
+          var curType = this.data.currentType + 1;
+          if(curType > 4) return;
+          this.setData({
+            currentType: curType
+          });
+          this.onShow();
+        }else if(disX <= -this.data.changeWidth){
+          var curType = this.data.currentType - 1;
+          if(curType < 0) return;
+          this.setData({
+            currentType: curType
+          });
+          this.onShow();
+        }else{
+          left = "left:0px";
+          this.setData({
+            leftStyle: left
+          });
+        }        
+      }
+    }, */
 
-  }
 })
