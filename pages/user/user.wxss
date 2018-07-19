@@ -195,3 +195,23 @@ text {
   margin-top: 10px;
 }
 
+.view-noticebar {
+  color: #fff;
+  background-color: #5D5D5D;
+  font-size:15px;
+  height: 82rpx;
+  font-family: 'PingFang SC'
+}
+
+.text-noticebar-tips {
+  position: absolute;
+  left:30rpx;top:22rpx;
+  color:#FFFFFF;
+  font-size: 12px;
+}
+
+.pop-container {
+  width:80vw;font-size:16px;overflow:hidden;border-radius:4px;background-color:#fff;color:#333;
+}
+
+

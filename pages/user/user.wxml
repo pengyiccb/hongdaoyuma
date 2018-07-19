@@ -1,12 +1,12 @@
 <view
-        class="zan-noticebar"
-        style="color: #fff;background-color: 	#5D5D5D; font-size:15px; height: 82rpx;font-family: 'PingFang SC'">
+        class="zan-noticebar view-noticebar"
+        >
   <!--<view wx:if="{{ leftIcon }}" class="zan-noticebar__left-icon">-->
     <!--<image src="{{ leftIcon }}" />-->
   <!--</view>-->
   <view class="zan-noticebar__content-wrap">
     <view class="zan-noticebar__content">
-      <text style="position: absolute; left:30rpx;top:22rpx;color:#FFFFFF; font-size: 12px;">找不到订单或优惠券？绑定手机号试试</text>
+      <text  class="text-noticebar-tips" >找不到订单或优惠券？绑定手机号试试</text>
     </view>
   </view>
   <!--<button type="warn">立即绑定 </button>-->
@@ -15,7 +15,7 @@
     <!--<text style='border-right:30rpx;top:15rpx;color:#FFFFFF;'></text>-->
   </view>
 <zan-popup show="{{ showPopup }}">
-  <view class="pop-example__container" style="width:80vw;font-size:16px;overflow:hidden;border-radius:4px;background-color:#fff;color:#333;">
+  <view class="pop-container" >
     <view class="zan-btns">
       <view class='zan-dialog__header' style="text-align: center">
         <text style="font-size: 22px;">绑定手机号</text> <text style="float: right" bindtap="togglePopup">×</text>
@@ -32,7 +32,7 @@
               input-type="number"
       >
       </zan-field>
-      <button style="padding: 10rpx">获取验证码</button>
+      <button type="primary" >获取验证码</button>
       <button type="warn" class="save-btn" bindtap="readFromWx">确定</button>
     </view>
   </view>
