@@ -7,12 +7,12 @@
     <view class="goodsList" hidden="{{isEmpty}}">
         <view class="a-gooods" wx:for="{{list}}"  wx:key="{{itemId}}" >
             <view class="a-goods-conts {{item.active? 'active':''}}" bindtap="selectTap" bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" data-index="{{index}}" style="{{item.left}}">
-                <navigator hover-class="none" catchtap="stopTap" class="goods-info" url="/pages/detail/detail?id={{item.productId}}">
-                    <view class="img-box">
+                <view  catchtap="stopTap" class="goods-info">
+                    <navigator hover-class="none" class="img-box" url="/pages/detail/detail?id={{item.productId}}">
                         <image src="{{item.image}}" class="img"/>
-                    </view>
+                    </navigator>
                     <view class="text-box">
-                        <view class="goods-title">{{item.desc}}</view>
+                        <navigator hover-class="none" class="goods-title" url="/pages/detail/detail?id={{item.productId}}">{{item.desc}}</navigator>
                         <view class="goods-label" catchtap="selectSpec" data-index="{{index}}">{{item.spec}}</view>
                         <view class="goods-price">¥ {{item.unitPrice}}</view>
                         <view class="buy-num">
@@ -21,7 +21,7 @@
                             <view class="jia-btn {{item.count==curTouchGoodStore? 'disabled' : ''}}" catchtap="jiaBtnTap" data-index="{{index}}">+</view>
                         </view>
                     </view>
-                </navigator>
+                </view>
                 <view class="delete-btn" data-index="{{index}}" catchtap="delItem">
                   删除
                 </view>

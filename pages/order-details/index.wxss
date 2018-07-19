@@ -164,6 +164,7 @@ view {
 .goods-time{
     width: 100%;
     height: 284rpx;
+    position: relative;
 }
 
 .goods-time .goods-box{
@@ -193,7 +194,7 @@ view {
     border: 1rpx solid;
     position: absolute;
     right: 25rpx;
-    bottom: -330rpx;
+    top: 226rpx;
 }
 
 .goods-info{

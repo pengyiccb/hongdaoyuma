@@ -43,7 +43,7 @@ Page({
     }
   },
   initEleWidth:function(){
-    var delBtnWidth = this.getEleWidth(this.data.delBtnWidth);
+    var delBtnWidth = this.getEleWidth(120);
     this.setData({
       delBtnWidth:delBtnWidth
     });
@@ -106,12 +106,13 @@ Page({
       var delBtnWidth = this.data.delBtnWidth;
       var left = "";
       if(disX == 0 || disX < 0){//如果移动距离小于等于0，container位置不变
-        left = "margin-left:0px";
+        left = "left:0px";
       }else if(disX > 0 ){//移动距离大于0，container left值等于手指移动距离
-        left = "margin-left:-"+disX+"px";
+        left = "left:-"+disX+"px";
         if(disX>=delBtnWidth){
           left = "left:-"+delBtnWidth+"px";
         }
+        /* left = "left:-60px"; */
       }
       var list = this.data.list;
       if(index!="" && index !=null){
@@ -125,10 +126,10 @@ Page({
     var index = e.currentTarget.dataset.index;    
     if(e.changedTouches.length==1){
       var endX = e.changedTouches[0].clientX;
-      var disX = this.data.startX - endX;
+      var disX = this.data.startX - endX;      
       var delBtnWidth = this.data.delBtnWidth;
       //如果距离小于删除按钮的1/2，不显示删除按钮
-      var left = disX > delBtnWidth/2 ? "margin-left:-"+delBtnWidth+"px":"margin-left:0px";
+      var left = disX > delBtnWidth/2 ? "left:-"+delBtnWidth+"px":"left:0px";
       var list = this.data.list;
      if(index!=="" && index != null){
         list[parseInt(index)].left = left; 
