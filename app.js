@@ -14,7 +14,7 @@ App({
     },
 
     globalData: {
-      appId:"wxdda83d03c2d1521c",
+      appId:"wxfb95d995a96c1e9b",
       userInfo: null,
       serverSessionKey: null,
       shopTitle: "红道御马"

@@ -304,32 +304,39 @@ Page({
             "appId": app.globalData.appId
           },
           success: (res) => {
-            api.getUserInfo().catch(res => {
-              wx.hideLoading()
-              wx.showToast({
-                icon: 'none',
-                title: '网络数据错误',
-              })
-            }).then(res => {
-              wx.hideLoading()
-              if(res.code && res.code == 200){
-                var icons = that.data.icons;
-                icons[0].num = res.data.waitForPay;
-                icons[1].num = res.data.waitForDelivered;
-                icons[2].num = res.data.hasDelivered;
-                that.setData({
-                  icons: icons,
-                  shopCarNum: res.data.cartItemNum,
-                  bindMobilePhone: res.data.bindMobilePhone,
-                  userInfo: app.globalData.userInfo
-                });
-              }else{
+            if(res.code && res.code == 200){
+              api.getUserInfo().catch(res => {
+                wx.hideLoading()
                 wx.showToast({
                   icon: 'none',
-                  title: res.msg,
+                  title: '网络数据错误',
                 })
-              }
-            });
+              }).then(res => {
+                wx.hideLoading()
+                if(res.code && res.code == 200){
+                  var icons = that.data.icons;
+                  icons[0].num = res.data.waitForPay;
+                  icons[1].num = res.data.waitForDelivered;
+                  icons[2].num = res.data.hasDelivered;
+                  that.setData({
+                    icons: icons,
+                    shopCarNum: res.data.cartItemNum,
+                    bindMobilePhone: res.data.bindMobilePhone,
+                    userInfo: app.globalData.userInfo
+                  });
+                }else{
+                  wx.showToast({
+                    icon: 'none',
+                    title: res.msg,
+                  })
+                }
+              });
+            }else{
+              wx.showToast({
+                icon: 'none',
+                title: res.msg,
+              })
+            }            
           },
           fail: (res) => {
             wx.hideLoading();
