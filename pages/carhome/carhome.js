@@ -325,6 +325,11 @@ Page({
    */
   onLoad: function (options) {
     
+    if(options.productId){
+      wx.navigateTo({
+        url: "/pages/detail/detail?id=" + options.productId
+      });
+    }
   },
 
   /**
