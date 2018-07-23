@@ -33,7 +33,12 @@ Page({
       success: function (res) {
         if (res.confirm) {
           wx.showLoading();
-          api.orderCancel({}, orderId).then(res => {
+          api.orderCancel({}, orderId).catch(res => {
+            wx.showToast({
+              icon: 'none',
+              title: '网络数据错误',
+            })
+          }).then(res => {
             if(res.code && res.code == 200){
               wx.hideLoading();
               that.onShow();              
@@ -53,8 +58,16 @@ Page({
     var that = this;
     var orderId = e.currentTarget.dataset.id;
 
-    api.playorder({orderId: orderId}).then(res => {
+    wx.showLoading();
+    api.playorder({orderId: orderId}).catch(res => {
+      wx.hideLoading();
+      wx.showToast({
+        icon: 'none',
+        title: '网络数据错误',
+      })
+    }).then(res => {
       if(res.code && res.code == 200){
+        wx.hideLoading();
         wx.requestPayment({
           timeStamp: res.data.timeStamp,
           nonceStr: res.data.nonceStr,
@@ -89,7 +102,13 @@ Page({
   ConfirmOrder: function(e){
     var orderId = e.currentTarget.dataset.id;
     wx.showLoading();
-    api.orderConfirm({}, orderId).then(res => {
+    api.orderConfirm({}, orderId).catch(res => {
+      wx.hideLoading();
+      wx.showToast({
+        icon: 'none',
+        title: '网络数据错误',
+      })
+    }).then(res => {
       wx.hideLoading();
       if(res.code && res.code == 200){
         wx.navigateTo({
@@ -127,7 +146,7 @@ Page({
         wx.hideLoading();
         wx.showToast({
           icon: 'none',
-          title: '数据加载错误',
+          title: '网络数据错误',
         });
       }).then(res => {
         wx.hideLoading();
@@ -148,7 +167,7 @@ Page({
         wx.hideLoading();
         wx.showToast({
           icon: 'none',
-          title: '数据加载错误',
+          title: '网络数据错误',
         });
       }).then(res => {
         wx.hideLoading();

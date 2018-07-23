@@ -36,7 +36,12 @@ Page({
       submitData.skuId = goodData.list[0].skuId;
     }
     
-    api.orderTotalPrice(submitData).then(res => {
+    api.orderTotalPrice(submitData).catch(res => {
+      wx.showToast({
+        icon: 'none',
+        title: '网络数据错误',
+      })
+    }).then(res => {
       if(res.code && res.code == 200){
         that.initShippingAddress();
         that.setData({
@@ -87,10 +92,20 @@ Page({
       goods.skuId = this.data.goodsData.list[0].skuId;
     }
     submitData.goods = goods;
-    api.orderCreate(submitData).then(res => {
+    api.orderCreate(submitData).catch(res => {
+      wx.showToast({
+        icon: 'none',
+        title: '网络数据错误',
+      })
+    }).then(res => {
       if(res.code && res.code == 200){
         var orderId = res.data;
-        api.playorder({orderId: orderId}).then(res => {
+        api.playorder({orderId: orderId}).catch(res => {
+          wx.showToast({
+            icon: 'none',
+            title: '网络数据错误',
+          })
+        }).then(res => {
           if(res.code && res.code == 200){
             wx.requestPayment({
               timeStamp: res.data.timeStamp,
@@ -136,7 +151,12 @@ Page({
 
   initShippingAddress: function () {
     var that = this;
-    api.userDefaultAddr({}).then(res => {
+    api.userDefaultAddr({}).catch(res => {
+      wx.showToast({
+        icon: 'none',
+        title: '网络数据错误',
+      })
+    }).then(res => {
       if (res.code && res.code == 200) {
         that.setData({
           curAddressData: res.data

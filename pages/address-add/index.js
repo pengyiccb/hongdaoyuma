@@ -85,7 +85,13 @@ Page({
     wx.showLoading();
     if(this.data.addressId){
       data.id = this.data.addressId;
-      api.modifyAddr(data).then(res => {
+      api.modifyAddr(data).catch(res => {
+        wx.hideLoading();
+        wx.showToast({
+          icon: 'none',
+          title: '网络数据错误',
+        })
+      }).then(res => {
         wx.hideLoading();
         if (res.code && res.code == 200) {
           wx.showToast({
@@ -104,7 +110,12 @@ Page({
       });
     }else{
       wx.hideLoading();
-      api.addaddr(data).then(res => {
+      api.addaddr(data).catch(res => {
+        wx.showToast({
+          icon: 'none',
+          title: '网络数据错误',
+        })
+      }).then(res => {
         if (res.code && res.code == 200) {
           wx.showToast({
             icon: 'none',
@@ -192,7 +203,13 @@ Page({
       this.data.addressId = id;
       // 初始化原数据
       wx.showLoading();
-      api.getAddrById({}, id).then(res => {
+      api.getAddrById({}, id).catch(res => {
+        wx.hideLoading();
+        wx.showToast({
+          icon: 'none',
+          title: '网络数据错误',
+        })
+      }).then(res => {
         wx.hideLoading();
         if(res.code && res.code == 200){
           let provinceName = res.data.areaAddress1;
@@ -243,7 +260,12 @@ Page({
       content: '确定要删除该收货地址吗？',
       success: function (res) {
         if (res.confirm) {
-          api.delAddr({}, id).then(res => {
+          api.delAddr({}, id).catch(res => {
+            wx.showToast({
+              icon: 'none',
+              title: '网络数据错误',
+            })
+          }).then(res => {
             if(res.code && res.code == 200){
               wx.navigateBack({});
             }else{

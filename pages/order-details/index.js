@@ -19,7 +19,13 @@ Page({
     onShow : function () {
       var that = this;
       wx.showLoading();
-      api.orderDetail({}, this.data.orderId).then(res => {
+      api.orderDetail({}, this.data.orderId).catch(res => {
+        wx.hideLoading();
+        wx.showToast({
+          icon: 'none',
+          title: '网络数据错误',
+        })
+      }).then(res => {
         wx.hideLoading();
         if(res.code && res.code == 200){
           that.setData({

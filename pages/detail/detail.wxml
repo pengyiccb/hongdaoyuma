@@ -49,7 +49,17 @@
             <image mode="widthFix" class="des-imgs" src="{{item.url}}" />
         </view>
     </view>
-    <view class="footer-box">        
+    <view class="footer-box">
+        <view class="kefu-btn">
+            <button open-type="contact" class="kefu"
+            send-message-title="{{goodsDetail.sharetitle}}" 
+            send-message-path="/pages/detail/detail?id={{productId}}"  
+            send-message-img="{{single_image}}" 
+            show-message-card="true">
+            <!-- <image class="kefu_pic" src="../../images/kefu.png" /> -->
+            </button>
+        </view>
+        <view class="shopcar-btn" bindtap="goShopCar"></view>
         <view class="join-shop-cart" bindtap="toAddShopCar">加入购物车</view>
         <view class="now-buy" bindtap="tobuy">立即购买</view>
    </view>

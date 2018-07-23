@@ -67,36 +67,58 @@ Page({
       productId: e.id
     });
 
-    api.GetProductDetail({ productId: e.id }).then(res => {
-      this.setData({
-        goodsDetail: res.data.product,
-        attrs : res.data.attrs,
-        single_image: res.data.product.imgPrimaryList[0].url,
-      });
-
-      wx.setNavigationBarTitle({
-        title: that.data.goodsDetail.title
-      });
-
-      api.getProductDetailList({
-        productId: that.data.goodsDetail.id,
-      }).then(res=>{
-        let productskuPriceMap = this.data.productskuPriceMap;
-        if (res.code && res.code==200) {
-          that.data.attrCount = res.data.length;
-          res.data.forEach(element => {
-            productskuPriceMap[element.attrOption] = element;
-          });
-          let pirceList = res.data.map(e => {return e.unitPrice});
-          let max = Math.max.apply(null, pirceList);
-          let min = Math.min.apply(null, pirceList);
-          if(max != min){
-            this.setData({ price_section: min + "-" + max});
+    api.GetProductDetail({ productId: e.id }).catch(res => {
+      wx.showToast({
+        icon: 'none',
+        title: '网络数据错误',
+      })
+    }).then(res => {
+      if(res.code && res.code == 200){
+        this.setData({
+          goodsDetail: res.data.product,
+          attrs : res.data.attrs,
+          single_image: res.data.product.imgPrimaryList[0].url,
+        });
+  
+        wx.setNavigationBarTitle({
+          title: that.data.goodsDetail.title
+        });
+  
+        api.getProductDetailList({
+          productId: that.data.goodsDetail.id,
+        }).catch(res => {
+          wx.showToast({
+            icon: 'none',
+            title: '网络数据错误',
+          })
+        }).then(res=>{
+          if(res.code && res.code == 200){
+            let productskuPriceMap = this.data.productskuPriceMap;
+            that.data.attrCount = res.data.length;
+            res.data.forEach(element => {
+              productskuPriceMap[element.attrOption] = element;
+            });
+            let pirceList = res.data.map(e => {return e.unitPrice});
+            let max = Math.max.apply(null, pirceList);
+            let min = Math.min.apply(null, pirceList);
+            if(max != min){
+              this.setData({ price_section: min + "-" + max});
+            }else{
+              this.setData({ price_section: max});
+            }
           }else{
-            this.setData({ price_section: max});
+            wx.showToast({
+              icon: 'none',
+              title: res.msg,
+            })
           }
-        }
-    });
+        });
+      }else{
+        wx.showToast({
+          icon: 'none',
+          title: res.msg,
+        })
+      }
     });
   
   },
@@ -117,7 +139,7 @@ Page({
 
   goShopCar: function () {
     wx.reLaunch({
-      url: "/pages/trolley/trolley"
+      url: "/pages/shop-cart/index"
     });
   },
 

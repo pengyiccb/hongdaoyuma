@@ -151,7 +151,12 @@ Page({
     var list = this.data.list;
     this.data.selAttr = [];
     this.data.selAttr = list[parseInt(index)].spec.split("|");
-    api.GetProductDetail({ productId: list[parseInt(index)].productId }).then(res => {
+    api.GetProductDetail({ productId: list[parseInt(index)].productId }).catch(res => {
+      wx.showToast({
+        icon: 'none',
+        title: '网络数据错误',
+      })
+    }).then(res => {
       if(res.code && res.code == 200){
         that.setData({
           attrs : res.data.attrs
@@ -174,6 +179,11 @@ Page({
 
         api.getProductDetailList({
           productId: list[parseInt(index)].productId,
+        }).catch(res => {
+          wx.showToast({
+            icon: 'none',
+            title: '网络数据错误',
+          })
         }).then(res => {
           if(res.code && res.code == 200){
             let productskuPriceMap = that.data.productskuPriceMap;
@@ -297,7 +307,12 @@ Page({
     let that = this;
     var list = that.data.list;
     console.log(list);
-    api.ModifyCart({itemId: list[that.data.curIndex].itemId, skuId: that.data.skuId}).then(res => {
+    api.ModifyCart({itemId: list[that.data.curIndex].itemId, skuId: that.data.skuId}).catch(res => {
+      wx.showToast({
+        icon: 'none',
+        title: '网络数据错误',
+      })
+    }).then(res => {
       if(res.code && res.code == 200){
         list[that.data.curIndex].spec = that.data.selAttr.join("|");
         that.setGoodsList(list);
@@ -321,7 +336,12 @@ Page({
     var that = this;
     var index = e.currentTarget.dataset.index;
     var list = this.data.list;
-    api.DelCart({},list[parseInt(index)].itemId).then(res =>{
+    api.DelCart({},list[parseInt(index)].itemId).catch(res => {
+      wx.showToast({
+        icon: 'none',
+        title: '网络数据错误',
+      })
+    }).then(res =>{
       if(res.code && res.code == 200){
         list.splice(index,1);
         that.setGoodsList(list);
@@ -411,7 +431,12 @@ Page({
     if(index!=="" && index != null){
       var carShopBean = list[parseInt(index)];
       var itemCount = carShopBean.count + 1;
-      api.ModifyCart({itemId: carShopBean.itemId, count: itemCount}).then(res =>{
+      api.ModifyCart({itemId: carShopBean.itemId, count: itemCount}).catch(res => {
+        wx.showToast({
+          icon: 'none',
+          title: '网络数据错误',
+        })
+      }).then(res =>{
         if(res.code && res.code == 200){
           list[parseInt(index)].count = itemCount;
           that.setGoodsList(list);
@@ -433,7 +458,12 @@ Page({
       if(list[parseInt(index)].count > 1){
         list[parseInt(index)].count-- ;
         that.setGoodsList(list);
-        api.ModifyCart({itemId: list[parseInt(index)].itemId, count: list[parseInt(index)].count}).then(res =>{
+        api.ModifyCart({itemId: list[parseInt(index)].itemId, count: list[parseInt(index)].count}).catch(res => {
+          wx.showToast({
+            icon: 'none',
+            title: '网络数据错误',
+          })
+        }).then(res =>{
           if(res.code && res.code == 200){
           }else{
             wx.showToast({
@@ -472,7 +502,12 @@ Page({
         }
         let carShopBean = shopList[i];
 
-        api.CarVerify({itemId: carShopBean.itemId}).then(res => {
+        api.CarVerify({itemId: carShopBean.itemId}).catch(res => {
+          wx.showToast({
+            icon: 'none',
+            title: '网络数据错误',
+          })
+        }).then(res => {
           if(res.code && res.code == 200){
             //商品已失效
             if(res.data.delFlag == 1){

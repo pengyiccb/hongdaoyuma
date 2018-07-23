@@ -16,17 +16,31 @@ const RequestServer = (data, url, method="GET", Authorization = true) => {
     header['Authorization'] = `Bearer ` + wx.getStorageSync('Authorization');
   }
   // header['content-type'] = method === "POST" ? 'application/x-www-form-urlencoded;charset=UTF-8;' : 'application/json;charset=UTF-8;';
-  console.log(header)
   return new Promise((resolve, reject) => {
     wx.request({
       url: API_URL + url,
       method: method,
       header: header,
       data: data,
-      success: (res) => {
+      success: (res) => {        
         if (res.statusCode === 200) {
+          console.log(res.data);
+          if(res.data.code === 50001){
+            try {
+              wx.removeStorageSync('Authorization');
+              wx.redirectTo({
+                url: '/pages/user/user'
+              });
+            } catch (e) {
+              wx.showToast({
+                icon: 'none',
+                title: '删除缓存错误'
+              })    
+            }
+          }
           resolve(res.data)
-        } else {
+        }
+        else {
           reject(res)
         }
       },
@@ -41,8 +55,8 @@ const RequestServer = (data, url, method="GET", Authorization = true) => {
 // params.data = {appId}
 const GetProductList = data => RequestServer(data, '/api/v1/wechat/getProductList');
 // GET /api/v1/wechat/productDetail
-const GetProductDetail = data => RequestServer(data, '/api/v1/wechat/product/detail');
-const getProductDetailList = data => RequestServer(data, '/api/v1/wechat/product/sku/detail/list');
+const GetProductDetail = data => RequestServer(data, '/api/v1/wechat/product/detail', 'GET', false);
+const getProductDetailList = data => RequestServer(data, '/api/v1/wechat/product/sku/detail/list', 'GET', false);
 const getProductSkuStockAmount = data => RequestServer(data, '/api/v1/wechat/getProductSkuStockAmount');
 
 const getCarKinds = data => RequestServer(data, '/api/v1/wechat/carList')
@@ -92,24 +106,47 @@ const orderTotalPrice = data => RequestServer(data, `/api/v1/wechat/order/price/
 const orderConfirm = (data, orderId) => RequestServer(data, `/api/v1/wechat/order/confirm?orderId=${orderId}`, 'PUT')
 
 
+//个人信息查询
+const getUserInfo = data => RequestServer(data, `/api/v1/wechat/user/info`)
+//获取用户短信验证码
+const getPhoneCode = (data, phoneNo) => RequestServer(data, `/api/v1/wechat/user/sms/verification/code?mobilePhone=${phoneNo}`)
+//验证用户短信验证码
+const verifyPhoneCode = (data, phoneNo, code) => RequestServer(data, `/api/v1/wechat/user/sms/verification/code?mobilePhone=${phoneNo}&code=${code}`, 'POST')
+//
+const dataDecode = data => RequestServer(data, `/api/v1/wechat/user/data/decode`, 'POST')
+
+
 const loginToServer = (params = {data, success, fail}) => {
+  wx.showLoading({
+    title: '登录中...'
+  });
   wx.login({
-    success : (wxLoginRes) => {
+    success : (wxLoginRes) => {      
       if (wxLoginRes.code) {
         params.data = params.data || {};
         params.data.code = wxLoginRes.code;
         params.data.userInfo = params.data.userInfo && params.data.userInfo || {}
-        console.log(params.data);
-        // wx.setStorageSync('key', params.data)
-        // requestToServer("POST", "/auth/wxlogin", params, false);
         RequestServer(params.data, "/auth/wxlogin", 'POST', false)
         .then(res=>{
+          wx.showToast({
+            title: '登陆成功',
+            icon: 'none',
+          });
           params.success && params.success(res);
         }).catch(res=> {
-          console.log(res);
           params.fail && params.fail(res);
         });
       }
+    },
+    fail: (res) => {
+      wx.showToast({
+        title: '登陆失败',
+        icon: 'none',
+      });
+    },
+
+    complete: (res) => {
+      wx.hideLoading();
     }
   });
 };
@@ -139,5 +176,9 @@ module.exports= {
   orderTotalPrice,
   orderConfirm,
   getCarKinds,
-  getCarMainProduct
+  getCarMainProduct,
+  getUserInfo,
+  getPhoneCode,
+  verifyPhoneCode,
+  dataDecode
 }
