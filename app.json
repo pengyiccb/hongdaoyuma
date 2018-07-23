@@ -1,7 +1,11 @@
 {
   "pages":[
     "pages/user/user",
+    "pages/bindcar/bindcar",
+    "pages/addcar/addcar",
+    "pages/productlist/productlist",
     "pages/carhome/carhome",
+    "pages/group/group",
     "pages/home/home",
     "pages/detail/detail",
     "pages/order/order",

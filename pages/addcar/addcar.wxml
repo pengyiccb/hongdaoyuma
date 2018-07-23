@@ -1,0 +1,71 @@
+<view class="container">
+  <view class="body-view">
+       <scroll-view style="height:{{scrollHeight}}px;" scroll-y="true" scroll-into-view="{{toView}}">
+      <view class="body-head">
+        <image class="head-brand-image" src="{{selectBrandImg}}" hidden="{{selectBrandId==-1}}" bindtap='choosebrand'/>
+        <view class="head-brand-text {{selectBrandId==-1?'':'select'}}" bindtap='choosebrand'>{{selectBrandName}}</view>
+        <view class="head-series-text {{selectSeriesId==-1?'':'select'}}" hidden="{{selectBrandId==-1}}" bindtap='chooseseries'>{{selectSeriesName}}</view>
+        <view class="head-time-text {{selectTimeId==-1?'':'select'}}" hidden="{{selectSeriesId==-1}}" bindtap='choosetime'>{{selectTimeName}}</view>
+        <view class="head-version-text {{selectVersionId==-1?'':'select'}}" hidden="{{selectTimeId==-1}}"  bindtap='chooseversion'>{{selectVersionName}}</view>
+      </view>
+      <view class="brand-hot-info" hidden="{{currentSelect!=1}}">
+          <view class="brand-hot-name">
+            <view class="brand-hot-name-flag"></view>
+            <view class="brand-hot-name-text">热门品牌</view>
+          </view>
+          <view class="brand-hot-body">
+              <view class="brand-hot-one" wx:for="{{hotCarBrandList}}" wx:key="" bindtap='selectHotBrand' data-brandid="{{item.brandId}}">
+                  <image class="hot-brand-image" src="{{item.brandUrl}}"/>
+                  <view class="hot-brand-name">{{item.brandName}}</view>
+              </view>
+          </view>
+          <view class="hot-brand-end" />
+      </view>
+      <view class="brand-info" hidden="{{currentSelect!=1}}">      
+        <!--scroll-view scroll-y="true" scroll-into-view="{{toView}}"-->
+            <view class="brand" wx:for="{{carBrandGroupList}}" wx:key="">
+                <view id="{{item.groupName}}" class="brand-wordindex">{{item.groupName}}</view>
+                <view class="brand-block">
+                    <view class="brand-line" wx:for="{{item.groupList}}" wx:for-item="item1" wx:key="" bindtap='selectBrand' data-groupname="{{item.groupName}}" data-brandid="{{item1.brandId}}">
+                        <image class="brand-line-image" src="{{item1.brandUrl}}"></image>
+                        <text>{{item1.brandName}}</text>
+                    </view>
+                </view>
+            </view>
+        <!--/scroll-view-->
+      </view>
+      <view class="series-info" hidden="{{currentSelect!=2}}">
+          <view class="series-head">{{selectBrandName}}</view>
+            <view class="series-body">
+                <view class="series-body-one" wx:for="{{seriesList}}" wx:key="" bindtap='selectSeries' data-seriesid='{{item.seriesId}}'>
+                    <image class="series-body-image" src="{{item.seriesImage}}" />
+                    <view class="series-body-text">{{item.seriesName}}</view>
+                </view>
+            </view>
+        </view>
+      <view class="time-info" hidden="{{currentSelect!=3}}">
+          <view class="time-head">{{selectSeriesName}}</view>
+            <view class="time-body">
+                <view class="time-body-one" wx:for="{{timeList}}" wx:key="" bindtap='selectTime' data-timeid='{{item.timeId}}'>
+                    <view class="time-body-text">{{item.timeName}}</view>
+                </view>
+            </view>
+      </view>
+      <view class="version-info" hidden="{{currentSelect!=4}}">
+          <view class="version-head">{{selectTimeName}}</view>
+            <view class="version-body">
+                <view class="version-body-one" wx:for="{{versionList}}" wx:key=""  bindtap='selectVersion' data-versionid='{{item.versionId}}'>
+                    <view class="version-body-text">{{item.versionName}}</view>
+                </view>
+            </view>
+      </view>
+      </scroll-view>
+      <view class="index-search" hidden="{{currentSelect!=1}}">
+            <view class="bock-text">
+                <text wx:for="{{wordindex}}" wx:key="" bindtap="choiceWordindex" data-wordindex="{{item}}">
+                    {{item}}
+                </text>
+            </view>
+        </view>
+  </view>
+</view>

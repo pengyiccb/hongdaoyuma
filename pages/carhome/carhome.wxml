@@ -1,33 +1,62 @@
-<!--pages/home/home.wxml-->
-<!--image src='/images/bg.png' class='bg'></image-->
+<!--pages/carhome/carhome.wxml-->
 <view class="container">
-    <!--from bindsubmit="selectcat"-->
-        <view class="form-box">
-            <view class="row-wrap">
-                <view class="label">请选择车型</view>
-                <view class="label-right"><!-- bindtap="selectcat"-->
-                    <picker bindchange="bindPickerCarChange" range="{{cars}}">
-                    <view class="picker {{selcar=='请选择'?'hui':''}}">
-                        {{selcar}}
-                    </view>
-                    </picker>
-                </view>
+  <view class="body-view">
+    <view class="ad-view">
+        <swiper class="slide-image" indicator-color="#cccccc" circular="{{true}}" indicator-active-color="white" indicator-dots="{{indicatorDots}}" autoplay="true" interval="{{interval}}" duration="{{duration}}">
+            <block wx:for="{{adUrl}}" wx:key="">
+                <swiper-item>
+                    <image src="{{item}}" class="slide-image" />
+                </swiper-item>
+            </block>
+        </swiper>
+    </view> 
+    <view class="search">
+        <icon hidden="{{inputSearch}}" class='searchcion' size='14' type='search' color='#b7b7b7'></icon>
+        <input class="{{inputSearch?'searchinput-select':'searchinput'}}" placeholder="请输入想找的商品" placeholder-class="place-search-intput" value="{{searchValue}}" bindfocus='startInputSearch' bindblur='endInputSearch'/>
+    </view>
+    <view class="select-car">
+        <view class="car-brand-image" bindtap='bindUserCar'>
+            <image class="{{isBindCar?'brand-image':'no-brand-image'}}" src="{{bindCar.brandImage}}" />
+        </view>
+        <view class="car-text-view" bindtap='bindUserCar'>
+            <view class="{{isBindCar?'main-text-view':'no-main-text-view'}}">{{bindCar.mainText}}</view>
+            <view class="text-view">{{bindCar.secondText}}</view>
+        </view>
+        <view class="car-column-view"></view>
+        <view class="map-view" bindtap='bindNavigation'>
+            <view>
+                <image class="map-image" src="../../images/map.png" />
             </view>
-        </view>
-    <!--/from-->
-    <view wx:for="{{routers}}" wx:key="productclass">
-        <view class='list-title'>
-        <view class='list-title-text'>{{item.productclass}}</view>
-        </view>
-        <view class="weui-grids">
-            <navigator class="weui-grid" wx:for="{{item.productlist}}" wx:key="productid"  url="/pages/detail/detail?id={{item.productId}}">
-                <view class='weui-grid__bg'>
-                    <view class="weui-grid__icon">
-                        <!-- <image src=" {{item.icon}}" mode="aspectFill" /> -->
-                    </view>
-                    <text class="weui-grid__label">{{item.name}}</text>
-                </view>
-            </navigator>
+            <view class="shop-text">
+                门店导航
+            </view>    
         </view>
     </view>
+    <view class="service-kinds">
+        <view class="kinds-set">
+            <navigator class="kind-view" wx:for="{{kindsInfo.kindlist}}" wx:key="" url="/pages/group/group?kindId={{item.kindId}}">
+                    <image class="kind-image" src="{{item.imageUrl}}" />
+                    <view class="kind-text">{{item.name}}</view>    
+            </navigator>
+        </view>
+    </view> 
+    <view class="actieve-view">
+        <view class="actieve-title">
+            <image class="actieve-hot-image" src="../../images/hotflag.png"/>
+            <view class="actieve-title-text">{{actieveTitleText}}</view>
+            <view class="actieve-title-more">
+                <view class="actieve-title-font">查看全部</view>
+                <view>></view>
+            </view>
+        </view>
+        <scroll-view class="actieve-body" scroll-x="true">
+            <view class="actieve-body-site" wx:for="{{actieveInfo}}" wx:key="" wx:for-index="idx">
+                <image class="actieve-body-image" src="{{item.imageUrl}}" />
+                <view class="actieve-body-name">{{item.name}}</view>
+                <view class="actieve-body-money">￥ {{item.money}}</view>
+            </view>
+        </scroll-view>
+    </view>
+    <view class="recommend-head"></view>
+  </view>  
 </view>

@@ -1,0 +1,119 @@
+.body-view {
+    width: 100%;
+    height: 100%;
+    font-family: "PingFang SC", "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Hiragino Sans GB", "Source Han Sans CN Normal", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif
+}
+
+.body-head {
+    width: 100%;
+    height: 79rpx;
+    position: fixed;
+    left: 0;
+    top: 0;
+    background: #fff;
+}
+
+.search {
+  width: 690rpx;
+  margin-left: 30rpx;
+  margin-top: 10rpx;
+  background: #f2f2f2;
+  border-radius: 30rpx;
+  height: 60rpx;
+  text-align: center; 
+  display: flex;
+  flex-direction: row-reverse
+}
+
+.searchcion {  
+  width: 28rpx;
+  position: absolute;
+  z-index: 2;
+  top: 27rpx;
+  left: 245rpx
+}
+
+.searchinput {  
+  width: 666rpx;
+  height: 100%
+}
+
+.searchinput-select {  
+  width: 100%;
+  height: 100%
+}
+
+.place-search-intput {  
+  font-size: 28rpx;
+  color: #b7b7b7
+}
+
+.body-body {
+    width: 100%;
+    padding-left: 25rpx;
+    padding-right: 9rpx;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap
+}
+
+.product-one {
+    width: 342rpx;
+    height: 476rpx;
+    margin-top: 20rpx;
+    margin-right: 16rpx;
+    display: flex;
+    background: #fff;
+    flex-direction: column
+}
+
+.product-one-image {
+    width: 302rpx;
+    height: 314rpx;
+    margin-top:20rpx;
+    margin-left:10rpx
+}
+
+.product-one-title {
+    margin-top: 14rpx;
+    margin-left: 20rpx;
+    margin-right: 20rpx;
+    line-height: 34rpx;
+    font-size: 24rpx;
+    color: rgb(18, 18, 18);
+    white-space: pre-wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical
+}
+
+.product-one-price{
+    height: 58rpx
+}
+
+.product-price{
+    font-size: 28rpx;
+    margin-top: 19rpx;
+    margin-left: 20rpx;
+    float: left;
+    color: rgb(254, 64, 59)
+}
+
+.product-sale-price{
+    font-size: 20rpx;
+    margin-top: 21rpx;
+    float: right;
+    margin-right: 20rpx;
+    color: rgb(149, 149, 149)
+}
+
+.no-dir{
+    width: 100%;
+    height: 100%;
+    line-height: 500rpx;
+    text-align: center;
+    font-size:28rpx;
+    color:#999999;
+}

@@ -1,0 +1,21 @@
+<view class="container">
+   <view class="head-title" hidden="{{haveDefaultCar==false}}">已有车辆</view>
+    <view class="touch-item {{item.isTouchMove ? 'touch-move-active' : ''}}" hidden="{{haveDefaultCar==false}}" data-index="{{index}}" bindtouchstart="touchstart" bindtouchmove="touchmove" wx:for="{{bindCarList}}" wx:key="" bindtap='updateDefaultCar' data-bindid='{{item.bindid}}'>
+        <view class="select-car-backgroud" hidden="{{item.defaultCar==1 ? false : true}}"></view>
+        <view class="content">
+            <image class="brand-image" src="{{item.brandImage}}"/>
+            <view class="car-info">
+                <view class="brand-main-text">{{item.mainText}}</view> 
+                <view class="brand-sencond-text">{{item.secondText}}</view>   
+                </view>     
+            </view>
+        <image class="select-car-image" hidden="{{item.defaultCar==1 ? false : true}}" src="../../images/selectcaricon.png" />
+        <view class="del" catchtap="del" data-index="{{index}}" data-bindid='{{item.bindid}}'>删除</view>
+    </view>
+    <view class="add-car" bindtap='addUserCar'>
+        <view class="center-box">
+            <image class="add-car-image" src="../../images/addcar.png" />
+            <view class="add-car-text">添加车型</view>
+        </view>
+    </view>
+</view>

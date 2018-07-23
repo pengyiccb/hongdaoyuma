@@ -1,0 +1,128 @@
+.head-title {
+    height: 80rpx;
+    border-bottom:1rpx #e5e5e5 solid;
+    line-height: 80rpx;
+    padding-left: 36rpx;
+    font-size: 30rpx;
+    color: #6e6e6e;
+    background: #fff
+}
+
+.touch-item {
+    font-size: 14px;
+    height: 116rpx;
+    border-bottom:1rpx #e5e5e5 solid;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    overflow: hidden;
+    background: #fff
+}
+
+.content {
+     width: 100%;
+     -webkit-transition: all 0.4s;
+     transition: all 0.4s;
+     -webkit-transform: translateX(90px);
+     transform: translateX(90px);
+     margin-left: -90px
+    }
+.del {
+     background-color: rgb(254, 64, 59);
+     width: 90px;
+     display: flex;
+     flex-direction: column;
+     align-items: center;
+     justify-content: center;
+     color: #fff;
+     z-index: 3;
+     -webkit-transform: translateX(90px);
+     transform: translateX(90px);
+     -webkit-transition: all 0.4s;
+     transition: all 0.4s;
+}
+.touch-move-active .content,
+.touch-move-active .del {
+     -webkit-transform: translateX(0);
+     transform: translateX(0);
+}
+
+.add-car {
+    background: #fff;
+    height: 80rpx;
+    border-bottom:1rpx #e5e5e5 solid;
+    line-height: 80rpx;
+    font-size: 28rpx;
+    color: #fe403b;
+    display: flex;
+    justify-content: center;
+}
+
+.center-box {
+    display: flex;
+    flex-direction: row
+}
+
+.add-car-image {
+    margin-top: 18rpx;
+    height: 44rpx;
+    width: 44rpx
+}
+
+.car-info {
+    float: left;
+    margin-left: 20rpx;
+    width: 579rpx;
+}
+
+.add-car-text {
+    margin-left: 18rpx;
+}
+.brand-image {
+    float: left;
+    margin-left: 20rpx;
+    width: 131rpx;
+    height: 87rpx;
+    margin-top: 14rpx 
+}
+
+.brand-main-text {
+    font-size: 34rpx;
+    color:  #333333;
+    font-weight: bold;
+    margin-top: 22rpx;
+    white-space: pre-wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical
+}
+
+.brand-sencond-text {
+    font-size: 22rpx;
+    color:  #333333;
+    white-space: pre-wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical
+}
+
+.select-car-backgroud {
+    background: rgba(254, 64, 59, 0.15);
+    width: 748rpx;
+    position: absolute; 
+    z-index: 2;
+    height: 116rpx;
+    border:1rpx rgb(254, 64, 59) solid;
+}
+
+.select-car-image {
+    position: absolute;
+    width: 64rpx;
+    height: 64rpx;
+    margin-top: 0rpx;
+    right: 0rpx
+}

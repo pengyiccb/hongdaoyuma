@@ -1,4 +1,4 @@
-// pages/home/home.js
+// pages/carhome/carhome.js
 // const qcloud = require('../../vendor/wafer2-client-sdk/index')
 const config = require('../../config.js');
 const api = require('../../utils/api');
@@ -9,266 +9,315 @@ Page({
    * 页面的初始数据
    */
   data: {
-    cars:[],
-    selcar:'请选择',
-    selcarIndex:-1,
-    carclass:[
-      {
-        carId:'1',
-        name:'宝马'
-      },
-      {
-        carId:'2',
-        name:'奔驰'
-      },
-      {
-        carId:'3',
-        name:'奥迪'
-      },
-      {
-        carId:'4',
-        name:'英菲迪尼'
-      }
-    ], 
-    routers:[
-      {
-        productclass:'产品1',
-        productlist:[
-          {
-            name:'机油1',
-            icon:'/images/image001.png',
-            productid:'1'     
-          },
-          {
-            name:'机油2',
-            icon:'/images/image002.png',
-            productid:'2'
-          },
-          {
-            name:'机油3',
-            icon:'/images/image003.png',
-            productid:'3'
-          },
-          {
-            name:'机油4',
-            icon:'/images/image004.png',
-            productid:'4'
-          },
-          {
-            name:'机油5',
-            icon:'/images/image005.png',
-            productid:'5'
-          },
-          {
-            name:'机油6',
-            icon:'/images/image006.png',
-            productid:'6'
-          },
-          {
-            name:'机油7',
-            icon:'/images/image007.png',
-            productid:'7'
-          },
-          {
-            name:'机油8',
-            icon:'/images/image008.png',
-            productid:'8'
-          },
-          {
-            name:'机油9',
-            icon:'/images/image009.png',
-            productid:'9'
-          },
-          {
-            name:'机油10',
-            icon:'/images/image010.png',
-            productid:'10'
-          },
-          {
-            name:'机油11',
-            icon:'/images/image011.png',
-            productid:'11'
-          },
-          {
-            name:'机油12',
-            icon:'/images/image012.png',
-            productid:'12'
-          },
-          {
-            name:'机油13',
-            icon:'/images/image013.png',
-            productid:'13'
-          },
-          {
-            name:'机油14',
-            icon:'/images/image014.png',
-            productid:'14'
-          },
-          {
-            name:'机油15',
-            icon:'/images/image015.png',
-            productid:'15'
-          },
-          {
-            name:'机油16',
-            icon:'/images/image016.png',
-            productid:'16'
-          },
-          {
-            name:'机油17',
-            icon:'/images/image017.png',
-            productid:'17'
-          },
-          {
-            name:'机油18',
-            icon:'/images/image018.png',
-            productid:'18'
-          },
-          {
-            name:'机油19',
-            icon:'/images/image019.png',
-            productid:'19'
-          },
-          {
-            name:'机油20',
-            icon:'/images/image020.png',
-            productid:'20'
-          }
-        ]
-      },
-      {
-        productclass:'产品2',
-        productlist:[
-          {
-            name:'机油21',
-            icon:'/images/image021.png',
-            productid:'21',     
-          },
-          {
-            name:'机油22',
-            icon:'/images/image022.png',
-            productid:'22'
-          },
-          {
-            name:'机油23',
-            icon:'/images/image023.png',
-            productid:'23'
-          },
-          {
-            name:'机油24',
-            icon:'/images/image024.png',
-            productid:'24'
-          },
-          {
-            name:'机油25',
-            icon:'/images/image025.png',
-            productid:'25'
-          },
-          {
-            name:'机油26',
-            icon:'/images/image026.png',
-            productid:'26'
-          },
-          {
-            name:'机油27',
-            icon:'/images/image027.png',
-            productid:'27'
-          },
-          {
-            name:'机油28',
-            icon:'/images/image028.png',
-            productid:'28'
-          },
-          {
-            name:'机油29',
-            icon:'/images/image029.png',
-            productid:'29'
-          },
-          {
-            name:'机油30',
-            icon:'/images/image030.png',
-            productid:'30'
-          }
-        ]
-      }
-    ]
-  },
 
+    addressInfo: {
+      longitude: Number(115.85794),
+      latitude: Number(28.68202),
+      name: '东湖区南昌市政府(世贸路北)',
+      address: '江西省南昌市东湖区世贸路'
+    },
+    adUrl: [
+      '../../images/image1.png',
+      '../../images/image1.png',
+      '../../images/image1.png'
+    ],
   
-  selectcat:function(event) {
-    console.log("enter selectcat")
-
-    api.getCarKinds({ appId: app.globalData.appId }).catch(err => {
-      wx.hideLoading()
-      wx.showToast({
-        icon: 'none',
-        title: '数据加载错误',
-      })
-    }).then(res => {
-      console.log(res);
-      this.setData({
-        carclass: res.data
-      })
-      this.initCarsData();
-    })
-
-    //this.initCarsData();
+    isBindCar: false,  
+    bindCar: {
+      carid: 0,
+      mainText: '请添加车型',
+      secondText: '添加车型后可使用本店更多服务',
+      brandImage: '../../images/cardefault.png',
+      defaultCar: 1
+    },
+    indicatorDots: true,
+    interval: 5000,
+    duration: 1000,
+    inputSearch: false,
+    searchValue: '',
+    carMainText: '大众迈腾·2016款',
+    carText: '1.8TSI 智享豪华版',
+    carImage: 'https://img.alicdn.com/bao/uploaded/TB1VdVfJFXXXXaeXVXXSutbFXXX_230x87Q50s150.jpg',
+    kindsAllInfo: {},
+    kindsInfo: {
+      gradeId:  1,
+      parentId: 0,
+      kindlist: [
+        {
+            kindId: 1,
+            name: '洗车美容',
+            imageUrl: '../../images/kind0.png',
+            sortId: 1
+        },
+        {
+            kindId: 2,
+            name: '保养快修',
+            imageUrl: '../../images/kind1.png',
+            sortId: 2
+        },
+        {
+            kindId: 3,
+            name: '套餐卡',
+            imageUrl: '../../images/kind2.png',
+            sortId: 3
+        },
+        {
+            kindId: 4,
+            name: '钣金喷漆',
+            imageUrl: '../../images/kind3.png',
+            sortId: 4
+        },
+        {
+            kindId: 999,
+            name: '更多服务',
+            imageUrl: '../../images/kind4.png',
+            sortId: 5
+        }
+      ]
+    },
     
-  },
-
-  initCarsData:function(){
-      var pinkArray = [];
-      for(var i = 0;i<this.data.carclass.length;i++){
-        pinkArray.push(this.data.carclass[i].name);
+    actieveTitleText: '八折热卖',
+    actieveInfo: [
+      {
+        imageUrl: 'http://p9l3k4x4g.bkt.clouddn.com/product1.jpg',
+        name: '前位汽车通用车载车用空气净化器消除异味活性炭过滤器加湿器',
+        money: 300,
+        total: 10
+      },
+      {
+        imageUrl: 'http://p9l3k4x4g.bkt.clouddn.com/product2.jpg',
+        name: '前位汽车通用车载车用空气净化器消除异味活性炭过滤器加湿器',
+        money: 300,
+        total: 10
+      },
+      {
+        imageUrl: 'http://p9l3k4x4g.bkt.clouddn.com/product3.jpg',
+        name: '前位汽车通用车载车用空气净化器消除异味活性炭过滤器加湿器',
+        money: 300,
+        total: 10
+      },
+      {
+        imageUrl: 'http://p9l3k4x4g.bkt.clouddn.com/product4.jpg',
+        name: '前位汽车通用车载车用空气净化器消除异味活性炭过滤器加湿器',
+        money: 300,
+        total: 10
       }
-      console.log(pinkArray)
-      this.setData({
-        cars:pinkArray
-      });
-      console.log("cars " + this.data.cars);
+    ],
+    currentGradeId: 1,
+    currentParentId: 0
   },
 
-  bindPickerCarChange:function(event){
-    console.log("enter bindPickerCarChange")
-    var selIterm = this.data.carclass[event.detail.value];
+  bindUserCar:function(event) {
+    wx.navigateTo({url:'../bindcar/bindcar'})
+    /*
+    if (this.data.isBindCar) {
+      this.setData({
+        isBindCar: false,
+        bindCar: {
+          carid: 0,
+          mainText: '请添加车型',
+          secondText: '添加车型后可使用本店更多服务',
+          brandImage: '../../images/cardefault.png',
+          defaultCar: 1
+        }
+      })
+    }else {
+      this.setData({
+        isBindCar: true,
+        bindCar: {
+          carid: 0,
+          mainText: '大众迈腾·2016款',
+          secondText: '1.8TSI 智享豪华版',
+          brandImage: 'https://img.alicdn.com/bao/uploaded/TB1VdVfJFXXXXaeXVXXSutbFXXX_230x87Q50s150.jpg',
+          defaultCar: 1
+        }
+      })
+    }*/
+  },
+
+  bindNavigation:function(e) {
+    console.log(e)
+    var value = e.detail.value
+    console.log(value)
+    wx.openLocation({
+      longitude: this.data.addressInfo.longitude,
+      latitude: this.data.addressInfo.latitude,
+      name: this.data.addressInfo.name,
+      address: this.data.addressInfo.address
+    })
+  },
+
+  compare:function (prop) {
+    return function (obj1, obj2) {
+        var val1 = obj1[prop];
+        var val2 = obj2[prop];if (val1 < val2) {
+            return -1;
+        } else if (val1 > val2) {
+            return 1;
+        } else {
+            return 0;
+        }            
+    } 
+  },
+
+  getBindMainCar: function() {
+    api.getMainBindCar().then(res=>{
+      if (res.code && res.code == 200) {
+          console.log("getBindMainCar res.data"+JSON.stringify(res.data))
+          if (res.data == null || res.data.carId == null || res.data.carId == 0) {
+            var bindinfo = {
+              carId: 0,
+              mainText: '请添加车型',
+              secondText: '添加车型后可使用本店更多服务',
+              brandImage: '../../images/cardefault.png',
+              defaultCar: 0
+            }
+            this.setData({
+              bindCar: bindinfo,
+              isBindCar: false
+            })
+          } else {
+            this.setData({
+              bindCar: res.data,
+              isBindCar: true
+            })
+          }
+      } else {
+        var bindinfo = {
+          carid: 0,
+          mainText: '请添加车型',
+          secondText: '添加车型后可使用本店更多服务',
+          brandImage: '../../images/cardefault.png',
+          defaultCar: 0
+        }
+        this.setData({
+          bindCar: bindinfo,
+          isBindCar: false
+        })
+      }
+    })
+  },
+
+  getGroupTree: function() {
+
+    api.getGroupTree().then(res => {
+
+        if (res.code && res.code == 200) {
+          var x=0
+          var kindInfo = {
+            gradeId:  1,
+            parentId: 0,
+            kindlist: []
+          }
+
+          for (x in res.data) {
+            kindInfo.kindlist.push({
+              kindId: res.data[x].groupId,
+              name: res.data[x].name,
+              imageUrl: res.data[x].imageUrl,
+              sortId: res.data[x].sortOrder
+            })
+          }
+
+          if (kindInfo.kindlist.length > 0) {
+            kindInfo.kindlist.sort(this.compare("sortId"))
+          }
+
+          // 如果小于等于5，直接显示
+          if (kindInfo.kindlist.length <= 5) { 
+            this.setData({
+              kindsInfo:  kindInfo
+          })
+          } else {
+            let moreKinds = {
+                kindId: kindInfo.kindlist[0].kindId,
+                name: '更多服务',
+                imageUrl: '../../images/kind4.png',
+                sortId: 999 
+              }
+              let mainKindList = []
+              for (var i = 0; i < 4; i++){
+                mainKindList = [...mainKindList, kindInfo.kindlist[i]]
+              }
+              mainKindList = [...mainKindList, moreKinds]
+              kindInfo.kindlist = mainKindList
+              this.setData({
+                kindsInfo:  kindInfo
+              })
+          }
+        } else {
+          var kindInfo = {
+            gradeId:  1,
+            parentId: 0,
+            kindlist: []
+          }
+          this.setData({
+            kindsInfo:  kindInfo
+          })
+        }
+    })
+
+  },
+
+  getKindsList: function() {
+      
+      api.getKindsList({parentId: this.data.currentParentId, gradeId: this.data.currentGradeId}).then(res => {
+        if (res.code && res.code == 200) {
+
+          // 排序
+          if ( res.data.kindlist && res.data.kindlist.length > 0){
+            res.data.kindlist.sort(this.compare("sortId"))
+          }
+          this.setData({
+            kindsAllInfo:  res.data
+          })
+
+          // 如果小于等于5，直接显示
+          if (res.data.kindlist.length <= 5) { 
+            this.setData({
+              kindsInfo:  res.data
+            })
+          //如果大于5，只显示4个加一个更多
+          } else {
+            let moreKinds = {
+              kindId: res.data.kindlist[0].kindId,
+              name: '更多服务',
+              imageUrl: '../../images/kind4.png',
+              sortId: 5 }
+            let mainKindList = []
+            for (var i = 0; i < 4; i++){
+              mainKindList = [...mainKindList, res.data.kindlist[i]]
+            }
+            mainKindList = [...mainKindList, moreKinds]
+            res.data.kindlist = mainKindList
+            this.setData({
+              kindsInfo:  res.data
+            })
+          }
+          //console.log("getKindsList success."+ JSON.stringify(res.data))    
+          //console.log("getKindsList "+JSON.stringify(this.data.kindsInfo))
+        } else {
+        
+        }
+      })
+  },
+
+  startInputSearch: function(event) {
     this.setData({
-      selcar:selIterm.name,
-      selcarIndex:event.detail.value,
+      inputSearch: true
     })
-    //let carId = -1;
-    //if (this.data.selcarIndex === -1){
-    //  console.log("未选择车型");
-    //} else {
-    //  console.log(this.data.selcar, this.data.selcarIndex, this.data.carclass[event.detail.value].carId);
-      //carId = this.data.carclass[event.detail.value].carId;
-    //}
-
-   this.getProductMain(this.data.selcarIndex)
-    
-    //this.initCarsData()
   },
 
-  getProductMain: function (carId) {
+  endInputSearch: function(event) {
 
-    api.getCarMainProduct({ appId: app.globalData.appId, carId: carId}).catch(err => {
-      wx.hideLoading()
-      wx.showToast({
-        icon: 'none',
-        title: '数据加载错误',
-      })
-    }).then(res => {
-      console.log(res);
-      this.setData({
-        routers: res.data
-      })
-      //this.initCarsData();
+    this.setData({
+      inputSearch: false,
+      searchValue: ''
     })
-    
-
   },
 
-  bindSave: function(e) {
-
+  tapKinds: function(event) {
+  
   },
 
   /**
@@ -276,13 +325,6 @@ Page({
    */
   onLoad: function (options) {
     
-    //this.selectcat();
-    this.initCarsData();
-    if(options.productId){
-      wx.navigateTo({
-        url: "/pages/detail/detail?id=" + options.productId
-      });
-    }
   },
 
   /**
@@ -296,12 +338,8 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    console.log("enter onShow.");
-    this.selectcat();
-    this.getProductMain(this.data.selcarIndex);
-    //this.initCarsData();
-    //this.getProductList();
-    //this.getAdList();
+    this.getBindMainCar()
+    this.getGroupTree()
   },
 
   /**

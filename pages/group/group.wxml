@@ -1,0 +1,27 @@
+<!--pages/group/group.wxml-->
+<view class="container">
+  <view class="body-view">
+    <view class="body-head">
+        <view class="search">
+            <icon hidden="{{inputSearch}}" class='searchcion' size='14' type='search' color='#b7b7b7'></icon>
+            <input class="{{inputSearch?'searchinput-select':'searchinput'}}" placeholder="请输入想找的商品" placeholder-class="place-search-intput" value="{{searchValue}}" bindfocus='startInputSearch' bindblur='endInputSearch'/>
+        </view>
+    </view>
+    <view class="dir-body">
+        <view class="dir-name" >
+            <view class="dir-one-name {{item.kindId == selectKinds? 'select':''}}" wx:for="{{mainKindsInfo.kindlist}}" wx:key="" bindtap='selectKind' data-id="{{item.kindId}}">
+                {{item.name}}
+            </view>
+        </view>
+        <view class="second-dir">
+            <view class="no-dir" hidden="{{secondkindsData ? true : false}}">
+                <view>暂无数据</view>
+            </view>
+            <view class="second-dir-one" wx:for="{{secondKindsInfo.kindlist}}" wx:key="" bindtap='selectOneKind' data-kindid='{{item.kindId}}'>
+                <image class="second-dir-one-image" src="{{item.imageUrl}}" />
+                <view class="second-dir-one-text">{{item.name}}</view>
+            </view>
+        </view>    
+    </view>
+  </view>  
+</view>

@@ -1,0 +1,23 @@
+<view class="container">
+  <view class="body-view">
+      <view class="body-head">
+        <view class="search">
+            <icon hidden="{{inputSearch}}" class='searchcion' size='14' type='search' color='#b7b7b7'></icon>
+            <input class="{{inputSearch?'searchinput-select':'searchinput'}}" placeholder="请输入想找的商品" placeholder-class="place-search-intput" value="{{searchValue}}" bindfocus='startInputSearch' bindblur='endInputSearch'/>
+        </view>
+        <view class="body-body">
+            <view class="no-dir" hidden="{{productData ? true : false}}">
+                <view>暂无数据</view>
+            </view>
+            <view class="product-one" wx:for="{{groupProductList}}" wx:key="" bindtap='inputDetail' data-productid='{{item.id}}'>
+                <image class="product-one-image" src="{{item.imageUrl}}" />  
+                <view class="product-one-title">{{item.title}}</view>
+                <view class="product-one-price">
+                    <view class="product-price">￥{{item.priceUnderline}}</view>
+                    <!--view class="product-sale-price">会员价：￥{{item.salePrice}}</view-->
+                </view>
+            </view>
+        </view>
+    </view>
+  </view>
+</view>

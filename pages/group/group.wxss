@@ -1,0 +1,135 @@
+.body-view {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    overflow-x: hidden;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-family: "PingFang SC", "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Hiragino Sans GB", "Source Han Sans CN Normal", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif
+  }
+
+  .body-head {
+      width: 100%;
+      height: 79rpx;
+      position: fixed;
+      left: 0;
+      top: 0;
+      background: #fff;
+  }
+  
+  .search {
+    width: 690rpx;
+    margin-left: 30rpx;
+    margin-top: 10rpx;
+    background: #f2f2f2;
+    border-radius: 30rpx;
+    height: 60rpx;
+    text-align: center; 
+    display: flex;
+    flex-direction: row-reverse
+  }
+  
+  .searchcion {  
+    width: 28rpx;
+    position: absolute;
+    z-index: 2;
+    top: 27rpx;
+    left: 245rpx
+  }
+  
+  .searchinput {  
+    width: 666rpx;
+    height: 100%
+  }
+  
+  .searchinput-select {  
+    width: 100%;
+    height: 100%
+  }
+  
+  .place-search-intput {  
+    font-size: 28rpx;
+    color: #b7b7b7
+  }
+
+  .dir-body {
+      display: block;
+      width: 100%;
+      height: 100%;
+      margin-top: 10rpx;
+      background: #ffffff;
+      border-top: 1rpx  #f2f2f2 solid;
+      
+  }
+
+  .dir-name {
+    width:  200rpx;
+    background: #f2f2f2;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    top: 81rpx;
+    overflow-y: auto
+  }
+
+  .dir-one-name{
+      width: 100%;
+      height: 108rpx;
+      text-align: center;
+      line-height: 108rpx;
+      border-bottom: 2rpx #fff solid;
+      font-size: 28rpx;
+      color: #6e6e6e
+  }
+
+  .dir-one-name.select{
+    width: 100%;
+    background: #fff;
+    height: 108rpx;
+    text-align: center;
+    line-height: 108rpx;
+    font-size: 28rpx;
+    color: #303030;
+    font-weight: bold   
+}
+
+.second-dir {
+    width:  550rpx;
+    background: #fff;
+    position: fixed;
+    bottom: 0;
+    left: 200rpx;
+    top: 81rpx;
+    overflow-y: auto
+}
+
+.second-dir-one {
+    position: relative;
+    float: left;
+    margin-left: 22rpx;
+    margin-top: 22rpx;
+    width: 154rpx;
+    height: 186rpx;
+    overflow-y: auto
+}
+
+.second-dir-one-image {
+    width: 154rpx;
+    height: 142rpx
+}
+
+.second-dir-one-text{
+    font-size: 24rpx;
+    text-align: center;
+    color: #4b4b4b;
+}
+
+.no-dir{
+    width: 100%;
+    height: 100%;
+    line-height: 500rpx;
+    text-align: center;
+    font-size:28rpx;
+    color:#999999;
+}
