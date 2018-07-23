@@ -29,7 +29,8 @@
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical
+    -webkit-box-orient: vertical;
+    max-width: 200rpx;
 }
 
 .head-brand-text.select {
@@ -42,19 +43,20 @@
     margin-left: 24rpx;
     color: rgb(254, 64, 59);
     border-bottom: 4rpx rgb(254, 64, 59) solid;
-    line-height: 78rpx;
+    /*line-height: 78rpx;*/
     white-space: pre-wrap;
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical
+    -webkit-box-orient: vertical;
+    max-width: 200rpx
 }
 
 .head-series-text.select{
     color: rgb(51, 51, 51);
     border-bottom: 0;
-    line-height: 78rpx
+    /*line-height: 78rpx*/
 }
 
 .head-time-text{
@@ -126,8 +128,8 @@
 
 
 .brand-line-image {
-    height: 87rpx;
-    width: 131rpx;
+    height: 56rpx;
+    width: 84rpx;
 }
 
 .brand-hot-name{
@@ -148,7 +150,7 @@
 }
 
 .brand-hot-name-text{
-    margin-left: 12rpx
+    margin-left: 12rpx;
 }
 
 .brand-hot-body {
@@ -232,9 +234,18 @@
     
   }
 
+  .series-body-image-view {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content:center;
+    width: 131rpx;
+    height: 87rpx;
+  }
+
   .series-body-image {
-    width: 184rpx;
-    height: 104rpx;
+    width: 130rpx;
+    height: 87rpx;
     margin-left: 10rpx
   }
 
@@ -242,7 +253,7 @@
     font-size: 30rpx;
     line-height: 114rpx;
     color: rgb(51, 51, 51);
-    margin-left: 10rpx
+    margin-left: 15rpx
   }
 
   .time-head {

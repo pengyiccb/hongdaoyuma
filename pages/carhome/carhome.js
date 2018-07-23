@@ -107,6 +107,12 @@ Page({
     currentParentId: 0
   },
 
+
+  loadKindPage: function(event) {
+    var kindId = event.currentTarget.dataset.kindid;
+    wx.navigateTo({url: '../group/group?kindId='+kindId})
+  },
+
   bindUserCar:function(event) {
     wx.navigateTo({url:'../bindcar/bindcar'})
     /*
@@ -324,7 +330,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+
     if(options.productId){
       wx.navigateTo({
         url: "/pages/detail/detail?id=" + options.productId
