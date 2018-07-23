@@ -1,43 +1,28 @@
 
 import tip from './tip'
 
-const appId = "wxdda83d03c2d1521c";
+const app = getApp();
+
+let tokenVal = null;
 
 //const API_URL = "http://localhost:8080";
 const API_URL = "https://shop.jxxykj.cn";
 // const API_URL = "http://192.168.10.100:8080";
 
 // 通过Promise发请求到服务器
-const RequestServer = (data, url, method="GET", Authorization = true) => {
+const RequestServer = (data, url, method="GET", token = true) => {
   let header = {};
-  
-  wx.setStorageSync
-  if (Authorization) {
-    header['Authorization'] = `Bearer ` + wx.getStorageSync('Authorization');
+  if (token) {
+    header['Authorization'] = `Bearer ` + tokenVal;
   }
-  // header['content-type'] = method === "POST" ? 'application/x-www-form-urlencoded;charset=UTF-8;' : 'application/json;charset=UTF-8;';
   return new Promise((resolve, reject) => {
     wx.request({
       url: API_URL + url,
       method: method,
       header: header,
       data: data,
-      success: (res) => {        
+      success: (res) => {
         if (res.statusCode === 200) {
-          console.log(res.data);
-          if(res.data.code === 50001){
-            try {
-              wx.removeStorageSync('Authorization');
-              wx.redirectTo({
-                url: '/pages/user/user'
-              });
-            } catch (e) {
-              wx.showToast({
-                icon: 'none',
-                title: '删除缓存错误'
-              })    
-            }
-          }
           resolve(res.data)
         }
         else {
@@ -133,37 +118,25 @@ const dataDecode = data => RequestServer(data, `/api/v1/wechat/user/data/decode`
 
 
 const loginToServer = (params = {data, success, fail}) => {
-  wx.showLoading({
-    title: '登录中...'
-  });
   wx.login({
-    success : (wxLoginRes) => {      
+    success : (wxLoginRes) => {
       if (wxLoginRes.code) {
         params.data = params.data || {};
         params.data.code = wxLoginRes.code;
         params.data.userInfo = params.data.userInfo && params.data.userInfo || {}
         RequestServer(params.data, "/auth/wxlogin", 'POST', false)
         .then(res=>{
-          wx.showToast({
-            title: '登陆成功',
-            icon: 'none',
-          });
+          tokenVal = res.data.token;
           params.success && params.success(res);
         }).catch(res=> {
+          console.log(res);
           params.fail && params.fail(res);
         });
       }
     },
     fail: (res) => {
-      wx.showToast({
-        title: '登陆失败',
-        icon: 'none',
-      });
+      params.fail && params.fail(res);
     },
-
-    complete: (res) => {
-      wx.hideLoading();
-    }
   });
 };
 

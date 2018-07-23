@@ -1,4 +1,4 @@
-<view class="zan-noticebar view-noticebar" wx:if="{{bindMobilePhone || !Authorization ? false: true}}">
+<view class="zan-noticebar view-noticebar" wx:if="{{bindMobilePhone || !userInfo ? false: true}}">
   <view class="zan-noticebar__content-wrap">
     <view class="zan-noticebar__content">
       <text  class="text-noticebar-tips" >找不到订单或优惠券？绑定手机号试试</text>
@@ -38,7 +38,7 @@
 </view>
 
 <image class="bg" src="/images/user/background.png"></image>
-<view style="margin-top: 100rpx;" wx:if="{{!Authorization}}">
+<view style="margin-top: 100rpx;" wx:if="{{!userInfo}}">
   <view class="unlogin-card">
     <!--<view class="unlogin-head"></view>-->
     <view class="unlogin-info">
@@ -50,8 +50,8 @@
 </view>
 <view wx:else>
   <view class="avatar-info">
-    <image class="user-head" src="{{avatarUrl}}"></image>
-    <view class="user-name">{{wxNickName}}</view>
+    <image class="user-head" src="{{userInfo.avatarUrl}}"></image>
+    <view class="user-name">{{userInfo.nickName}}</view>
   </view>
   <view class="user-card" >
     <view class="user-card-info">
@@ -105,7 +105,7 @@
   </view>
 </view>
 <!--<zan-cell-group>-->
-<view wx:if="{{Authorization}}" style="border-top: 10rpx; overflow: hidden;">
+<view wx:if="{{userInfo}}" style="border-top: 10rpx; overflow: hidden;">
 
   <view class="user-split-big"></view>
 

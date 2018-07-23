@@ -81,8 +81,17 @@ Page({
   },
 
   onShow: function(){
-      this.initEleWidth();
-      this.getTrolley();
+    wx.getUserInfo({
+      success: function(res){
+        this.initEleWidth();
+        this.getTrolley();
+      },
+      fail: function(res){
+        wx.switchTab({
+          url: '/pages/user/user'
+        })
+      }
+    });      
   },
   toIndexPage:function(){
       wx.switchTab({

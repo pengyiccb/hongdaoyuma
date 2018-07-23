@@ -4,8 +4,6 @@ const util = require('../../utils/util');
 
 const app = getApp();
 
-const tokenKey = 'Authorization';
-
 Page({
 
   /**
@@ -17,10 +15,10 @@ Page({
     phoneNum: "",
     codeTxt: "",
     codeBtnTxt: "获取验证码",
+    userInfo: null,
     times: 60,
     bActive: true,
     bindMobilePhone: false,
-    Authorization: null,
     icons: [
       {
         icon: '/images/user/order_wait_for_pay.png',
@@ -83,6 +81,7 @@ Page({
 
   getPhoneNumber: function(e){
     var that = this;
+    
     api.dataDecode({iv: e.detail.iv, encryptedData: e.detail.encryptedData}).catch(res => {
       wx.showToast({
         icon: 'none',
@@ -93,6 +92,7 @@ Page({
         that.setData({
           wxPhoneNo: res.data
         });
+        this.data.phoneNum = res.data;
       }else{
         wx.showToast({
           icon: 'none',
@@ -123,64 +123,16 @@ Page({
   },
 
   onTapLogin: function(e) {
-    var that = this;
+    /* var that = this;
     if(e.detail.userInfo){
-      api.loginToServer({
-        data:{
-          userInfo: e.detail.userInfo,
-          "appId": app.globalData.appId
-        },
-        success: (res) => {
-          try {
-            wx.setStorageSync(tokenKey, res.data.token);
-            that.setData({
-              Authorization: res.data.token
-            });
-            that.onShow();            
-          } catch (e) {
-            wx.showToast({
-              icon: 'none',
-              title: '设置缓存错误'
-            })      
-          }          
-        }
-      });
+      that.onShow();
     }else{
       wx.showToast({
         icon: 'none',
-        title: '用户拒绝授权'
+        title: '登陆失败'
       });
-      
-      try {
-        wx.removeStorageSync(tokenKey);
-      } catch (e) {
-        wx.showToast({
-          icon: 'none',
-          title: '删除缓存错误'
-        })    
-      }
-    }
-
-    /* util.getUserAuth(e, {
-      success: () => {
-        let userInfo = app.globalData.userInfo = e.detail.userInfo;
-        this.setData({
-          userInfo:userInfo
-        });
-        api.loginToServer({
-          data: {
-            userInfo,
-            "appId": getApp().globalData.appId
-          },
-          success: (res) => {
-            wx.setStorageSync('Authorization', res.data.token)
-            that.onShow();
-          }
-        });
-      },
-      fail: () => {
-      }
-    }); */
+    } */
+    this.onShow();
   },
 
   togglePopup(){
@@ -190,6 +142,7 @@ Page({
     },
 
   phoneInput: function(e){
+    console.log(e.detail.value);
     this.data.phoneNum = e.detail.value;
   },
 
@@ -200,7 +153,7 @@ Page({
   onGetPhoneCode: function(){
     var that = this;
     if(!this.data.bActive) return;
-    if(this.data.phoneNum.length != 11){
+    if(this.data.phoneNum.length != 11 && this.data.wxPhoneNo.length != 11){
       wx.showToast({
         icon: 'none',
         title: '手机号格式不正确'
@@ -292,23 +245,41 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    try {
-      var token = wx.getStorageSync(tokenKey);
-      if(token){
-        this.setData({
-          Authorization: token
+    /* var that = this;
+    wx.getUserInfo({
+      success: function(res){
+        wx.showLoading({
+          icon: 'none',
+          title: '登录中...',
         });
-      }else{
-        this.setData({
-          Authorization: null
+        app.globalData.userInfo = res.userInfo;
+        api.loginToServer({
+          data:{
+            userInfo: res.userInfo,
+            "appId": app.globalData.appId
+          },
+          success: (res) => {
+            wx.hideLoading();
+            that.setData({
+              userInfo: app.globalData.userInfo
+            });
+          },
+          fail: (res) => {
+            wx.hideLoading();
+            wx.showToast({
+              icon: 'none',
+              title: '登陆失败',
+            });
+          }
         });
-      }      
-    } catch (e) {
-      wx.showToast({
-        icon: 'none',
-        title: '获取缓存错误',
-      })
-    }
+      },
+      fail: function(res){
+        app.globalData.userInfo = null;
+        that.setData({
+          userInfo: null
+        });
+      }
+    }); */
   },
 
   /**
@@ -323,36 +294,59 @@ Page({
    */
   onShow: function () {
     var that = this;
-    if(this.data.Authorization){
-      wx.showLoading();
-      api.getUserInfo().catch(res => {
-        wx.hideLoading()
-        wx.showToast({
-          icon: 'none',
-          title: '网络数据错误',
-        })
-      }).then(res => {
-        wx.hideLoading()
-        if(res.code && res.code == 200){
-          var icons = that.data.icons;
-          icons[0].num = res.data.waitForPay;
-          icons[1].num = res.data.waitForDelivered;
-          icons[2].num = res.data.hasDelivered;
-          that.setData({
-            icons: icons,
-            shopCarNum: res.data.cartItemNum,
-            bindMobilePhone: res.data.bindMobilePhone,
-            wxNickName: res.data.wxNickName,
-            avatarUrl: res.data.avatarUrl
-          });
-        }else{
-          wx.showToast({
-            icon: 'none',
-            title: res.msg,
-          })
-        }
-      });
-    }
+    wx.getUserInfo({
+      success: function(res){
+        wx.showLoading();
+        app.globalData.userInfo = res.userInfo;
+        api.loginToServer({
+          data:{
+            userInfo: res.userInfo,
+            "appId": app.globalData.appId
+          },
+          success: (res) => {
+            api.getUserInfo().catch(res => {
+              wx.hideLoading()
+              wx.showToast({
+                icon: 'none',
+                title: '网络数据错误',
+              })
+            }).then(res => {
+              wx.hideLoading()
+              if(res.code && res.code == 200){
+                var icons = that.data.icons;
+                icons[0].num = res.data.waitForPay;
+                icons[1].num = res.data.waitForDelivered;
+                icons[2].num = res.data.hasDelivered;
+                that.setData({
+                  icons: icons,
+                  shopCarNum: res.data.cartItemNum,
+                  bindMobilePhone: res.data.bindMobilePhone,
+                  userInfo: app.globalData.userInfo
+                });
+              }else{
+                wx.showToast({
+                  icon: 'none',
+                  title: res.msg,
+                })
+              }
+            });
+          },
+          fail: (res) => {
+            wx.hideLoading();
+            wx.showToast({
+              icon: 'none',
+              title: '网络数据错误',
+            });
+          }
+        });
+      },
+      fail: function(res){
+        app.globalData.userInfo = null;
+        that.setData({
+          userInfo: null
+        });
+      }
+    });
   },
 
   /**
