@@ -233,7 +233,15 @@ Page({
   },
 
   getMainConfigInfo: function(){
-    api.getMainConfig({appId: app.globalData.appId}).then(res=>{
+    wx.showLoading({})
+    api.getMainConfig({appId: app.globalData.appId}).catch(err => {
+        wx.hideLoading();
+        wx.showToast({
+          icon: 'none',
+          title: '网络数据错误',
+        })
+    }).then(res=>{
+      wx.hideLoading();
       if (res.code && res.code == 200) {
         //console.log("getMainConfigInfo res.data"+JSON.stringify(res.data))
         //遍历整个数组
@@ -303,7 +311,14 @@ Page({
   },
 
   getBindMainCar: function() {
-    api.getMainBindCar().then(res=>{
+    api.getMainBindCar().catch(err => {
+      /*wx.hideLoading();
+      wx.showToast({
+        icon: 'none',
+        title: '网络数据错误',
+      })*/
+  }).then(res=>{
+      //wx.hideLoading();
       if (res.code && res.code == 200) {
           console.log("getBindMainCar res.data"+JSON.stringify(res.data))
           if (res.data == null || res.data.carId == null || res.data.carId == 0) {
@@ -341,9 +356,14 @@ Page({
   },
 
   getGroupTree: function() {
-
-    api.getGroupTree({appId: app.globalData.appId}).then(res => {
-
+    api.getGroupTree({appId: app.globalData.appId}).catch(err => {
+      /*wx.hideLoading();
+      wx.showToast({
+        icon: 'none',
+        title: '网络数据错误',
+      })*/
+  }).then(res => {
+        
         if (res.code && res.code == 200) {
           var x=0
           var kindInfo = {
@@ -403,7 +423,13 @@ Page({
 
   getKindsList: function() {
       
-      api.getKindsList({parentId: this.data.currentParentId, gradeId: this.data.currentGradeId}).then(res => {
+      api.getKindsList({parentId: this.data.currentParentId, gradeId: this.data.currentGradeId}).catch(err => {
+        wx.hideLoading();
+        wx.showToast({
+          icon: 'none',
+          title: '网络数据错误',
+        })
+    }).then(res => {
         if (res.code && res.code == 200) {
 
           // 排序

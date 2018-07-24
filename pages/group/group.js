@@ -101,9 +101,16 @@ Page({
   },
 
   getGroupTree: function() {
-
-    api.getGroupTree({appId: app.globalData.appId}).then(res => {
+    wx.showLoading({})
+    api.getGroupTree({appId: app.globalData.appId}).catch(err => {
+        wx.hideLoading();
+        wx.showToast({
+          icon: 'none',
+          title: '网络数据错误',
+        })
+    }).then(res => {
         //
+        wx.hideLoading();
         if (res.code && res.code == 200) {
             res.data.sort(this.compare("sortOrder"))
             this.setData({
