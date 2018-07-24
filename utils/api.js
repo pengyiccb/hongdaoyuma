@@ -40,6 +40,7 @@ const RequestServer = (data, url, method="GET", token = true) => {
 // params.data = {appId}
 const getKindsList = data => RequestServer(data, '/api/v1/wechat/getKindsList');
 const getMainBindCar = data => RequestServer(data, '/api/v1/wechat/bindcar');
+const getMainConfig = data => RequestServer(data, '/api/v1/wechat/page/main' , 'GET', false);
 
 //绑定汽车
 const getBindCarList = data => RequestServer(data, '/api/v1/wechat/bindcarlist');
@@ -52,8 +53,8 @@ const changeDefaultBindCar = (data, bindId) => RequestServer(data, `/api/v1/wech
 const userDeleteBindCar = (data, bindId) => RequestServer(data, `/api/v1/wechat/deleteBindCar?bindId=${bindId}`, 'DELETE');
 
 //api分类信息
-const getGroupTree = data => RequestServer(data, '/api/v1/wechat/product/group/tree');
-const getGroupProducts = data => RequestServer(data, '/api/v1/wechat/product/group/products');
+const getGroupTree = data => RequestServer(data, '/api/v1/wechat/product/group/tree' , 'GET', false);
+const getGroupProducts = data => RequestServer(data, '/api/v1/wechat/product/group/products', 'GET', false);
 const GetProductList = data => RequestServer(data, '/api/v1/wechat/getProductList');
 // GET /api/v1/wechat/productDetail
 const GetProductDetail = data => RequestServer(data, '/api/v1/wechat/product/detail', 'GET', false);
@@ -181,5 +182,6 @@ module.exports= {
   changeDefaultBindCar,
   userDeleteBindCar,
   getGroupTree,
-  getGroupProducts
+  getGroupProducts,
+  getMainConfig
 }

@@ -78,7 +78,8 @@ Page({
     },
 
     getProductList: function(event) {
-        api.getGroupProducts({groupId: this.data.groupId}).then(res => {    
+        api.getGroupProducts({groupId: this.data.groupId,
+                                appId: app.globalData.appId}).then(res => {    
         //
         if (res.code && res.code == 200) {
 

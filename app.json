@@ -1,10 +1,10 @@
 {
   "pages":[
-    "pages/user/user",
-    "pages/bindcar/bindcar",
-    "pages/addcar/addcar",
-    "pages/productlist/productlist",
     "pages/carhome/carhome",
+    "pages/user/user",
+    "pages/addcar/addcar",
+    "pages/bindcar/bindcar",
+    "pages/productlist/productlist",
     "pages/group/group",
     "pages/home/home",
     "pages/detail/detail",

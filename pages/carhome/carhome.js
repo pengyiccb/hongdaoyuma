@@ -21,8 +21,16 @@ Page({
       '../../images/image1.png',
       '../../images/image1.png'
     ],
+
+    scrollList: [],
+    hotList: [],
+    recommendList: [],
   
-    isBindCar: false,  
+    isBindCar: false, 
+    hotTitle: '', 
+    displayHot: false,
+    recommendTitle: '',
+    displayRecommend: false,
     bindCar: {
       carid: 0,
       mainText: '请添加车型',
@@ -80,7 +88,7 @@ Page({
     actieveInfo: [
       {
         imageUrl: 'http://p9l3k4x4g.bkt.clouddn.com/product1.jpg',
-        name: '前位汽车通用车载车用空气净化器消除异味活性炭过滤器加湿器',
+        name: '前位',
         money: 300,
         total: 10
       },
@@ -114,7 +122,26 @@ Page({
   },
 
   bindUserCar:function(event) {
-    wx.navigateTo({url:'../bindcar/bindcar'})
+
+    wx.getUserInfo({
+      success: function(res){
+        wx.navigateTo({url:'../bindcar/bindcar'})
+      },
+      fail: function(res){
+        wx.showToast({  
+          title: '请先登陆',  
+          icon: 'none',  
+          duration: 1000  
+        })
+        setTimeout(function () {
+            wx.switchTab({
+              url: '/pages/user/user'
+            })
+          }, 1000) //延迟时间 这里是1秒
+        
+      }
+    })
+    
     /*
     if (this.data.isBindCar) {
       this.setData({
@@ -166,6 +193,116 @@ Page({
     } 
   },
 
+  comparedown:function(prop){
+    return function (obj1, obj2) {
+      var val1 = obj1[prop];
+      var val2 = obj2[prop];if (val1 < val2) {
+          return 1;
+      } else if (val1 > val2) {
+          return -1;
+      } else {
+          return 0;
+      }            
+    } 
+  },
+
+  scrollImage: function(event) {
+    var index = event.currentTarget.dataset.id
+    console.log("scrollImage index"+index)
+    //跳商品
+    if (this.data.scrollList[index].navigateType == -3) {
+      wx.navigateTo({
+        url: "/pages/detail/detail?id="+this.data.scrollList[index].navigateParam
+      });
+    //跳分组
+    } else if (this.data.scrollList[index].navigateType == -2) {
+      wx.navigateTo({url: '../productlist/productlist?groupId='+this.data.scrollList[index].navigateParam})
+    }
+  },
+
+  bindHot: function(event) {
+    var productid = event.currentTarget.dataset.productid
+    wx.navigateTo({
+      url: "/pages/detail/detail?id="+productid
+    });
+  },
+
+  inputDetail: function(event) {
+    var productid = event.currentTarget.dataset.productid
+    wx.navigateTo({
+      url: "/pages/detail/detail?id="+productid
+    });
+  },
+
+  getMainConfigInfo: function(){
+    api.getMainConfig({appId: app.globalData.appId}).then(res=>{
+      if (res.code && res.code == 200) {
+        //console.log("getMainConfigInfo res.data"+JSON.stringify(res.data))
+        //遍历整个数组
+        var x = 0
+        for (x in res.data) {
+          var listconfig = res.data[x]
+          if (listconfig.cellType == 1) {
+            var scroll = listconfig.children
+            if (scroll) {
+              scroll.sort(this.compare("sortOrder"))
+              this.setData({
+                scrollList: scroll
+              })
+            }
+          } else if (listconfig.cellType == 2) {
+
+          } else if (listconfig.cellType == 3) {
+            var y = 0
+            var hot = []
+            this.setData({
+              hotTitle: listconfig.cellLabel
+            })
+            for (y in listconfig.children){
+              hot.push(listconfig.children[y].product)
+            }
+            if (hot) {
+              hot.sort(this.comparedown("productId"))
+              this.setData({
+                displayHot: true,
+                hotList: hot
+              })
+            } else {
+              this.setData({
+                displayHot: false
+              })
+            }
+
+          } else if (listconfig.cellType == 4) { 
+            var y = 0
+            var recommend = []
+            this.setData({
+              recommendTitle: listconfig.cellLabel
+            })
+            for (y in listconfig.children){
+              recommend.push(listconfig.children[y].product)
+            }
+            if (recommend) {
+              recommend.sort(this.comparedown("productId"))
+              this.setData({
+                displayRecommend: true,
+                recommendList: recommend
+              })
+            } else {
+              this.setData({
+                displayRecommend: false
+              })
+            }
+          }
+        }
+
+        
+
+
+      }
+    })
+  },
+
   getBindMainCar: function() {
     api.getMainBindCar().then(res=>{
       if (res.code && res.code == 200) {
@@ -206,7 +343,7 @@ Page({
 
   getGroupTree: function() {
 
-    api.getGroupTree().then(res => {
+    api.getGroupTree({appId: app.globalData.appId}).then(res => {
 
         if (res.code && res.code == 200) {
           var x=0
@@ -351,6 +488,7 @@ Page({
   onShow: function () {
     this.getBindMainCar()
     this.getGroupTree()
+    this.getMainConfigInfo()
   },
 
   /**

@@ -74,6 +74,16 @@
     margin-left:10rpx
 }
 
+.product-one-title-view {
+    height: 72rpx;
+    width: 342rpx;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center
+  
+  }
+  
 .product-one-title {
     margin-top: 14rpx;
     margin-left: 20rpx;

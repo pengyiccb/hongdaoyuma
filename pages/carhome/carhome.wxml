@@ -3,9 +3,9 @@
   <view class="body-view">
     <view class="ad-view">
         <swiper class="slide-image" indicator-color="#cccccc" circular="{{true}}" indicator-active-color="white" indicator-dots="{{indicatorDots}}" autoplay="true" interval="{{interval}}" duration="{{duration}}">
-            <block wx:for="{{adUrl}}" wx:key="">
+            <block wx:for="{{scrollList}}" wx:key="">
                 <swiper-item>
-                    <image src="{{item}}" class="slide-image" />
+                    <image src="{{item.imageUrl}}" class="slide-image" bindtap='scrollImage' data-id="{{index}}" />
                 </swiper-item>
             </block>
         </swiper>
@@ -40,23 +40,43 @@
             </view>
         </view>
     </view> 
-    <view class="actieve-view">
+    <view class="actieve-view" hidden="{{displayHot?false:true}}">
         <view class="actieve-title">
             <image class="actieve-hot-image" src="../../images/hotflag.png"/>
-            <view class="actieve-title-text">{{actieveTitleText}}</view>
-            <view class="actieve-title-more">
+            <view class="actieve-title-text">{{hotTitle}}</view>
+            <!--view class="actieve-title-more">
                 <view class="actieve-title-font">查看全部</view>
                 <view>></view>
-            </view>
+            </view-->
         </view>
         <scroll-view class="actieve-body" scroll-x="true">
-            <view class="actieve-body-site" wx:for="{{actieveInfo}}" wx:key="" wx:for-index="idx">
+            <view class="actieve-body-site" wx:for="{{hotList}}" wx:key="" bindtap='bindHot' data-productid='{{item.productId}}'>
                 <image class="actieve-body-image" src="{{item.imageUrl}}" />
-                <view class="actieve-body-name">{{item.name}}</view>
-                <view class="actieve-body-money">￥ {{item.money}}</view>
+                <view class="actieve-body-name-view">
+                <view class="actieve-body-name">{{item.title}}</view>
+                </view>
+                <view class="actieve-body-money">￥ {{item.priceUnderline}}</view>
             </view>
         </scroll-view>
     </view>
-    <view class="recommend-head"></view>
+    <view class="recommend-head" hidden="{{displayRecommend?false:true}}">
+        <view class="recommend-head-info">
+            <image class="recommend-head-image" src="../../images/hotflag.png"/>
+            <view class="recommend-head-text">{{recommendTitle}}</view>
+            <image class="recommend-head-image" src="../../images/hotflag.png"/>
+        </view>
+    </view>
+    <view class="recommend-head-body" hidden="{{displayRecommend?false:true}}">
+        <view class="product-one" wx:for="{{recommendList}}" wx:key="" bindtap='inputDetail' data-productid='{{item.productId}}'>
+            <image class="product-one-image" src="{{item.imageUrl}}" />  
+            <view class="product-one-title-view">
+            <view class="product-one-title">{{item.title}}</view>
+            </view>
+            <view class="product-one-price">
+                <view class="product-price">￥{{item.priceUnderline}}</view>
+                <!--view class="product-sale-price">会员价：￥{{item.salePrice}}</view-->
+            </view>
+            </view>
+        </view>
   </view>  
 </view>

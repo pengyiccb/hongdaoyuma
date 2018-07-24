@@ -11,7 +11,9 @@
             </view>
             <view class="product-one" wx:for="{{groupProductList}}" wx:key="" bindtap='inputDetail' data-productid='{{item.id}}'>
                 <image class="product-one-image" src="{{item.imageUrl}}" />  
+                <view class="product-one-title-view">
                 <view class="product-one-title">{{item.title}}</view>
+                </view>
                 <view class="product-one-price">
                     <view class="product-price">￥{{item.priceUnderline}}</view>
                     <!--view class="product-sale-price">会员价：￥{{item.salePrice}}</view-->

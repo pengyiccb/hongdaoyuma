@@ -102,7 +102,7 @@ Page({
 
   getGroupTree: function() {
 
-    api.getGroupTree().then(res => {
+    api.getGroupTree({appId: app.globalData.appId}).then(res => {
         //
         if (res.code && res.code == 200) {
             res.data.sort(this.compare("sortOrder"))
