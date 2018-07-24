@@ -21,6 +21,10 @@ Page({
         selectVersionName: '车型',
         toView: '',
         scrollHeight: 0,
+        imgSerieswidth:0,
+        imgSeriesheight:0,
+        searchY: 0,
+        scrollAnimation: true,
         timeList:[
             /*{timeId:1, timeName: '2018款'},
             {timeId:2, timeName: '2017款'},
@@ -301,6 +305,11 @@ Page({
           this.setData({
             toView: wordindex,
           })
+          wx.showToast({  
+            title: wordindex,  
+            icon: 'none',  
+            duration: 1000  
+        })
         }
      
         console.log(this.data.toView);
@@ -340,6 +349,99 @@ Page({
                 return
             }
         }
+    },
+
+    errbrandImg: function(e) {
+
+    },
+
+    touchstartWord: function(e) {
+        var word = e.currentTarget.dataset.wordindex
+        var id = e.currentTarget.dataset.id
+        console.log("touchstartWord:"+word+"id:"+id)
+        var touchs = e.touches[0]; 
+        var pageX = touchs.pageX; 
+        var pageY = touchs.pageY; 
+        console.log('pageX: ' + pageX) 
+        console.log('pageY: ' + pageY) 
+        
+        this.setData({
+            //scrollAnimation: false
+        })
+
+        this.setData({
+            searchY: touchs.pageY,
+            //toView: word
+        })
+        
+    },
+
+    touchmoveWord: function(e) {
+        this.setData({
+            scrollAnimation: true
+        })
+        
+        var word = e.currentTarget.dataset.wordindex
+        var id = e.currentTarget.dataset.id
+        
+        var touchs = e.touches[0]; 
+        var pageX = touchs.pageX; 
+        var pageY = touchs.pageY; 
+        var  indexpos = parseInt((pageY-this.data.searchY)/18)
+        console.log("touchmoveWord indexpos: "+indexpos +" id:"+id)
+        var current = (id+indexpos)
+        var lenword = this.data.wordindex.length
+        if (current >= 0 && current < lenword) {
+            this.setData({
+               // toView: this.data.wordindex[id+indexpos]
+            })
+        }
+
+    },
+
+    touchendWord: function(e) {
+
+        var touchs = e.changedTouches[0]; 
+        var id = e.currentTarget.dataset.id
+        var pageY = touchs.pageY;
+        var  indexpos = parseInt((pageY-this.data.searchY)/18)
+        var current = (id+indexpos)
+        var lenword = this.data.wordindex.length
+        if (current >= 0 && current < lenword) {
+            console.log("touchendWord:"+word + " this.data.wordindex[id+indexpos]"+this.data.wordindex[id+indexpos])
+            this.setData({
+                //toView: this.data.wordindex[id+indexpos]
+            })
+        }
+        var word = e.currentTarget.dataset.wordindex
+        var id = e.currentTarget.dataset.id
+        
+        this.setData({
+           /* scrollAnimation: true,*/
+            searchY: 0
+        })
+    },
+
+    loadSeriesimage: function (e) {
+        var _this=this;
+		var width=e.detail.width,    //获取图片真实宽度
+            height=e.detail.height,
+            ratio=height/ width;   //图片的真实宽高比例
+
+        var id = e.currentTarget.dataset.id
+            
+        console.log("width :" + width+ "height:" + height)
+		var viewHeight=87,           //设置图片显示宽度，
+            viewWidth=87/ratio;    //计算的高度值 
+            console.log("id:"+id+"viewWidth :" + viewWidth+ "viewHeight:" + viewHeight)  
+
+        var serieslist = this.data.seriesList
+        serieslist[id].imgSerieswidth = viewWidth
+        serieslist[id].imgSeriesheight = viewHeight
+		this.setData({
+			seriesList: serieslist
+		})
+
     },
 
     selectTime: function (event) {
@@ -559,7 +661,7 @@ Page({
                 hotBrandList.push({
                     brandId: brandinfo.brandId,
                     brandName: brandinfo.brandName,
-                    brandUrl: brandinfo.brandUrl
+                    brandUrl: brandinfo.hotBrandUrl
                 })
             }
 

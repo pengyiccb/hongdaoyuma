@@ -1,6 +1,6 @@
 <view class="container">
   <view class="body-view">
-       <scroll-view style="height:{{scrollHeight}}px;" scroll-y="true" scroll-into-view="{{toView}}">
+       <scroll-view style="height:{{scrollHeight}}px;" scroll-y="true" scroll-into-view="{{toView}}" scroll-with-animation="true">
       <view class="body-head">
         <image class="head-brand-image" src="{{selectBrandImg}}" hidden="{{selectBrandId==-1}}" bindtap='choosebrand'/>
         <view class="head-brand-text {{selectBrandId==-1?'':'select'}}" bindtap='choosebrand'>{{selectBrandName}}</view>
@@ -27,8 +27,8 @@
                 <view id="{{item.groupName}}" class="brand-wordindex">{{item.groupName}}</view>
                 <view class="brand-block">
                     <view class="brand-line" wx:for="{{item.groupList}}" wx:for-item="item1" wx:key="" bindtap='selectBrand' data-groupname="{{item.groupName}}" data-brandid="{{item1.brandId}}">
-                        <image class="brand-line-image" src="{{item1.brandUrl}}"></image>
-                        <text>{{item1.brandName}}</text>
+                        <image class="brand-line-image" binderror="errbrandImg" src="{{item1.brandUrl}}"></image>
+                        <text class="brand-bloc-text">{{item1.brandName}}</text>
                     </view>
                 </view>
             </view>
@@ -38,7 +38,9 @@
           <view class="series-head">{{selectBrandName}}</view>
             <view class="series-body">
                 <view class="series-body-one" wx:for="{{seriesList}}" wx:key="" bindtap='selectSeries' data-seriesid='{{item.seriesId}}'>
-                    <image class="series-body-image" src="{{item.seriesImage}}" />
+                    <view class = "series-body-image-view">
+                    <image class="series-body-image" bindload='loadSeriesimage' style="width:{{item.imgSerieswidth}}rpx; height:{{item.imgSeriesheight}}rpx;" src="{{item.seriesImage}}" data-id="{{index}}"/>
+                    </view>
                     <view class="series-body-text">{{item.seriesName}}</view>
                 </view>
             </view>
@@ -62,7 +64,7 @@
       </scroll-view>
       <view class="index-search" hidden="{{currentSelect!=1}}">
             <view class="bock-text">
-                <text wx:for="{{wordindex}}" wx:key="" bindtap="choiceWordindex" data-wordindex="{{item}}">
+                <text wx:for="{{wordindex}}" wx:key="" catchtap="choiceWordindex" data-wordindex="{{item}}" data-id="{{index}}">
                     {{item}}
                 </text>
             </view>
