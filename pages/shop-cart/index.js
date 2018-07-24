@@ -81,10 +81,11 @@ Page({
   },
 
   onShow: function(){
+    var that = this;
     wx.getUserInfo({
       success: function(res){
-        this.initEleWidth();
-        this.getTrolley();
+        that.initEleWidth();
+        that.getTrolley();
       },
       fail: function(res){
         wx.switchTab({
