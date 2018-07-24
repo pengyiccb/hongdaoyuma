@@ -89,6 +89,10 @@ Page({
       fail: function(res){
         wx.switchTab({
           url: '/pages/user/user'
+        });
+        wx.showToast({
+          icon: 'none',
+          title: '请先登录',
         })
       }
     });      

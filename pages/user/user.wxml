@@ -127,7 +127,7 @@
 
 
   <zan-cell-group style="">
-    <view wx:for="{{ userRouter }}" wx:for-item="item">
+    <view wx:for="{{ userRouter }}" wx:key="index" wx:for-item="item">
       <zan-cell
               linkType="navigateTo"
               is-link
