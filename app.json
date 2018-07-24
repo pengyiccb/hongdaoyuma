@@ -6,7 +6,6 @@
     "pages/bindcar/bindcar",
     "pages/productlist/productlist",
     "pages/group/group",
-    "pages/home/home",
     "pages/detail/detail",
     "pages/order/order",
     "pages/shop-cart/index",
