@@ -11,10 +11,10 @@ Page({
   data: {
 
     addressInfo: {
-      longitude: Number(115.85794),
-      latitude: Number(28.68202),
-      name: '东湖区南昌市政府(世贸路北)',
-      address: '江西省南昌市东湖区世贸路'
+      longitude: Number(116.2376099825),
+      latitude: Number(28.3747261822),
+      name: '红道御马专业汽车服务连锁',
+      address: '江西省南昌市进贤县人民大道（豪景一品旁约96米）'
     },
     adUrl: [
       '../../images/image1.png',
