@@ -127,18 +127,15 @@ Page({
       success: function(res){
         wx.navigateTo({url:'../bindcar/bindcar'})
       },
-      fail: function(res){
+      fail: function(res){ 
+        wx.switchTab({
+          url: '/pages/user/user'
+        })
         wx.showToast({  
           title: '请先登陆',  
           icon: 'none',  
           duration: 1000  
         })
-        setTimeout(function () {
-            wx.switchTab({
-              url: '/pages/user/user'
-            })
-          }, 1000) //延迟时间 这里是1秒
-        
       }
     })
     
