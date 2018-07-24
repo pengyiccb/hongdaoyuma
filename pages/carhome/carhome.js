@@ -22,6 +22,7 @@ Page({
       '../../images/image1.png'
     ],
 
+    scrollLen: 0,
     scrollList: [],
     hotList: [],
     recommendList: [],
@@ -244,7 +245,8 @@ Page({
             if (scroll) {
               scroll.sort(this.compare("sortOrder"))
               this.setData({
-                scrollList: scroll
+                scrollList: scroll,
+                scrollLen: scroll.length
               })
             }
           } else if (listconfig.cellType == 2) {

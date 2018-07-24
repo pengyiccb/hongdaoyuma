@@ -2,7 +2,10 @@
 <view class="container">
   <view class="body-view">
     <view class="ad-view">
-        <swiper class="slide-image" indicator-color="#cccccc" circular="{{true}}" indicator-active-color="white" indicator-dots="{{indicatorDots}}" autoplay="true" interval="{{interval}}" duration="{{duration}}">
+        <view class="slide-image" hidden="{{scrollLen<=1?false:true}}">
+            <image src="{{scrollList[0].imageUrl}}" class="slide-image" bindtap='scrollImage' data-id="{{0}}" />
+        </view>
+        <swiper class="slide-image" hidden="{{scrollLen>1?false:true}}" indicator-color="#cccccc" circular="true" indicator-active-color="white" indicator-dots="{{indicatorDots}}" autoplay="true" interval="{{interval}}" duration="{{duration}}">
             <block wx:for="{{scrollList}}" wx:key="">
                 <swiper-item>
                     <image src="{{item.imageUrl}}" class="slide-image" bindtap='scrollImage' data-id="{{index}}" />
