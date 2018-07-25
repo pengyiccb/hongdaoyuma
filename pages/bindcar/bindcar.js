@@ -5,7 +5,7 @@ const api = require('../../utils/api');
 var app = getApp()
 Page({
  data: {
-    haveDefaultCar: true,
+    haveDefaultCar: false,
     bindCarList: [
         /*{
             carid: 1,
