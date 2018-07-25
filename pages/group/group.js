@@ -318,6 +318,25 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-  
+    let that =this;
+    return {
+        title: '闲约·红道御马',
+        path: '/pages/carhome/carhome',
+        imageUrl: "/images/image1.png",
+        success: (res) => {
+            wx.showToast({  
+                title: '转发成功',  
+                icon: 'none',  
+                duration: 1000  
+            })
+        },
+        fail: (res) => {
+            wx.showToast({  
+                title: '转发失败',  
+                icon: 'none',  
+                duration: 1000  
+            })
+        }
+    }
   }
 })
