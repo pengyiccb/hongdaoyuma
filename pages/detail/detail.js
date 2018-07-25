@@ -493,7 +493,7 @@ Page({
     return {
       title: this.data.goodsDetail.sharetitle,
       path: '/pages/carhome/carhome?productId=' + this.data.productId,
-      imageUrl: this.data.goodsDetail.shareImage,
+      imageUrl: this.data.goodsDetail.shareImage.url,
       success: function (res) {
         // 转发成功
       },

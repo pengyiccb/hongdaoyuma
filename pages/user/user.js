@@ -247,53 +247,7 @@ Page({
     });
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    /* var that = this;
-    wx.getUserInfo({
-      success: function(res){
-        wx.showLoading({
-          icon: 'none',
-          title: '登录中...',
-        });
-        app.globalData.userInfo = res.userInfo;
-        api.loginToServer({
-          data:{
-            userInfo: res.userInfo,
-            "appId": app.globalData.appId
-          },
-          success: (res) => {
-            wx.hideLoading();
-            that.setData({
-              userInfo: app.globalData.userInfo
-            });
-          },
-          fail: (res) => {
-            wx.hideLoading();
-            wx.showToast({
-              icon: 'none',
-              title: '登陆失败',
-            });
-          }
-        });
-      },
-      fail: function(res){
-        app.globalData.userInfo = null;
-        that.setData({
-          userInfo: null
-        });
-      }
-    }); */
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
   
-  },
 
   /**
    * 生命周期函数--监听页面显示
@@ -362,38 +316,4 @@ Page({
     });
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
-  }
 })

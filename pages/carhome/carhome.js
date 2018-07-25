@@ -598,7 +598,7 @@ Page({
   onShareAppMessage: function () {
     let that =this;
         return {
-            title: '闲约·红道御马',
+            title: '红道御马',
             path: '/pages/carhome/carhome',
             imageUrl: "/images/image1.png",
             success: (res) => {
