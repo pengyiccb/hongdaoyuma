@@ -126,6 +126,8 @@ Page({
 
     wx.getUserInfo({
       success: function(res){
+
+
         wx.navigateTo({url:'../bindcar/bindcar'})
       },
       fail: function(res){ 
@@ -511,7 +513,42 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.getBindMainCar()
+    var that = this;
+    wx.getUserInfo({
+      success: function(res){
+        app.globalData.userInfo = res.userInfo;
+        api.loginToServer({
+          data:{
+            userInfo: res.userInfo,
+            "appId": app.globalData.appId
+          },
+          success: (res) => {
+            if(res.code && res.code == 200){
+              api.getUserInfo().catch(res => {
+                wx.showToast({
+                  icon: 'none',
+                  title: '网络数据错误',
+                })
+              }).then(res => {
+                if(res.code && res.code == 200){
+                  that.getBindMainCar()
+                }else{
+                }
+              });
+            }else{
+            }            
+          },
+          fail: (res) => {
+            wx.showToast({
+              icon: 'none',
+              title: '网络数据错误',
+            });
+          }
+        });
+      },
+      fail: function(res){
+      }
+    });
     this.getGroupTree()
     this.getMainConfigInfo()
   },
