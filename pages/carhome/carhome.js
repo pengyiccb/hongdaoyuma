@@ -546,19 +546,8 @@ Page({
           },
           success: (res) => {
             if(res.code && res.code == 200){
-              api.getUserInfo().catch(res => {
-                wx.showToast({
-                  icon: 'none',
-                  title: '网络数据错误',
-                })
-              }).then(res => {
-                if(res.code && res.code == 200){
                   that.getBindMainCar()
-                }else{
-                }
-              });
-            }else{
-            }            
+              }
           },
           fail: (res) => {
             wx.showToast({
