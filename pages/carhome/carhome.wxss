@@ -87,6 +87,7 @@
 
 .car-brand-image {
   width: 144rpx;
+  position: relative;
 }
 
 .brand-image {
@@ -106,7 +107,9 @@
   display: inline-block;
   /*display: flex;
   flex-direction: column;*/
-  text-align: left
+  text-align: left;
+  position: relative;
+  
 }
 
 .main-text-view {

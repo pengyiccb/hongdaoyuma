@@ -22,6 +22,8 @@ Page({
       '../../images/image1.png'
     ],
 
+    loginFlag: false,
+
     scrollLen: 0,
     scrollList: [],
     hotList: [],
@@ -131,14 +133,14 @@ Page({
         wx.navigateTo({url:'../bindcar/bindcar'})
       },
       fail: function(res){ 
-        wx.switchTab({
+        /*wx.switchTab({
           url: '/pages/user/user'
         })
         wx.showToast({  
           title: '请先登陆',  
           icon: 'none',  
           duration: 1000  
-        })
+        })*/
       }
     })
     
@@ -217,6 +219,23 @@ Page({
     //跳分组
     } else if (this.data.scrollList[index].navigateType == -2) {
       wx.navigateTo({url: '../productlist/productlist?groupId='+this.data.scrollList[index].navigateParam})
+    }
+  },
+
+  onTapLogin: function(event) {
+    var that = this;
+    console.log("sonShow ")
+    if(event.detail.userInfo){
+      that.onShow();
+      that.setData({
+        loginFlag: true
+      })
+      console.log("sonShow2")
+    }else{
+      wx.showToast({
+        icon: 'none',
+        title: '登陆失败'
+      });
     }
   },
 
@@ -517,6 +536,9 @@ Page({
     wx.getUserInfo({
       success: function(res){
         app.globalData.userInfo = res.userInfo;
+        that.setData({
+          loginFlag: true
+        })
         api.loginToServer({
           data:{
             userInfo: res.userInfo,

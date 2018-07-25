@@ -20,10 +20,12 @@
     <view class="select-car">
         <view class="car-brand-image" bindtap='bindUserCar'>
             <image class="{{isBindCar?'brand-image':'no-brand-image'}}" src="{{bindCar.brandImage}}" />
+            <button hidden="{{loginFlag}}" style="position:absolute; width: 100%; height: 100%; opacity: 0; top: 0; left: 0;" open-type='getUserInfo' bindgetuserinfo='onTapLogin' />
         </view>
         <view class="car-text-view" bindtap='bindUserCar'>
             <view class="{{isBindCar?'main-text-view':'no-main-text-view'}}">{{bindCar.mainText}}</view>
             <view class="text-view">{{bindCar.secondText}}</view>
+            <button hidden="{{loginFlag}}" style="position:absolute; width: 100%; height: 100%; opacity: 0; top: 0; left: 0;" open-type='getUserInfo' bindgetuserinfo='onTapLogin' />
         </view>
         <view class="car-column-view"></view>
         <view class="map-view" bindtap='bindNavigation'>
