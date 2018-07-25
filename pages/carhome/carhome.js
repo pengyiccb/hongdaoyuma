@@ -598,7 +598,7 @@ Page({
   onShareAppMessage: function () {
     let that =this;
         return {
-            title: '红道御马',
+            title: '欢迎关注红道御马专业汽车连锁服务',
             path: '/pages/carhome/carhome',
             imageUrl: "/images/image1.png",
             success: (res) => {
