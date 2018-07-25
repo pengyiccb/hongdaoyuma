@@ -12,14 +12,20 @@
     <view class="title">绑定手机号</view>
     <view class="pop-close" bindtap="togglePopup"></view>
     <view class="phone-box">
-      <view class="pop-phone">
-          <input name="mobile" bindinput="phoneInput" placeholder-class="input-placeholder" class="input" maxlength="11" type="number" placeholder="请输入手机号码" value="{{wxPhoneNo}}"/>
+      <input name="mobile" bindinput="phoneInput" placeholder-class="input-placeholder" class="pop-phone-input" maxlength="11" type="number" placeholder="请输入手机号码" value="{{wxPhoneNo}}"/>
+
+      <view class="phone-line"></view>
+      <view class="phone-btn">
+        <button style="width: 100%; height: 100%; opacity: 0; top: 0; left: 0;" open-type='getPhoneNumber' bindgetphonenumber="getPhoneNumber" />
       </view>
-      <view class="wx-phone">
+      <!-- <view class="pop-phone">
+          <input name="mobile" bindinput="phoneInput" placeholder-class="input-placeholder" class="pop-phone-input" maxlength="11" type="number" placeholder="请输入手机号码" value="{{wxPhoneNo}}"/>
+      </view> -->
+      <!-- <view class="wx-phone">
         <button style="width: 100%; height: 100%; opacity: 1; top: 0; left: 0;" open-type='getPhoneNumber' bindgetphonenumber="getPhoneNumber" >
           手机号
         </button>
-        </view>
+        </view> -->
     </view>
     
     <view class="pop-verify">

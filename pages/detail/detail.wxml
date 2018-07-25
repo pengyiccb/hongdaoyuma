@@ -60,8 +60,13 @@
             </button>
         </view>
         <view class="shopcar-btn" bindtap="goShopCar"></view>
-        <view class="join-shop-cart" bindtap="toAddShopCar">加入购物车</view>
-        <view class="now-buy" bindtap="tobuy">立即购买</view>
+        <view class="join-shop-cart" bindtap="toAddShopCar">
+            加入购物车
+        </view>
+        <view class="now-buy" bindtap="tobuy">
+            立即购买
+        </view>
+        <button hidden="{{bAccept ? true : false}}" style="position:absolute; width: 100%; height: 100%; opacity: 0; top: 0; left: 0;" open-type='getUserInfo' bindgetuserinfo='onTapLogin' />
    </view>
    <view class="empty-box"></view>
     <view catchtouchmove="true" class="show-popup" hidden="{{hideShopPopup}}" >
@@ -102,7 +107,10 @@
             </view> 
             
             <block wx:if="{{isOkButton}}">
-                <view class="popup-ok-btn" bindtap="onOKButton">确定</view>
+                <view class="popup-ok-btn" bindtap="onOKButton">
+                    确定
+                    <button hidden="{{bAccept ? true : false}}" style="position:absolute; width: 100%; height: 100%; opacity: 0; top: 0; left: 0;" open-type='getUserInfo' bindgetuserinfo='onTapLogin' />
+                </view>
             </block>
             <block wx:else>
                 <view class="btn_grounp">
@@ -112,6 +120,7 @@
                     <view class="popup-buy-btn" bindtap="buyNow">
                         立即购买
                     </view>
+                    <button hidden="{{bAccept ? true : false}}" style="position:absolute; width: 100%; height: 100%; opacity: 0; top: 0; left: 0;" open-type='getUserInfo' bindgetuserinfo='onTapLogin' />
                 </view>
             </block>
         </view>

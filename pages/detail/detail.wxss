@@ -243,6 +243,7 @@ swiper-item image {
   color:#ffffff;
   font-size: 28rpx;
   font-weight: bold;
+  position: relative;
 }
 .footer-box .now-buy{
   text-align: center;
@@ -253,6 +254,7 @@ swiper-item image {
   color:#ffffff;
   font-size: 28rpx;
   font-weight: bold;
+  position: relative;
 }
 .show-popup{
   position: fixed;

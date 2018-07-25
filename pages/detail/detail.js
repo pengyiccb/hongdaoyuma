@@ -29,6 +29,7 @@ Page({
     single_image: "",
     select_string: "",    //已选规格
     skuId: 0,
+    bAccept: false,
 
     
     propertyChildIds: "",
@@ -56,6 +57,44 @@ Page({
       success: function (res) {
         that.setData({
           scrollHeight: res.windowHeight
+        });
+      }
+    });
+
+    wx.getUserInfo({
+      success: function(res){
+        that.setData({
+          bAccept: true
+        });
+        wx.showLoading();
+        app.globalData.userInfo = res.userInfo;
+        api.loginToServer({
+          data:{
+            userInfo: res.userInfo,
+            "appId": app.globalData.appId
+          },
+          success: (res) => {
+            wx.hideLoading();
+            if(res.code && res.code == 200){              
+            }else{
+              wx.showToast({
+                icon: 'none',
+                title: res.msg,
+              })
+            }            
+          },
+          fail: (res) => {
+            wx.hideLoading();
+            wx.showToast({
+              icon: 'none',
+              title: '网络数据错误',
+            });
+          }
+        });
+      },
+      fail: function(res){
+        that.setData({
+          bAccept: false
         });
       }
     });
@@ -367,6 +406,42 @@ Page({
     })
 
     //shopCarInfo = {shopNum:12,shopList:[]}
+  },
+
+  onTapLogin: function(e){
+    this.onShow();
+    /* if(e.detail.userInfo){
+      this.setData({
+        bAccept: true
+      });
+
+      app.globalData.userInfo = e.detail.userInfo;
+      api.loginToServer({
+        data:{
+          userInfo: e.detail.userInfo,
+          "appId": app.globalData.appId
+        },
+        success: (res) => {
+          if(res.code && res.code == 200){
+          }else{
+            wx.showToast({
+              icon: 'none',
+              title: res.msg,
+            })
+          }            
+        },
+        fail: (res) => {
+          wx.showToast({
+            icon: 'none',
+            title: '网络数据错误',
+          });
+        }
+      });
+    }else{
+      this.setData({
+        bAccept: false
+      });
+    } */
   },
 
   buyNow: function () {

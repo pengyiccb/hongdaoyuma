@@ -54,7 +54,7 @@ Page({
       {
         name: "绑定车型",
         url: "",
-        tapFunction:"onTapCloseTips"
+        tapFunction:"onTapBindCar"
       },
       {
         name: "优惠券",
@@ -100,6 +100,12 @@ Page({
         })
       }
     });
+  },
+
+  onTapBindCar: function(){
+    wx.navigateTo({
+      url:"/pages/bindcar/bindcar"
+    })
   },
   
   onTapAddress: function(){
