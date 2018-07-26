@@ -103,7 +103,7 @@ Page({
     /**
      * 用户点击右上角分享
      */
-    onShareAppMessage: function () {
+    /* onShareAppMessage: function () {
         let that =this;
         return {
             title: '闲约·红道御马',
@@ -124,7 +124,7 @@ Page({
                 })
             }
         }
-    },
+    }, */
 
   //手指触摸动作开始 记录起点X坐标
   touchstart: function (e) {
