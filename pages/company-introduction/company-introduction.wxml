@@ -1,13 +1,13 @@
 
 <view class="flex-wrp">
     <image class="img" src="../../images/company-introduction/info1.jpg" mode="widthFix">   
-        <view class="buttonTop" bindtap='OnClickPhoneCounsel'></view> 
+        <view class="buttonTop" bindtap='onClickPhoneCounsel'></view> 
     </image>
     <image class="img" src="../../images/company-introduction/info2.jpg" mode="widthFix"/>
     <image class="img" src="../../images/company-introduction/info3.jpg" mode="widthFix"/>
     <image class="img" src="../../images/company-introduction/info4.jpg" mode="widthFix"/>
     <image class="img" src="../../images/company-introduction/info5.jpg" mode="widthFix"/>
     <image class="img" src="../../images/company-introduction/info6.jpg" mode="widthFix">   
-        <view class="buttonBottom" bindtap='OnClickPhoneCounsel'></view> 
+        <view class="buttonBottom" bindtap='onClickPhoneCounsel'></view> 
     </image>
 </view>
