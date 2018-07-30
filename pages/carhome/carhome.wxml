@@ -18,7 +18,7 @@
         <input class="{{inputSearch?'searchinput-select':'searchinput'}}" placeholder="请输入想找的商品" placeholder-class="place-search-intput" value="{{searchValue}}" bindfocus='startInputSearch' bindblur='endInputSearch'/>
     </view>
     <view class="select-car">
-        <view class="car-brand-image" bindtap='openNewPage'>
+        <view class="car-brand-image" bindtap='bindUserCar'>
             <image class="{{isBindCar?'brand-image':'no-brand-image'}}" src="{{bindCar.brandImage}}" />
             <button hidden="{{loginFlag}}" style="position:absolute; width: 100%; height: 100%; opacity: 0; top: 0; left: 0;" open-type='getUserInfo' bindgetuserinfo='onTapLogin' />
         </view>

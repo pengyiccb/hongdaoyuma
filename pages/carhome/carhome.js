@@ -124,12 +124,6 @@ Page({
     wx.navigateTo({url: '../group/group?kindId='+kindId})
   },
 
-  openNewPage:function(event) {
-    wx.navigateTo({
-      url: "/pages/company-introduction/company-introduction"
-    })
-  },
-
   bindUserCar:function(event) {
 
     wx.getUserInfo({
