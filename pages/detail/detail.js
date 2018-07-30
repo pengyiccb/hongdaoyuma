@@ -3,6 +3,7 @@
 var app = getApp();
 var WxParse = require('../../wxParse/wxParse.js');
 const api = require('../../utils/api');
+let animationShowHeight = 300;
 
 Page({
   data: {
@@ -30,6 +31,8 @@ Page({
     select_string: "",    //已选规格
     skuId: 0,
     bAccept: false,
+    bSharePopop: false,
+    maskHidden: true,
 
     
     propertyChildIds: "",
@@ -162,6 +165,149 @@ Page({
   
   },
 
+  closeCanvas: function () {
+    this.setData({
+      maskHidden: true
+    });
+  },
+
+  stopClick: function(){
+  },
+
+  baocun:function(){
+    var that = this
+    wx.saveImageToPhotosAlbum({
+      filePath: that.data.imagePath,
+      success(res) {
+        that.setData({
+          maskHidden: true
+        });
+        wx.showToast({
+          icon: 'none',
+          title: '图片保存成功',
+        });
+      },
+      fail(res){
+        that.setData({
+          maskHidden: true
+        });
+        wx.showToast({
+          icon: 'none',
+          title: '图片保存失败',
+        })
+      }
+    })
+  },
+
+  //分享朋友圈
+  onShareSpace: function(){
+    var that = this;
+    this.setData({
+      hideShopPopup: true,
+      maskHidden: true
+    });
+    wx.showLoading({
+      title: '海报生成中...'
+    });
+
+    var context = wx.createCanvasContext('mycanvas');
+    context.setFillStyle("#ffffff")
+    context.fillRect(0, 0, 750, 1334);
+    
+    var path = "/images/paper.png"
+    context.drawImage(path, 28, 70, 686, 686);
+
+    context.font = "36px PingFang SC";
+    context.setFillStyle('#333333');
+    context.setTextAlign('left');
+ 
+    var temp = '';
+    var row = [];
+    var chr = that.data.goodsDetail.sharetitle.split('');
+    /* var chr = "邀请你一起去吃面邀请你一起去吃面邀请你邀请你一起去吃面邀请你一起去吃面邀请你邀请你一起去吃面邀请你一起去吃面邀请你"; */
+    for(var i = 0; i < chr.length; i++){
+      if (context.measureText(temp).width < 686) {
+        temp += chr[i];
+      }else{
+        i--
+        row.push(temp);
+        temp = '';
+      }
+    }
+    row.push(temp);
+    if(row.length > 2){
+      var rowCut = row.slice(0, 2);
+      var rowPart = rowCut[1];
+      var test = '';
+      var empty = [];
+      for (var j = 0; j < rowPart.length; j++){
+        if (context.measureText(test).width < 600) {
+          test += rowPart[j];
+        }
+        else {
+          break;
+        }
+      }
+      empty.push(test);
+      var group = empty[0] + "...";
+      rowCut.splice(1, 1, group);
+      row = rowCut;
+    }
+    for(var k = 0; k < row.length; k++){
+      context.fillText(row[k], 28, 846 + k * 60, 686);
+    }
+
+    context.font = "60px bold PingFang SC";
+    context.setFillStyle('#fe403b');
+    context.setTextAlign('left');
+    context.fillText("￥ 2000", 28, 1002, 686);
+
+    context.draw();    
+
+    setTimeout(function () {
+      wx.canvasToTempFilePath({
+        canvasId: 'mycanvas',
+        success: function (res) {
+          wx.hideLoading();
+          var tempFilePath = res.tempFilePath;
+          that.setData({
+            imagePath: tempFilePath,
+            maskHidden: false
+          });
+        },
+        fail: function (res) {
+          wx.hideLoading();
+          wx.showLoading({
+            title: '海报生成失败'
+          });
+        }
+      });
+    }, 200);
+  },
+
+  //分享
+  onShare: function(){
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear"
+
+    });
+
+    this.animation = animation;
+    animation.height(0).step();
+    this.setData({
+      bSharePopop: true,
+      hideShopPopup: false,
+      animationData: animation.export()
+    });
+
+    setTimeout(function(){
+      animation.height(162).step();
+      this.setData({
+        animationData: animation.export()
+      });
+    }.bind(this), 100);
+  },
   //商品介绍
   goodInstr: function(){
     this.setData({
@@ -261,9 +407,27 @@ Page({
         }
       }
     }
+
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear"
+
+    });
+
+    this.animation = animation;
+    animation.height(0).step();
     this.setData({
-      hideShopPopup: false
-    })
+      bSharePopop: false,
+      hideShopPopup: false,
+      animationData: animation.export()
+    });
+
+    setTimeout(function(){
+      animation.height(534).step();
+      this.setData({
+        animationData: animation.export()
+      });
+    }.bind(this), 100);
   },
   /**
    * 规格选择弹出框隐藏

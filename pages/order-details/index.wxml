@@ -1,3 +1,4 @@
+<import src="../../pages/template/foot.wxml" />
 <view class="container">
     <view class="sec-wrap">
         <view class="shop-title">{{shopTitle}}</view>
@@ -60,4 +61,5 @@
         </view>
         <view bindtap="onCopy" class="copy-btn">复制</view>
     </view>
+    <template is="foot" />
 </view>

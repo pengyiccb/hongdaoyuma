@@ -6,7 +6,7 @@ const app = getApp();
 let tokenVal = null;
 
 //const API_URL = "http://localhost:8080";
-const API_URL = "https://shop.jxxykj.cn";
+const API_URL = "https://shop.ydmaj.com";
 // const API_URL = "http://192.168.10.100:8080";
 
 // 通过Promise发请求到服务器
@@ -117,6 +117,8 @@ const verifyPhoneCode = (data, phoneNo, code) => RequestServer(data, `/api/v1/we
 //
 const dataDecode = data => RequestServer(data, `/api/v1/wechat/user/data/decode`, 'POST')
 
+const getQR = data => RequestServer(data, `/api/v1/wechat/qrcode/generate`, 'POST')
+
 
 const loginToServer = (params = {data, success, fail}) => {
   wx.login({
@@ -183,5 +185,6 @@ module.exports= {
   userDeleteBindCar,
   getGroupTree,
   getGroupProducts,
-  getMainConfig
+  getMainConfig,
+  getQR
 }

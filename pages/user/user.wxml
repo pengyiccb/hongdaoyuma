@@ -1,3 +1,4 @@
+<import src="../../pages/template/foot.wxml" />
 <view class="zan-noticebar view-noticebar" wx:if="{{bindMobilePhone || !userInfo ? false: true}}">
   <view class="zan-noticebar__content-wrap">
     <view class="zan-noticebar__content">
@@ -152,9 +153,6 @@
     </zan-cell>
   </zan-cell-group>
 
-
-
-
-
+  <template is="foot" />
 </view>
 <!--</zan-cell-group>-->

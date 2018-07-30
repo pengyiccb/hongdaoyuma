@@ -1,3 +1,4 @@
+<import src="../../pages/template/foot.wxml" />
 <view class="container">
     <form bindsubmit="bindSave">
     <view class="form-box">
@@ -50,4 +51,5 @@
     <button type="default" class="save-btn" bindtap="deleteAddress" data-id="{{addressData.id}}" wx:if="{{addressData}}">删除该地址</button>
     <button type="default" class="cancel-btn" bindtap="bindCancel">取消</button>
     </form>
+    <template is="foot" />
 </view>

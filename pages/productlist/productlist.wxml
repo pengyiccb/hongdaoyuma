@@ -1,3 +1,4 @@
+<import src="../../pages/template/foot.wxml" />
 <view class="container">
   <view class="body-view">
       <view class="body-head">
@@ -20,6 +21,7 @@
                 </view>
             </view>
         </view>
-    </view>
-  </view>
+        <template is="foot" />
+    </view>    
+  </view>  
 </view>

@@ -69,3 +69,15 @@ page {
 .unlogin-btn::after {
   border: none;
 }
+
+.page-foot{
+  margin: 50rpx 0 50rpx 0;
+  text-align: center;
+  color: #1aad19;
+  font-size: 0;
+}
+
+.icon-foot{
+  width: 185rpx;
+  height: 58rpx;
+}

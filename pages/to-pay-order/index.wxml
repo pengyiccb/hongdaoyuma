@@ -1,3 +1,4 @@
+<import src="../../pages/template/foot.wxml" />
 <view class="container">
   <form bindsubmit='createOrder' report-submit="true">
      <view class="address-box" wx:if="{{isNeedLogistics > 0}}">
@@ -32,6 +33,7 @@
             </view>
         </view>
      </view>
+     <template is="foot" />
 
      <view class="jiesuan-box">
         <view class="left-price">

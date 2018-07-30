@@ -1,8 +1,9 @@
-<!--index.wxml-->
+<import src="../../pages/template/foot.wxml" />
 <view class="container">
      <!-- <template is="{{goodsList.list.length > 0 ? 'cart-goods-list' : 'no-goods'}}" data="{{...goodsList}}"></template> -->
      <view class="title-box" hidden="{{!isEmpty}}">
         购物车空空如也～
+        <template is="foot" />
     </view>
     <view class="goodsList" hidden="{{isEmpty}}">
         <view class="a-gooods" wx:for="{{list}}"  wx:key="{{itemId}}" >
@@ -27,6 +28,7 @@
                 </view>
             </view>
         </view>
+        <template is="foot" />
     </view>
     <view class="jiesuan-box">
         <view class="left-price">
