@@ -1,0 +1,23 @@
+.flex-wrp {
+    display: flex;
+    flex-direction:column;
+}
+.img{
+    width: 100%;
+}
+.buttonTop{
+    width: 170rpx;
+    height: 60rpx;
+    position: relative;
+    /* border: 1rpx solid chartreuse; */
+    top: -720rpx;
+    left: 290rpx;display: flex;
+}
+.buttonBottom{
+    width: 370rpx;
+    height: 36rpx;
+    position: relative;
+    /* border: 1rpx solid chartreuse; */
+    top: -303rpx;
+    left: 190rpx;display: flex;
+}
