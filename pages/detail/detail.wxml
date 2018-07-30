@@ -1,10 +1,11 @@
 <import src="../../wxParse/wxParse.wxml" />
+<import src="../../pages/template/foot.wxml" />
 <scroll-view scroll-y="true" class="container" scroll-into-view="{{toView}}" style="height:{{scrollHeight}}px;"> 
    <view class="swiper-container">
         <swiper class="swiper_box" 
                     autoplay="{{autoplay}}" interval="{{interval}}" circular="true" indicator-active-color="#ffffff" duration="{{duration}}" bindchange="swiperchange" indicator-dots="true">
             <!-- <block wx:for="{{goodsDetail}}" wx:key="id"> -->
-            <block wx:for="{{goodsDetail.imgPrimaryList}}">
+            <block wx:for="{{goodsDetail.imgPrimaryList}}" wx:key="index">
                 <swiper-item>
                     <image src="{{item.url}}" class="slide-image" mode="aspectFit" lazy-load="true"/>
                 </swiper-item>
@@ -19,9 +20,9 @@
     <view class="goods-info">
         <view class="goods-price">¥{{price_section}}</view>
         <view class="goods-title">{{goodsDetail.sharetitle}}</view>
-        <view class="goods-info-fx">
+        <view class="goods-info-fx" bindtap="onShare">
             <image mode="aspectFit" src='../../images/share.jpg' />
-            <button open-type="share" />
+            <!-- <button open-type="share" /> -->
         </view>
     </view>
 
@@ -42,10 +43,10 @@
         <view bindtap="goodSize" class="label-title {{toView==='goodSize'?'active':''}}">商品参数</view>
     </view>
     <view class="goods-des-info" >        
-        <view id="goodDesc" class="img-box" wx:for="{{goodsDetail.imgDescList}}">
+        <view id="goodDesc" class="img-box" wx:for="{{goodsDetail.imgDescList}}" wx:key="index">
             <image mode="widthFix" class="des-imgs" src="{{item.url}}" />
         </view>        
-        <view id="goodSize" class="img-box" wx:for="{{goodsDetail.imgSpecList}}">
+        <view id="goodSize" class="img-box" wx:for="{{goodsDetail.imgSpecList}}" wx:key="index">
             <image mode="widthFix" class="des-imgs" src="{{item.url}}" />
         </view>
     </view>
@@ -68,10 +69,23 @@
         </view>
         <button hidden="{{bAccept ? true : false}}" style="position:absolute; width: 100%; height: 100%; opacity: 0; top: 0; left: 0;" open-type='getUserInfo' bindgetuserinfo='onTapLogin' />
    </view>
+   <template is="foot" />
    <view class="empty-box"></view>
     <view catchtouchmove="true" class="show-popup" hidden="{{hideShopPopup}}" >
         <view class="popup-mask" bindtap="closePopupTap"></view>
-        <view class="popup-contents">
+        <view class="popup-share" animation="{{animationData}}" wx:if="{{bSharePopop}}">
+            <view class="popup-item" bindtap="closePopupTap">
+                分享给朋友
+                <button open-type="share" style="position:absolute; width: 100%; height: 100%; opacity: 0; top: 0; left: 0;" />
+            </view>
+            <view class="popup-item" bindtap="onShareSpace">
+                分享朋友圈
+            </view>
+            <view class="popup-cancel" bindtap="closePopupTap">
+                取消
+            </view>
+        </view>
+        <view class="popup-contents" animation="{{animationData}}" wx:else>
              <view class="pop-goods-info">
                 <view class="pop-img-box">
                     <image mode="aspectFit" src="{{single_image}}" class="goods-thumbnail"/>
@@ -125,4 +139,14 @@
             </block>
         </view>
     </view>
+    <view class='imagePathBox' bindtap="closeCanvas" hidden="{{maskHidden}}">        
+        <image catchtap="stopClick" src="{{imagePath}}" class='shengcheng'></image>
+        <view class="cancelBtn" catchtap="closeCanvas"></view>
+        <button class='baocun' catchtap='baocun'>保存相册，分享到朋友圈</button>
+    </view>
+    <!-- <view hidden="{{maskHidden == false}}" class="mask"></view>  -->
+    <view class="canvas-box">
+        <canvas  style="width: 750px;height: 1334px;position:fixed;top:9999px" canvas-id="mycanvas"/>
+    </view>  
+    
 </scroll-view>

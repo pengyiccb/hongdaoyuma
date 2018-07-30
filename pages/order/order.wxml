@@ -1,3 +1,4 @@
+<import src="../../pages/template/foot.wxml" />
 <view class="container">
     <!-- <view class="bindphone">
         
@@ -10,6 +11,7 @@
     <view class="no-order" hidden="{{orderList.length != 0 ? true : false}}">
         <image src="/images/no-order.png" class="no-order-img"></image>
         <view class="text">暂无订单</view>
+        <template is="foot" />
     </view>
     <view class="order-list" hidden="{{orderList.length != 0 ? false : true}}">
         <view class="a-order" wx:for="{{orderList}}" wx:for-item="orderItem" wx:key="{{index}}">
@@ -43,7 +45,7 @@
                 <view class="btn cancel-btn" bindtap="ConfirmOrder" data-id="{{orderItem.orderId}}">确认服务</view>
             </view>
         </view>
-
+        <template is="foot" />
     </view>
 </view>
 

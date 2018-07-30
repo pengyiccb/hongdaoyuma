@@ -519,6 +519,15 @@ Page({
         url: "/pages/detail/detail?id=" + options.productId
       });
     }
+    /* wx.getImageInfo({
+      src: 'https://image.ydmaj.com/6.png',
+      success: function(res){
+        console.log("path ====" + res.path);
+      },
+      fail: function(res){
+        console.log("fail...........");
+      }
+    }); */
   },
 
   /**

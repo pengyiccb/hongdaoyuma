@@ -1,3 +1,4 @@
+<import src="../../pages/template/foot.wxml" />
 <view class="container">
    <view class="head-title" hidden="{{haveDefaultCar==false}}">已有车辆</view>
     <view class="touch-item {{item.isTouchMove ? 'touch-move-active' : ''}}" hidden="{{haveDefaultCar==false}}" data-index="{{index}}" bindtouchstart="touchstart" bindtouchmove="touchmove" wx:for="{{bindCarList}}" wx:key="" bindtap='updateDefaultCar' data-bindid='{{item.bindid}}'>
@@ -18,4 +19,5 @@
             <view class="add-car-text">添加车型</view>
         </view>
     </view>
+    <template is="foot" />
 </view>

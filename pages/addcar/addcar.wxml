@@ -1,3 +1,4 @@
+<import src="../../pages/template/foot.wxml" />
 <view class="container">
   <view class="body-view">
        <scroll-view style="height:{{scrollHeight}}px;" scroll-y="true" scroll-into-view="{{toView}}" scroll-with-animation="true">
@@ -61,6 +62,7 @@
                 </view>
             </view>
       </view>
+      <template is="foot" />
       </scroll-view>
       <view class="index-search" hidden="{{currentSelect!=1}}">
             <view class="bock-text">
@@ -68,6 +70,6 @@
                     {{item}}
                 </text>
             </view>
-        </view>
-  </view>
+        </view>        
+  </view>  
 </view>
