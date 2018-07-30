@@ -4,8 +4,10 @@ Page({
     },
     
     bIsTopColor: true,
+    changeColorPosY: 0,
 
     onLoad: function (options) {
+        this.changeColorPosY = wx.getSystemInfoSync().windowHeight / 3;
         this.changeColor()
     },
     onClickPhoneCounsel:function(event){
@@ -18,12 +20,12 @@ Page({
     },
     onPageScroll:function(e){
         if (this.bIsTopColor) {
-            if (204 < e.scrollTop) {
+            if (this.changeColorPosY < e.scrollTop) {
                 this.bIsTopColor = false;
                 this.changeColor();
             }
         } else {
-            if (204 >= e.scrollTop) {
+            if (this.changeColorPosY >= e.scrollTop) {
                 this.bIsTopColor = true;
                 this.changeColor();
             }
