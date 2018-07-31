@@ -1,0 +1,17 @@
+
+ <view class="shopRecord">
+    <view wx:for="{{shopRecordList}}">
+        <view class="shopRecordItem"> 
+            <text class="text">服务时间：{{item.time}}</text>
+            <view class="dashed"></view> 
+            <text class="text">所属套餐：{{item.setMealType}}</text>
+            <view class="dashed"></view> 
+            <text class="text">服务项目：{{item.projectType}}</text>
+            <view class="dashed"></view> 
+            <text class="text">服务车辆：{{item.carNumber}}</text>
+            <view class="dashed"></view> 
+            <text class="text">服务状态：{{statusName[item.status]}}</text>
+            <button class="button" src="../../images/button.png" bindtap='onClickPhoneCounsel'></button>
+        </view>
+    </view>
+</view>

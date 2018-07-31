@@ -118,15 +118,14 @@ Page({
     currentParentId: 0
   },
 
-
   loadKindPage: function(event) {
     var kindId = event.currentTarget.dataset.kindid;
     wx.navigateTo({url: '../group/group?kindId='+kindId})
   },
-
+  
   openNewPage:function(event) {
     wx.navigateTo({
-      url: '../company-introduction/company-introduction'
+      url: '../shopRecord/shopRecord'
     })
   },
 
@@ -519,6 +518,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+
+    // wx.navigateTo({
+    //   url: '../shopRecord/shopRecord'
+    // });
 
     if(options.productId){
       wx.navigateTo({

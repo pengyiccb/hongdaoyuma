@@ -13,7 +13,8 @@
     "pages/address-add/index",
     "pages/select-address/index",
     "pages/order-details/index",
-    "pages/company-introduction/company-introduction"
+    "pages/company-introduction/company-introduction",
+    "pages/shopRecord/shopRecord"
   ],
   "window":{
     "backgroundColor":"#F6F6F6",
