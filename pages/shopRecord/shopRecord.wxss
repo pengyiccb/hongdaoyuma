@@ -34,8 +34,8 @@ page {
     left: 18rpx;
 }
 .statusItem{
-    display: flex;
-    flex-direction: row;
+    /* display: flex; */
+    /* flex-direction: row; */
 }
 .buttonBase{
     width: 156rpx;
@@ -43,8 +43,8 @@ page {
     border-radius: 25px;
     border: 1rpx solid rgb(149,149,149);
     position: relative;
-    left: 126rpx;
-    top: 14rpx;
+    left: 548rpx;
+    top: -65rpx;
 
     color:rgb(149,149,149);
     font-style: normal;
@@ -54,9 +54,9 @@ page {
 }
 .buttonBase.confirm{
     border: 1rpx solid rgb(240, 40, 30);
-    left: 51rpx;
     color:rgb(242, 67, 62);
 }
 .buttonBase.contact{
-    left: 150rpx;
+    left: 368rpx;
+    top: -120rpx;
 }
