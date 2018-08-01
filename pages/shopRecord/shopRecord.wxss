@@ -38,12 +38,12 @@ page {
     flex-direction: row;
 }
 .buttonBase{
-    width: 170rpx;
+    width: 156rpx;
     height: 50rpx;
     border-radius: 25px;
     border: 1rpx solid rgb(149,149,149);
     position: relative;
-    left: 100rpx;
+    left: 126rpx;
     top: 14rpx;
 
     color:rgb(149,149,149);
@@ -54,10 +54,9 @@ page {
 }
 .buttonBase.confirm{
     border: 1rpx solid rgb(240, 40, 30);
-    left: 36rpx;
-    top: 10rpx;
+    left: 51rpx;
     color:rgb(242, 67, 62);
 }
 .buttonBase.contact{
-    left: 124rpx;
+    left: 150rpx;
 }

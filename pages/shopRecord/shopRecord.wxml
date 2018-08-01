@@ -12,7 +12,7 @@
             <view class="dashed"></view> 
             <view class="statusItem"> 
                 <view class="textPublic">服务状态：{{statusName[item.status]}}</view>
-                <view class="buttonBase.confirm" hidden="{{item.status==1?false:true}}" left="500rpx" bindtap='onClickButtonConfirm'>
+                <view class="buttonBase.confirm" hidden="{{item.status==1?false:true}}" bindtap='onClickButtonConfirm'>
                     确认完成
                 </view>
                 <view class="buttonBase" hidden="{{item.status==0?false:true}}" bindtap='onClickButtonCancel'>
