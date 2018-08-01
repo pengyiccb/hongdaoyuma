@@ -11,7 +11,7 @@
     position: relative;
     /* border: 1rpx solid chartreuse; */
     top: -735rpx;
-    left: 275rpx;display: flex;
+    left: 275rpx;
 }
 .buttonBottom{
     width: 400rpx;
@@ -19,5 +19,5 @@
     position: relative;
     /* border: 1rpx solid chartreuse; */
     top: -315rpx;
-    left: 177rpx;display: flex;
+    left: 177rpx;
 }

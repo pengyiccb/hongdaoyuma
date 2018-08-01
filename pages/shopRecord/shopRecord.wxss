@@ -1,0 +1,62 @@
+page {
+    background: #f2f2f2;
+ }
+ .shopRecord{
+    display: flex;
+    flex-direction: column;
+    margin-top: 9rpx;
+    margin-bottom: 9rpx;
+ }
+ .shopRecordItem {
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    width: 726rpx;
+    height: 394rpx;
+    border-radius: 5px;
+    margin-left: 12rpx;
+    margin-top: 9rpx;
+    margin-bottom: 9rpx;
+}
+.textPublic{
+    color:#888888;
+    font-style: normal;
+    font-size: 26rpx;
+    margin-left: 30rpx;
+    margin-top: 22rpx;
+    margin-bottom: 20rpx;
+}
+.dashed{
+    width: 690rpx;
+    border: 1rpx solid #f2f2f2;
+    border-style: dashed;
+    position: relative;
+    left: 18rpx;
+}
+.statusItem{
+    display: flex;
+    flex-direction: row;
+}
+.buttonBase{
+    width: 156rpx;
+    height: 50rpx;
+    border-radius: 25px;
+    border: 1rpx solid rgb(149,149,149);
+    position: relative;
+    left: 126rpx;
+    top: 14rpx;
+
+    color:rgb(149,149,149);
+    font-style: normal;
+    font-size: 26rpx;
+    text-align: center;
+    line-height: 50rpx;
+}
+.buttonBase.confirm{
+    border: 1rpx solid rgb(240, 40, 30);
+    left: 51rpx;
+    color:rgb(242, 67, 62);
+}
+.buttonBase.contact{
+    left: 150rpx;
+}
