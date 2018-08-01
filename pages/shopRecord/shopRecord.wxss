@@ -4,37 +4,68 @@ page {
  .shopRecord{
     display: flex;
     flex-direction: column;
+    margin-top: 9rpx;
  }
  .shopRecordItem {
+    background: #ffffff;
     display: flex;
     flex-direction: column;
     width: 726rpx;
     height: 394rpx;
+    border-radius: 5px;
     margin-left: 12rpx;
-    margin-top: 18rpx;
-    background: #ffffff;
+    margin-top: 9rpx;
+    margin-bottom: 9rpx;
 }
-.text{
+.textPublic{
     color:#888888;
+    font-style: normal;
     font-size: 26rpx;
+    margin-left: 30rpx;
     margin-top: 22rpx;
     margin-bottom: 20rpx;
-    font-style: normal;
-    margin-left: 30rpx;
 }
 .dashed{
+    border-style: dashed;
     width: 690rpx;
     border: 1rpx solid #f2f2f2;
     position: relative;
-    top: 0rpx;
     left: 18rpx;
-    border-style: dashed;
 }
-.button{
-    width: 200rpx;
-    height: 90rpx;
+.statusItem{
+    display: flex;
+    flex-direction: row;
+}
+.buttonConfirm{
+    width: 170rpx;
+    height: 50rpx;
+    border-radius: 25px;
+    border: 1rpx solid rgb(240, 40, 30);
     position: relative;
-    border: 10rpx solid chartreuse;
-    top: -40rpx;
+    left: 36rpx;
+    top: 10rpx;
+
+    color:rgb(242, 67, 62);
+    font-style: normal;
+    font-size: 26rpx;
+    text-align: center;
+    line-height: 50rpx;
+}
+.buttonBase{
+    width: 170rpx;
+    height: 50rpx;
+    border-radius: 25px;
+    border: 1rpx solid rgb(149,149,149);
+    position: relative;
     left: 100rpx;
+    top: 14rpx;
+
+    color:rgb(149,149,149);
+    font-style: normal;
+    font-size: 26rpx;
+    text-align: center;
+    line-height: 50rpx;
+}
+.buttonBase.contact{
+    left: 124rpx;
 }

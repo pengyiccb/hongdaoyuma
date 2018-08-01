@@ -7,12 +7,18 @@ Page({
             {shopRecordId: 23, time: "2018-07-31 16:07:00", setMealType: "《钻石卡套餐》", projectType: "1、翡翠紫瓷套装(数量x2)", carNumber:"赣A 88888", status:0}
         ],
     },
-    onClickPhoneCounsel:function(event){
-        console.log("onClickPhoneCounsel")
-    },
     onLoad: function (options) {
         // this.setData({
         //     shopRecordList: this.shopRecordList
         // })
+    },
+    onClickButtonConfirm:function(event){
+        console.log("onClickButtonConfirm")
+    },
+    onClickButtonCancel:function(event){
+        console.log("onClickButtonCancel")
+    },
+    onClickButtonContact:function(event){
+        console.log("onClickButtonContact")
     },
 })

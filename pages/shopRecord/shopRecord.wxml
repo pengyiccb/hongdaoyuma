@@ -2,16 +2,26 @@
  <view class="shopRecord">
     <view wx:for="{{shopRecordList}}">
         <view class="shopRecordItem"> 
-            <text class="text">服务时间：{{item.time}}</text>
+            <text class="textPublic">服务时间：{{item.time}}</text>
             <view class="dashed"></view> 
-            <text class="text">所属套餐：{{item.setMealType}}</text>
+            <text class="textPublic">所属套餐：{{item.setMealType}}</text>
             <view class="dashed"></view> 
-            <text class="text">服务项目：{{item.projectType}}</text>
+            <text class="textPublic">服务项目：{{item.projectType}}</text>
             <view class="dashed"></view> 
-            <text class="text">服务车辆：{{item.carNumber}}</text>
+            <text class="textPublic">服务车辆：{{item.carNumber}}</text>
             <view class="dashed"></view> 
-            <text class="text">服务状态：{{statusName[item.status]}}</text>
-            <button class="button" src="../../images/button.png" bindtap='onClickPhoneCounsel'></button>
+            <view class="statusItem"> 
+                <text class="textPublic">服务状态：{{statusName[item.status]}}</text>
+                <view class="buttonConfirm" hidden="{{item.status==1?false:true}}" left="500rpx" bindtap='onClickButtonConfirm'>
+                    确认完成
+                </view>
+                <view class="buttonBase" hidden="{{item.status==0?false:true}}" bindtap='onClickButtonCancel'>
+                    取消订单
+                </view>
+                <view class="buttonBase.contact" hidden="{{item.status==0?false:true}}" bindtap='onClickButtonContact'>
+                    联系商家
+                </view>
+            </view>
         </view>
     </view>
 </view>
