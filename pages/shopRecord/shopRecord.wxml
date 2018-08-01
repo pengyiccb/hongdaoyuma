@@ -1,26 +1,24 @@
 
  <view class="shopRecord">
-    <view wx:for="{{shopRecordList}}">
-        <view class="shopRecordItem"> 
-            <view class="textPublic">服务时间：{{item.time}}</view>
-            <view class="dashed"></view> 
-            <view class="textPublic">所属套餐：{{item.setMealType}}</view>
-            <view class="dashed"></view> 
-            <view class="textPublic">服务项目：{{item.projectType}}</view>
-            <view class="dashed"></view> 
-            <view class="textPublic">服务车辆：{{item.carNumber}}</view>
-            <view class="dashed"></view> 
-            <view class="statusItem"> 
-                <view class="textPublic">服务状态：{{statusName[item.status]}}</view>
-                <view class="buttonBase.confirm" hidden="{{item.status==1?false:true}}" bindtap='onClickButtonConfirm'>
-                    确认完成
-                </view>
-                <view class="buttonBase" hidden="{{item.status==0?false:true}}" bindtap='onClickButtonCancel'>
-                    取消订单
-                </view>
-                <view class="buttonBase.contact" hidden="{{item.status==0?false:true}}" bindtap='onClickButtonContact'>
-                    联系商家
-                </view>
+    <view class="shopRecordItem" wx:for="{{shopRecordList}}"> 
+        <view class="textPublic">服务时间：{{item.time}}</view>
+        <view class="dashed"></view> 
+        <view class="textPublic">所属套餐：{{item.setMealType}}</view>
+        <view class="dashed"></view> 
+        <view class="textPublic">服务项目：{{item.projectType}}</view>
+        <view class="dashed"></view> 
+        <view class="textPublic">服务车辆：{{item.carNumber}}</view>
+        <view class="dashed"></view> 
+        <view class="statusItem"> 
+            <view class="textPublic">服务状态：{{statusName[item.status]}}</view>
+            <view class="buttonBase.confirm" hidden="{{item.status==1?false:true}}" bindtap='onClickButtonConfirm'>
+                确认完成
+            </view>
+            <view class="buttonBase" hidden="{{item.status==0?false:true}}" bindtap='onClickButtonCancel'>
+                取消订单
+            </view>
+            <view class="buttonBase.contact" hidden="{{item.status==0?false:true}}" bindtap='onClickButtonContact'>
+                联系商家
             </view>
         </view>
     </view>

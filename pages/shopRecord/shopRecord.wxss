@@ -2,29 +2,24 @@ page {
     background: #f2f2f2;
  }
  .shopRecord{
-    display: flex;
-    flex-direction: column;
-    margin-top: 9rpx;
-    margin-bottom: 9rpx;
+    margin-top: 12rpx;
  }
  .shopRecordItem {
     background: #ffffff;
-    display: flex;
     flex-direction: column;
     width: 726rpx;
     height: 394rpx;
     border-radius: 5px;
     margin-left: 12rpx;
-    margin-top: 9rpx;
-    margin-bottom: 9rpx;
+    margin-bottom: 18rpx;
 }
 .textPublic{
     color:#888888;
     font-style: normal;
     font-size: 26rpx;
+    height: 77rpx;
+    line-height: 77rpx;
     margin-left: 30rpx;
-    margin-top: 22rpx;
-    margin-bottom: 20rpx;
 }
 .dashed{
     width: 690rpx;
@@ -34,17 +29,18 @@ page {
     left: 18rpx;
 }
 .statusItem{
-    /* display: flex; */
-    /* flex-direction: row; */
+    height: 77rpx;
+    position: relative;
+    overflow: hidden;
 }
 .buttonBase{
     width: 156rpx;
     height: 50rpx;
     border-radius: 25px;
     border: 1rpx solid rgb(149,149,149);
-    position: relative;
-    left: 548rpx;
-    top: -65rpx;
+    position: absolute;
+    right: 18rpx;
+    top: 13rpx;
 
     color:rgb(149,149,149);
     font-style: normal;
@@ -57,6 +53,5 @@ page {
     color:rgb(242, 67, 62);
 }
 .buttonBase.contact{
-    left: 368rpx;
-    top: -120rpx;
+    right: 198rpx;
 }
