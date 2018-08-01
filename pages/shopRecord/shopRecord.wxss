@@ -5,6 +5,7 @@ page {
     display: flex;
     flex-direction: column;
     margin-top: 9rpx;
+    margin-bottom: 9rpx;
  }
  .shopRecordItem {
     background: #ffffff;
@@ -26,30 +27,15 @@ page {
     margin-bottom: 20rpx;
 }
 .dashed{
-    border-style: dashed;
     width: 690rpx;
     border: 1rpx solid #f2f2f2;
+    border-style: dashed;
     position: relative;
     left: 18rpx;
 }
 .statusItem{
     display: flex;
     flex-direction: row;
-}
-.buttonConfirm{
-    width: 170rpx;
-    height: 50rpx;
-    border-radius: 25px;
-    border: 1rpx solid rgb(240, 40, 30);
-    position: relative;
-    left: 36rpx;
-    top: 10rpx;
-
-    color:rgb(242, 67, 62);
-    font-style: normal;
-    font-size: 26rpx;
-    text-align: center;
-    line-height: 50rpx;
 }
 .buttonBase{
     width: 170rpx;
@@ -65,6 +51,12 @@ page {
     font-size: 26rpx;
     text-align: center;
     line-height: 50rpx;
+}
+.buttonBase.confirm{
+    border: 1rpx solid rgb(240, 40, 30);
+    left: 36rpx;
+    top: 10rpx;
+    color:rgb(242, 67, 62);
 }
 .buttonBase.contact{
     left: 124rpx;

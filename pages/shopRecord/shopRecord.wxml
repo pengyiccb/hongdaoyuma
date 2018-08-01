@@ -2,17 +2,17 @@
  <view class="shopRecord">
     <view wx:for="{{shopRecordList}}">
         <view class="shopRecordItem"> 
-            <text class="textPublic">服务时间：{{item.time}}</text>
+            <view class="textPublic">服务时间：{{item.time}}</view>
             <view class="dashed"></view> 
-            <text class="textPublic">所属套餐：{{item.setMealType}}</text>
+            <view class="textPublic">所属套餐：{{item.setMealType}}</view>
             <view class="dashed"></view> 
-            <text class="textPublic">服务项目：{{item.projectType}}</text>
+            <view class="textPublic">服务项目：{{item.projectType}}</view>
             <view class="dashed"></view> 
-            <text class="textPublic">服务车辆：{{item.carNumber}}</text>
+            <view class="textPublic">服务车辆：{{item.carNumber}}</view>
             <view class="dashed"></view> 
             <view class="statusItem"> 
-                <text class="textPublic">服务状态：{{statusName[item.status]}}</text>
-                <view class="buttonConfirm" hidden="{{item.status==1?false:true}}" left="500rpx" bindtap='onClickButtonConfirm'>
+                <view class="textPublic">服务状态：{{statusName[item.status]}}</view>
+                <view class="buttonBase.confirm" hidden="{{item.status==1?false:true}}" left="500rpx" bindtap='onClickButtonConfirm'>
                     确认完成
                 </view>
                 <view class="buttonBase" hidden="{{item.status==0?false:true}}" bindtap='onClickButtonCancel'>
