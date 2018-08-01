@@ -1,7 +1,6 @@
 //index.js
 //获取应用实例
 var app = getApp();
-var WxParse = require('../../wxParse/wxParse.js');
 const api = require('../../utils/api');
 let animationShowHeight = 300;
 
@@ -210,79 +209,125 @@ Page({
       title: '海报生成中...'
     });
 
-    var context = wx.createCanvasContext('mycanvas');
-    context.setFillStyle("#ffffff")
-    context.fillRect(0, 0, 750, 1334);
+    wx.getImageInfo({
+      src: that.data.goodsDetail.shareImage.url,
+      success: function(res){
+        var context = wx.createCanvasContext('mycanvas');
+        context.setFillStyle("#ffffff")
+        context.fillRect(0, 0, 750, 1334);
+        
+        context.drawImage(res.path, 28, 70, 686, 686);
+
+        context.font = "36px PingFang SC";
+        context.setFillStyle('#333333');
+        context.setTextAlign('left');
     
-    var path = "/images/paper.png"
-    context.drawImage(path, 28, 70, 686, 686);
-
-    context.font = "36px PingFang SC";
-    context.setFillStyle('#333333');
-    context.setTextAlign('left');
- 
-    var temp = '';
-    var row = [];
-    var chr = that.data.goodsDetail.sharetitle.split('');
-    /* var chr = "邀请你一起去吃面邀请你一起去吃面邀请你邀请你一起去吃面邀请你一起去吃面邀请你邀请你一起去吃面邀请你一起去吃面邀请你"; */
-    for(var i = 0; i < chr.length; i++){
-      if (context.measureText(temp).width < 686) {
-        temp += chr[i];
-      }else{
-        i--
+        var temp = '';
+        var row = [];
+        var chr = that.data.goodsDetail.sharetitle.split('');
+        for(var i = 0; i < chr.length; i++){
+          if (context.measureText(temp).width < 686) {
+            temp += chr[i];
+          }else{
+            i--
+            row.push(temp);
+            temp = '';
+          }
+        }
         row.push(temp);
-        temp = '';
+        if(row.length > 2){
+          var rowCut = row.slice(0, 2);
+          var rowPart = rowCut[1];
+          var test = '';
+          var empty = [];
+          for (var j = 0; j < rowPart.length; j++){
+            if (context.measureText(test).width < 600) {
+              test += rowPart[j];
+            }
+            else {
+              break;
+            }
+          }
+          empty.push(test);
+          var group = empty[0] + "...";
+          rowCut.splice(1, 1, group);
+          row = rowCut;
+        }
+        for(var k = 0; k < row.length; k++){
+          context.fillText(row[k], 28, 846 + k * 60, 686);
+        }
+
+        context.font = "60px bold PingFang SC";
+        context.setFillStyle('#fe403b');
+        context.setTextAlign('left');
+        context.fillText("￥ " + that.data.price_section, 28, 1002, 686);
+
+        var data = {};
+        data.scene = that.data.productId;
+        data.page = "pages/carhome/carhome";
+        data.width = 180;
+        data.is_hyaline = true;
+        data.appId = app.globalData.appId;
+        api.getQR(data).catch(res => {
+          wx.showToast({
+            icon: 'none',
+            title: '网络数据错误',
+          })
+        }).then(res => {
+          if(res.code && res.code == 200){
+            wx.getImageInfo({
+              src: res.data.url,
+              success: function(res){
+                context.drawImage(res.path, 286, 1100, 160, 160);
+
+                context.font = "18px PingFang SC";
+                context.setFillStyle('#9b9b9b');
+                context.setTextAlign('left');
+                context.fillText("扫描或长按小程序码", 291, 1290, 160);
+
+                context.draw();
+                setTimeout(function () {
+                  wx.canvasToTempFilePath({
+                    canvasId: 'mycanvas',
+                    success: function (res) {
+                      wx.hideLoading();
+                      var tempFilePath = res.tempFilePath;
+                      that.setData({
+                        imagePath: tempFilePath,
+                        maskHidden: false
+                      });
+                    },
+                    fail: function (res) {
+                      wx.hideLoading();
+                      wx.showLoading({
+                        title: '海报生成失败'
+                      });
+                    }
+                  });
+                }, 200);
+              },
+              fail: function(res){
+                wx.showToast({
+                  icon: 'none',
+                  title: '数据错误',
+                });
+              }
+            });
+          }else{
+            wx.showToast({
+              icon: 'none',
+              title: res.msg,
+            })
+          }
+        });        
+      },
+      fail: function(res){
+        wx.showToast({
+          icon: 'none',
+          title: '数据错误',
+        })
       }
-    }
-    row.push(temp);
-    if(row.length > 2){
-      var rowCut = row.slice(0, 2);
-      var rowPart = rowCut[1];
-      var test = '';
-      var empty = [];
-      for (var j = 0; j < rowPart.length; j++){
-        if (context.measureText(test).width < 600) {
-          test += rowPart[j];
-        }
-        else {
-          break;
-        }
-      }
-      empty.push(test);
-      var group = empty[0] + "...";
-      rowCut.splice(1, 1, group);
-      row = rowCut;
-    }
-    for(var k = 0; k < row.length; k++){
-      context.fillText(row[k], 28, 846 + k * 60, 686);
-    }
-
-    context.font = "60px bold PingFang SC";
-    context.setFillStyle('#fe403b');
-    context.setTextAlign('left');
-    context.fillText("￥ 2000", 28, 1002, 686);
-
-    context.draw();    
-
-    setTimeout(function () {
-      wx.canvasToTempFilePath({
-        canvasId: 'mycanvas',
-        success: function (res) {
-          wx.hideLoading();
-          var tempFilePath = res.tempFilePath;
-          that.setData({
-            imagePath: tempFilePath,
-            maskHidden: false
-          });
-        },
-        fail: function (res) {
-          wx.hideLoading();
-          wx.showLoading({
-            title: '海报生成失败'
-          });
-        }
-      });
-    }, 200);
+    });    
   },
 
   //分享

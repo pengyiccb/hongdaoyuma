@@ -1,4 +1,3 @@
-<import src="../../wxParse/wxParse.wxml" />
 <import src="../../pages/template/foot.wxml" />
 <scroll-view scroll-y="true" class="container" scroll-into-view="{{toView}}" style="height:{{scrollHeight}}px;"> 
    <view class="swiper-container">

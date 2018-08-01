@@ -1,0 +1,14 @@
+<view class="container">
+    <view class="title-view">
+        <view class="myvip">
+            我的会员卡
+        </view>
+        <view class="sale-detail">
+            消费记录 >>
+        </view>
+    </view>
+
+    <view class="card-view">
+        <i class="iconfont">&#x33;</i>
+    </view>
+</view>

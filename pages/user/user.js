@@ -49,7 +49,7 @@ Page({
       {
         name: "会员卡",
         url: "",
-        tapFunction:"onTapCloseTips"
+        tapFunction:"onTapVipCard"
       },
       {
         name: "绑定车型",
@@ -77,6 +77,12 @@ Page({
         tapFunction:"onTapCloseTips"
       }, */
     ]
+  },
+
+  onTapVipCard: function(){
+    wx.navigateTo({
+      url:"/pages/vipcard/vipcard"
+    })
   },
 
   getPhoneNumber: function(e){

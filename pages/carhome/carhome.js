@@ -519,6 +519,13 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if(options.scene){
+      var scene = decodeURIComponent(options.scene)
+      wx.navigateTo({
+        url: "/pages/detail/detail?id=" + scene
+      });
+      return;
+    }
 
     if(options.productId){
       wx.navigateTo({
@@ -546,7 +553,7 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function (options) {
     var that = this;
     wx.getUserInfo({
       success: function(res){

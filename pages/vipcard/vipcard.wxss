@@ -1,0 +1,67 @@
+/* pages/vipcard/vipcard.wxss */
+page{
+    min-height: 100%;
+    background-color: #F2f2f2;
+  }
+
+  view {
+    font-family: "PingFang SC", "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Hiragino Sans GB", "Source Han Sans CN Normal", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif;
+  }
+
+  .container {
+    min-height: 100%;
+    width: 100%;
+  }
+
+  .title-view{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      height: 70rpx;
+      background-color: #fff;
+      line-height: 70rpx;
+      padding-left: 20rpx;
+      padding-right: 20rpx;
+  }
+
+  .title-view .myvip{
+      font-size: 24rpx;
+      color: #333333;
+  }
+
+  .title-view .sale-detail{
+      font-size: 24rpx;
+      color: #0096ec;
+  }
+
+  .card-view{
+      height: 292rpx;
+      background-color: #fff;
+      margin: 18rpx 12rpx 0rpx 12rpx;
+      border-radius: 16rpx;
+  }
+
+  .card-view .card-body{
+    background-image: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyMS4wLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0i5Zu+5bGCXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgNTk1LjMgODQxLjkiIHN0eWxlPSJlbmFibGUtYmFja2dyb3VuZDpuZXcgMCAwIDU5NS4zIDg0MS45OyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KCS5zdDB7ZmlsbC1ydWxlOmV2ZW5vZGQ7Y2xpcC1ydWxlOmV2ZW5vZGQ7ZmlsbDojRkZGRkZGO30NCjwvc3R5bGU+DQo8cGF0aCBjbGFzcz0ic3QwIiBkPSJNNDgwLjUsNDc5LjVjLTMuNSwwLTYuNy0xLjYtOC45LTRoLTYuMWMtMi4yLDIuNC01LjQsNC04LjksNHMtNi43LTEuNi04LjktNGgtNi4xYy0yLjIsMi40LTUuNCw0LTguOSw0DQoJcy02LjctMS42LTguOS00aC02LjFjLTIuMiwyLjQtNS40LDQtOC45LDRzLTYuNy0xLjYtOC45LTRoLTYuMWMtMi4yLDIuNC01LjQsNC04LjksNHMtNi43LTEuNi04LjktNGgtNi4xYy0yLjIsMi40LTUuNCw0LTguOSw0DQoJcy02LjctMS42LTguOS00aC02LjFjLTIuMiwyLjQtNS40LDQtOC45LDRzLTYuNy0xLjYtOC45LTRoLTYuMWMtMi4yLDIuNC01LjQsNC04LjksNHMtNi43LTEuNi04LjktNGgtNi4xYy0yLjIsMi40LTUuNCw0LTguOSw0DQoJcy02LjctMS42LTguOS00aC02LjFjLTIuMiwyLjQtNS40LDQtOC45LDRzLTYuNy0xLjYtOC45LTRoLTYuMWMtMi4yLDIuNC01LjQsNC04LjksNHMtNi43LTEuNi04LjktNGgtNi4xYy0yLjIsMi40LTUuNCw0LTguOSw0DQoJcy02LjctMS42LTguOS00aC02LjFjLTIuMiwyLjQtNS40LDQtOC45LDRzLTYuNy0xLjYtOC45LTRoLTYuMWMtMi4yLDIuNC01LjQsNC04LjksNHMtNi43LTEuNi04LjktNGgtNi4xYy0yLjIsMi40LTUuNCw0LTguOSw0DQoJcy02LjctMS42LTguOS00aC02LjFjLTIuMiwyLjQtNS40LDQtOC45LDRzLTYuNy0xLjYtOC45LTRoLTYuMWMtMi4yLDIuNC01LjQsNC04LjksNHMtNi43LTEuNi04LjktNGgtNi4xYy0yLjIsMi40LTUuNCw0LTguOSw0DQoJcy02LjctMS42LTguOS00aC02LjFjLTIuMiwyLjQtNS40LDQtOC45LDRzLTYuNy0xLjYtOC45LTRoLTYuMWMtMi4yLDIuNC01LjQsNC04LjksNHMtNi43LTEuNi04LjktNEg5LjRjLTIuMiwyLjQtNS40LDQtOC45LDQNCglzLTYuNy0xLjYtOC45LTRoLTYuMWMtMi4yLDIuNC01LjQsNC04LjksNHMtNi43LTEuNi04LjktNGgtNi4xYy0yLjIsMi40LTUuNCw0LTguOSw0cy02LjctMS42LTguOS00aC02LjFjLTIuMiwyLjQtNS40LDQtOC45LDQNCglzLTYuNy0xLjYtOC45LTRoLTYuMWMtMi4yLDIuNC01LjQsNC04LjksNHMtNi43LTEuNi04LjktNGgtNi4xYy0yLjIsMi40LTUuNCw0LTguOSw0cy02LjctMS42LTguOS00aC02LjFjLTIuMiwyLjQtNS40LDQtOC45LDQNCglzLTYuNy0xLjYtOC45LTRoLTYuMWMtMi4yLDIuNC01LjQsNC04LjksNHMtNi43LTEuNi04LjktNGgtNi4xYy0yLjIsMi40LTUuNCw0LTguOSw0cy02LjctMS42LTguOS00aC02LjFjLTIuMiwyLjQtNS40LDQtOC45LDQNCglzLTYuNy0xLjYtOC45LTRoLTYuMWMtMi4yLDIuNC01LjQsNC04LjksNGMtMSwwLTItMC4xLTMtMC40di0yMy4yVjM0My41YzAtOC44LDcuMi0xNiwxNi0xNmg2OTRjOC44LDAsMTYsNy4yLDE2LDE2djExMi40djIzLjINCglDNDgyLjUsNDc5LjQsNDgxLjUsNDc5LjUsNDgwLjUsNDc5LjV6Ii8+DQo8L3N2Zz4NCg==");
+    background-size: cover;
+    display: inline-block;
+    width: 152rpx;
+    height: 152rpx;
+  }
+  
+  @font-face {
+    font-family: 'iconfont';
+    src: url('../../images/svg-file/iconfont.eot');
+    src: url('../../images/svg-file/iconfont.eot?#iefix') format('embedded-opentype'),
+    url('../../images/svg-file/iconfont.woff') format('woff'),
+    url('../../images/svg-file/iconfont.ttf') format('truetype'),
+    url('../../images/svg-file/iconfont.svg#iconfont') format('svg');
+  }
+
+  .iconfont{
+    font-family:"iconfont" !important;
+    font-size:16px;font-style:normal;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+  }

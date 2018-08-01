@@ -1,5 +1,5 @@
 {
-  "pages":[
+  "pages": [
     "pages/carhome/carhome",
     "pages/user/user",
     "pages/addcar/addcar",
@@ -13,35 +13,37 @@
     "pages/address-add/index",
     "pages/select-address/index",
     "pages/order-details/index",
-    "pages/company-introduction/company-introduction"
+    "pages/company-introduction/company-introduction",
+    "pages/vipcard/vipcard"
   ],
-  "window":{
-    "backgroundColor":"#F6F6F6",
-    "backgroundTextStyle":"light",
+  "window": {
+    "backgroundColor": "#F6F6F6",
+    "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#ececee",
     "navigationBarTitleText": "Wafer Quick Start",
-    "navigationBarTextStyle":"black"
+    "navigationBarTextStyle": "black"
   },
   "tabBar": {
     "selectedColor": "#ff0000",
-    "list": [{
-      "pagePath": "pages/carhome/carhome",
-      "text": "首页",
-      "iconPath": "images/home.png",
-      "selectedIconPath": "images/home-sel.png"
-    },
-    {
-      "text": "购物车",
-      "pagePath": "pages/shop-cart/index",
-      "iconPath": "images/trolley.png",
-      "selectedIconPath": "images/trolley-sel.png"
-    },
-    {
-      "text": "个人中心",
-      "pagePath": "pages/user/user",
-      "iconPath": "images/user.png",
-      "selectedIconPath": "images/user-sel.png"
-    }
+    "list": [
+      {
+        "pagePath": "pages/carhome/carhome",
+        "text": "首页",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home-sel.png"
+      },
+      {
+        "text": "购物车",
+        "pagePath": "pages/shop-cart/index",
+        "iconPath": "images/trolley.png",
+        "selectedIconPath": "images/trolley-sel.png"
+      },
+      {
+        "text": "个人中心",
+        "pagePath": "pages/user/user",
+        "iconPath": "images/user.png",
+        "selectedIconPath": "images/user-sel.png"
+      }
     ]
   }
 }
