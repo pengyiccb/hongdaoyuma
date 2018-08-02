@@ -1,4 +1,4 @@
-<view class="shopRecord">
+<view class="shopRecord" class="{{bIsHidePopup ? '' : 'noScroll'}}"> 
     <view class="shopRecordItem" wx:for="{{shopRecordList}}"> 
         <view class="textPublic">服务时间：{{item.time}}</view>
         <view class="dashed"></view> 
@@ -17,7 +17,7 @@
     </view>
 </view>
 
-<view class="popupMask" bindtap="closePopupTap" catchtouchmove="true" hidden="{{bIsHidePopup}}" >
+<view class="popupMask" bindtap="closePopupTap" hidden="{{bIsHidePopup}}" >
     <view class="popupBg"> 
         <view class="pop-goods-close" bindtap="closePopupTap"></view> 
         <view class="textTitle">服务说明</view>
