@@ -1,29 +1,14 @@
+
+const api = require('../../utils/api');
+
 Page({
     data:{
-        statusName:["已预约", "店家服务已完成，请确认完成"],
-        shopRecordList: [
-            {shopRecordId: 23, time: "2018-07-31 16:07:00", setMealType: "钻石卡套餐", projectType: "1、翡翠紫瓷套装(数量x2)", carNumber:"赣A 12345", status:0},
-            {shopRecordId: 23, time: "2018-07-31 16:07:00", setMealType: "钻石卡套餐", projectType: "1、翡翠紫瓷套装(数量x2)", carNumber:"赣A 66666", status:1},
-            {shopRecordId: 23, time: "2018-07-31 16:07:00", setMealType: "钻石卡套餐", projectType: "1、翡翠紫瓷套装(数量x2)", carNumber:"赣A 12345", status:0},
-            {shopRecordId: 23, time: "2018-07-31 16:07:00", setMealType: "钻石卡套餐", projectType: "1、翡翠紫瓷套装(数量x2)", carNumber:"赣A 66666", status:1},
-            {shopRecordId: 23, time: "2018-07-31 16:07:00", setMealType: "钻石卡套餐", projectType: "1、翡翠紫瓷套装(数量x2)", carNumber:"赣A 12345", status:0},
-            {shopRecordId: 23, time: "2018-07-31 16:07:00", setMealType: "钻石卡套餐", projectType: "1、翡翠紫瓷套装(数量x2)", carNumber:"赣A 66666", status:1},
-            {shopRecordId: 23, time: "2018-07-31 16:07:00", setMealType: "钻石卡套餐", projectType: "1、翡翠紫瓷套装(数量x2)", carNumber:"赣A 12345", status:0},
-            {shopRecordId: 23, time: "2018-07-31 16:07:00", setMealType: "钻石卡套餐", projectType: "1、翡翠紫瓷套装(数量x2)", carNumber:"赣A 66666", status:1},
-        ],
-        bIsHidePopup: false,
+        statusName:["服务已完成", "预约已提交", "预约已完成", "预约已取消",],
+        shopRecordList: [],
+        bIsHidePopup: true,
     },
     onLoad: function (options) {
-        // this.setData({
-        //     shopRecordList: this.shopRecordList
-        // })
-    },
-    closePopupTap:function(event){
-        this.setData({
-            bIsHidePopup: true
-        })
-    },
-    onClickButtonConfirm:function(event){
+        // testcode popup
         var animation = wx.createAnimation({
             duration: 200,
             timingFunction: "linear"
@@ -36,13 +21,76 @@ Page({
         });
         console.log("onClickButtonConfirm:"+this.data.bIsHidePopup)
     },
+    onShow: function () {
+        this.GetReservationRecord();
+    },
+    GetReservationRecord: function () {
+        api.getReservationRecord({}).catch(res => {
+            wx.showToast({
+              icon: 'none',
+              title: '网络数据错误',
+            })
+          }).then(res => {
+            if(res.code && res.code == 200){
+                console.log(res)
+                this.setData({ 
+                    shopRecordList: res.data,
+                });
+              }else{
+                wx.showToast({
+                  icon: 'none',
+                  title: res.msg,
+                })
+              }
+          });
+    },
     onClickButtonCancel:function(event){
+        api.shopRecordCancel({}, event.currentTarget.dataset.id).catch(res => {
+            wx.showToast({
+              icon: 'none',
+              title: '网络数据错误',
+            })
+          }).then(res =>{
+            if(res.code && res.code == 200){
+                console.log(res);
+                this.GetReservationRecord();
+            }else{
+              wx.showToast({
+                icon: 'none',
+                title: res.msg,
+              })
+            }
+        });
+    },
+    onClickButtonConfirm:function(event){
+        api.shopRecordConfirm({}, event.currentTarget.dataset.id).catch(res => {
+            wx.showToast({
+              icon: 'none',
+              title: '网络数据错误',
+            })
+          }).then(res =>{
+            if(res.code && res.code == 200){
+                console.log(res);
+                this.GetReservationRecord();
+            }else{
+              wx.showToast({
+                icon: 'none',
+                title: res.msg,
+              })
+            }
+        });
+    },
+    onClickButtonContact:function(event){
+        wx.makePhoneCall({
+            phoneNumber: '15170057995',
+            success: function () {
+                console.log("成功拨打电话")
+            }
+        })
+    },
+    closePopupTap:function(event){
         this.setData({
             bIsHidePopup: true
         })
-        console.log("onClickButtonCancel:"+this.data.bIsHidePopup)
-    },
-    onClickButtonContact:function(event){
-        console.log("onClickButtonContact")
     },
 })

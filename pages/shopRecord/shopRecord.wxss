@@ -6,17 +6,24 @@ view {
 page {
     background: #f2f2f2;
  }
- .shopRecord{
-    margin-top: 12rpx;
- }
- .shopRecordItem {
+ .noScroll{
+     top:0px;
+     left: 0px;
+     width: 100%;
+     height: 100%;
+     overflow: hidden;
+     position: fixed;
+     z-index: 0;
+} 
+.shopRecordItem {
     background: #ffffff;
     flex-direction: column;
     width: 726rpx;
-    height: 394rpx;
+    /* height: 394rpx; */
     border-radius: 5px;
     margin-left: 12rpx;
-    margin-bottom: 18rpx;
+    margin-top: 12rpx;
+    margin-bottom: 6rpx;
 }
 .textPublic{
     color:#888888;
@@ -24,6 +31,24 @@ page {
     height: 77rpx;
     line-height: 77rpx;
     margin-left: 30rpx;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.textProjectList{
+    width: 560rpx;
+    position: relative; 
+    margin-top:18rpx; 
+    margin-bottom: 18rpx;
+}
+.textProjectItem{
+    color:#888888;
+    font-size: 26rpx;
+    height: 36rpx;
+    line-height: 36rpx;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .dashed{
     width: 690rpx;
@@ -43,7 +68,7 @@ page {
     border-radius: 25px;
     border: 1rpx solid rgb(149,149,149);
     position: absolute;
-    right: 18rpx;
+    /* right: 18rpx; */
     top: 13rpx;
 
     color:rgb(149,149,149);
@@ -51,12 +76,16 @@ page {
     text-align: center;
     line-height: 50rpx;
 }
+.buttonBase.cancel{
+    right: 198rpx;
+}
+.buttonBase.contact{
+    right: 18rpx;
+}
 .buttonBase.confirm{
     border: 1rpx solid rgb(240, 40, 30);
     color:rgb(242, 67, 62);
-}
-.buttonBase.contact{
-    right: 198rpx;
+    right: 18rpx;
 }
 
 
@@ -123,8 +152,10 @@ page {
     color:rgb(51,51,51);
     font-size: 28rpx;
     line-height: 28rpx;
-    position: relative;
     margin-bottom: 22rpx;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .textSubInfo{
     color:rgb(155,155,155);
@@ -146,12 +177,3 @@ page {
     height: 0;
     color: transparent;
 }
-.noScroll{
-    top:0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    position: fixed;
-    z-index: 0;
-} 
