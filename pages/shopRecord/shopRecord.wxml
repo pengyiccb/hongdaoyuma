@@ -1,4 +1,4 @@
-<view class="{{bIsHidePopup ? '' : 'noScroll'}}"> 
+<view > 
     <view class="shopRecordItem" wx:for="{{shopRecordList}}"> 
         <view class="textPublic">服务时间：{{item.createTime}}</view>
         <view class="dashed"></view> 
@@ -28,21 +28,5 @@
                 <view class="buttonBase.confirm" bindtap='onClickButtonConfirm' data-id="{{item.reservationId}}">确认完成</view>
             </view>
         </view>
-    </view>
-</view>
-
-<!-- testcode popup -->
-<view class="popupMask" bindtap="closePopupTap" hidden="{{bIsHidePopup}}" >
-    <view class="popupBg"> 
-        <view class="pop-goods-close" bindtap="closePopupTap"></view> 
-        <view class="textTitle">服务说明</view>
-        <view class="textTitlePS">“{{shopRecordList[0].userPackageName}}”服务项目说明：</view>
-        <scroll-view class="scrollViewFrame" scroll-y="true" style="width: 100%">
-            <view class="textInfo" wx:for="{{shopRecordList[0].itemList}}"> 
-                <view class="textSubTitle">{{(item.itemId)}}、{{item.userPackageItemName}}：</view>
-                <view class="textSubInfo">{{item.userPackageItemName}}(x{{item.amount}})</view>
-                <view class="separateDashed" hidden="{{(item.itemId)==shopRecordList[0].itemList.length?true:false}}"></view> 
-            </view>
-        </scroll-view >
     </view>
 </view>

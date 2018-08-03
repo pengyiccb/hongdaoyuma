@@ -5,21 +5,9 @@ Page({
     data:{
         statusName:["服务已完成", "预约已提交", "预约已完成", "预约已取消",],
         shopRecordList: [],
-        bIsHidePopup: true,
     },
     onLoad: function (options) {
-        // testcode popup
-        var animation = wx.createAnimation({
-            duration: 200,
-            timingFunction: "linear"
-        });
-        this.animation = animation;
-        animation.height(0).step();
-        this.setData({
-            bIsHidePopup: false,
-            animationData: animation.export()
-        });
-        console.log("onClickButtonConfirm:"+this.data.bIsHidePopup)
+        
     },
     onShow: function () {
         this.GetReservationRecord();
@@ -86,11 +74,6 @@ Page({
             success: function () {
                 console.log("成功拨打电话")
             }
-        })
-    },
-    closePopupTap:function(event){
-        this.setData({
-            bIsHidePopup: true
         })
     },
 })

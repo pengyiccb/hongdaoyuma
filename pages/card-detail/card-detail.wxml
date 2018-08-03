@@ -5,7 +5,7 @@
                 <view class="card-name">{{cardName}}</view>
                 <view class="card-time">购买时间:{{cardBuyTime}}</view>
             </view>
-            <view class="card-btn"></view>
+            <view class="card-btn" bindtap="showCardInfo"></view>
         </view>
         <view class="line-dot"></view>
         <view class="service-title">
@@ -29,4 +29,19 @@
         </view>
     </view>
     <v-panel isShow="{{keybordShow ? true : false}}" bindok="inputOk" binddelete="inputdelete" bindinputchange="inputChange" keyBoardType="{{keybordType}}" backgroundColor="white" />
+</view>
+<!-- popup -->
+<view class="popupMask" bindtap="hideCardInfo" hidden="{{bIsHidePopup}}" >
+    <view class="popupBg"> 
+        <view class="pop-goods-close" bindtap="hideCardInfo"></view> 
+        <view class="textTitle">服务说明</view>
+        <view class="textTitlePS">“{{cardName}}”服务项目说明：</view>
+        <scroll-view class="scrollViewFrame" scroll-y="true" style="width: 100%">
+            <view class="textInfo" wx:for="{{cardItemList}}"> 
+                <view class="textSubTitle">{{(index+1)}}、{{item.itemName}}：</view>
+                <view class="textSubInfo">{{item.itemDesc}}</view>
+                <view class="separateDashed" hidden="{{(index+1)==cardItemList.length?true:false}}"></view> 
+            </view>
+        </scroll-view >
+    </view>
 </view>

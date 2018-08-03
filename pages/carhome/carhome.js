@@ -122,12 +122,6 @@ Page({
     var kindId = event.currentTarget.dataset.kindid;
     wx.navigateTo({url: '../group/group?kindId='+kindId})
   },
-  
-  openNewPage:function(event) {
-    wx.navigateTo({
-      url: '../shopRecord/shopRecord'
-    })
-  },
 
   bindUserCar:function(event) {
 
@@ -525,10 +519,6 @@ Page({
       });
       return;
     }
-
-    // wx.navigateTo({
-    //   url: '../shopRecord/shopRecord'
-    // });
 
     if(options.productId){
       wx.navigateTo({

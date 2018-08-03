@@ -42,4 +42,9 @@ Page({
       }
     });
   },
+  openShopRecord:function(event) {
+    wx.navigateTo({
+      url: '../shopRecord/shopRecord'
+    })
+  },
 })

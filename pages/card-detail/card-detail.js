@@ -18,7 +18,8 @@ Page({
     cardBuyTime: '',
     isRunOut: false,
     cardItemList: [],
-    noSelect: true
+    noSelect: true,
+    bIsHidePopup: true,
   },
 
   /**
@@ -209,5 +210,23 @@ Page({
       bottomVal: posVal[0],
       keybordShow: false,
     });
-  }
+  },
+
+  showCardInfo: function(){
+    var animation = wx.createAnimation({
+      duration: 200,
+      timingFunction: "linear"
+    });
+    this.animation = animation;
+    animation.height(0).step();
+    this.setData({
+      bIsHidePopup: false,
+      animationData: animation.export()
+    });
+  },
+  hideCardInfo:function(event){
+    this.setData({
+        bIsHidePopup: true
+    })
+  },
 })

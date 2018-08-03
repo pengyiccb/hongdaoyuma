@@ -4,7 +4,7 @@
         <view class="myvip">
             我的会员卡
         </view>
-        <view class="sale-detail">
+        <view class="sale-detail" bindtap="openShopRecord">
             消费记录 >>
         </view>
     </view>
