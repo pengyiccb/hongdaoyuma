@@ -10,7 +10,7 @@
     </view>
     <view class="item-list">
         <view class="card-view" wx:for="{{cardData}}" wx:key="index">
-            <view class="card-body {{item.packageInfo.isRunOut ? 'unused' : ''}}" style="background-color: {{item.packageInfo.isRunOut ? 'rgb(142,142,142)': item.packageInfo.colorString}};">
+            <view class="card-body {{item.packageInfo.isRunOut ? 'unused' : ''}}" style="background-color: {{item.packageInfo.colorString}};">
                 <view class="card-info">
                     <view class="card-name">{{item.packageInfo.packageName}}</view>
                     <view class="card-time">{{item.packageInfo.packageBuyTime}}</view>

@@ -1,6 +1,5 @@
 const api = require('../../utils/api');
 const posVal = ["24rpx", "435rpx"];
-const unuseColor = "rgb(142, 142, 142)";
 
 Page({
 
@@ -13,7 +12,7 @@ Page({
     keybordType: 1,
     cityName: '赣',
     carNumber: '',
-    cardColor: "ffffff",
+    cardColor: "rgb(255, 255, 255)",
     cardName: '',
     cardBuyTime: '',
     isRunOut: false,
@@ -45,16 +44,10 @@ Page({
         })
       }).then(res => {
         if(res.code && res.code == 200){
-          var cardColor = 'ffffff';
-          if(res.data.packageInfo.isRunOut){
-            cardColor = unuseColor;
-          }else{
-            cardColor = res.data.packageInfo.colorString;
-          }
           that.setData({
             cardName: res.data.packageInfo.packageName,
             cardBuyTime: res.data.packageInfo.packageBuyTime,
-            cardColor: cardColor,
+            cardColor: res.data.packageInfo.colorString,
             cardItemList: res.data.itemList,
             noSelect: true
           });
@@ -94,8 +87,10 @@ Page({
     var index = e.currentTarget.dataset.index;
     var list = this.data.cardItemList;
     if(index!=="" && index != null){
-        list[parseInt(index)].active = !list[parseInt(index)].active ; 
-        this.setItemList(list);
+        if(list[parseInt(index)].itemRemainingTimes > 0){
+          list[parseInt(index)].active = !list[parseInt(index)].active ; 
+          this.setItemList(list);
+        }        
       }
   },
 
