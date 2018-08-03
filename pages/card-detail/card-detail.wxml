@@ -16,7 +16,7 @@
             <view wx:for="{{cardItemList}}" wx:key="item.itemId" class="service-item {{item.active ? 'active' : ''}}{{item.itemRemainingTimes <= 0 ? 'used' : ''}}" data-index="{{index}}" bindtap="onSelectItem">
                 <view class="service-name">{{item.itemName}}</view>
                 <view wx:if="{{item.itemRemainingTimes > 0}}">X{{item.itemRemainingTimes}}</view>
-                <view wx:else>已用完</view>
+                <view style="width: 80rpx;" wx:else>已用完</view>
             </view>
         </scroll-view>
         <view class="car-number">
