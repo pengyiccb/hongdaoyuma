@@ -1,0 +1,32 @@
+<view class="container">
+    <view class="card-view" style="bottom:{{bottomVal}}">
+        <view class="card-body" style="background-color: {{cardColor}};">
+            <view class="card-info">
+                <view class="card-name">{{cardName}}</view>
+                <view class="card-time">购买时间:{{cardBuyTime}}</view>
+            </view>
+            <view class="card-btn"></view>
+        </view>
+        <view class="line-dot"></view>
+        <view class="service-title">
+            <view >服务项目</view>
+            <view >剩余次数</view>
+        </view>
+        <scroll-view scroll-y class="service-list">
+            <view wx:for="{{cardItemList}}" wx:key="item.itemId" class="service-item {{item.active ? 'active' : ''}}{{item.itemRemainingTimes <= 0 ? 'used' : ''}}" data-index="{{index}}" bindtap="onSelectItem">
+                <view class="service-name">{{item.itemName}}</view>
+                <view wx:if="{{item.itemRemainingTimes > 0}}">X{{item.itemRemainingTimes}}</view>
+                <view wx:else>已用完</view>
+            </view>
+        </scroll-view>
+        <view class="car-number">
+            <view class="car-city" bindtap="selectCity">{{cityName}}</view>
+            <view class="car-line"></view>
+            <input name="car-input" bindtap="inputCarNum" disabled placeholder-class="car-placeholder" class="car-input" maxlength="6" placeholder="请输入所需要服务的车辆车牌号码" value="{{carNumber}}" />
+        </view>
+        <view class="yuyue-btn {{noSelect?'no-select':''}}" bindtap="serviceSubmit">
+            点击预约
+        </view>
+    </view>
+    <v-panel isShow="{{keybordShow ? true : false}}" bindok="inputOk" binddelete="inputdelete" bindinputchange="inputChange" keyBoardType="{{keybordType}}" backgroundColor="white" />
+</view>

@@ -1,5 +1,5 @@
 <import src="../../pages/template/foot.wxml" />
-<scroll-view scroll-y="true" class="container" scroll-into-view="{{toView}}" style="height:{{scrollHeight}}px;"> 
+<scroll-view scroll-y="true" enable-back-to-top="true" class="container" scroll-into-view="{{toView}}" style="height:{{scrollHeight}}px;"> 
    <view class="swiper-container">
         <swiper class="swiper_box" 
                     autoplay="{{autoplay}}" interval="{{interval}}" circular="true" indicator-active-color="#ffffff" duration="{{duration}}" bindchange="swiperchange" indicator-dots="true">

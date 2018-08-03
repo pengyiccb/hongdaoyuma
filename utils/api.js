@@ -120,6 +120,11 @@ const dataDecode = data => RequestServer(data, `/api/v1/wechat/user/data/decode`
 
 const getQR = data => RequestServer(data, `/api/v1/wechat/qrcode/generate`, 'POST', false)
 
+//会员卡套餐
+const getCardList = data => RequestServer(data, `/api/v1/wechat/user/member/list`)
+const getCardDetail = data => RequestServer(data, `/api/v1/wechat/user/member/detail`)
+const serviceSubmit = data => RequestServer(data, `/api/v1/wechat/reservation/submit`, 'POST')
+
 
 const loginToServer = (params = {data, success, fail}) => {
   wx.login({
@@ -187,5 +192,8 @@ module.exports= {
   getGroupTree,
   getGroupProducts,
   getMainConfig,
-  getQR
+  getQR,
+  getCardList,
+  getCardDetail,
+  serviceSubmit
 }

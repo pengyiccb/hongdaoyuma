@@ -1,3 +1,4 @@
+<import src="../../pages/template/foot.wxml" />
 <view class="container">
     <view class="title-view">
         <view class="myvip">
@@ -7,8 +8,23 @@
             消费记录 >>
         </view>
     </view>
-
-    <view class="card-view">
-        <i class="iconfont">&#x33;</i>
+    <view class="item-list">
+        <view class="card-view" wx:for="{{cardData}}" wx:key="index">
+            <view class="card-body {{item.packageInfo.isRunOut ? 'unused' : ''}}" style="background-color: {{item.packageInfo.isRunOut ? 'rgb(142,142,142)': item.packageInfo.colorString}};">
+                <view class="card-info">
+                    <view class="card-name">{{item.packageInfo.packageName}}</view>
+                    <view class="card-time">{{item.packageInfo.packageBuyTime}}</view>
+                </view>
+                <navigator hover-class="none" url="../card-detail/card-detail?id={{item.packageInfo.packageId}}" class="card-btn"></navigator>
+            </view>
+            <view class="line-dot"></view>
+            <view class="card-foot">
+                <view class="use-item first" wx:if="{{item.history.length > 0}}">{{item.history[0].serverTime}}{{item.history[0].userReservationName}}</view>
+                <view class="line-dot" wx:if="{{item.history.length > 1}}"></view>
+                <view class="use-item second" wx:if="{{item.history.length > 1}}">{{item.history[1].serverTime}}{{item.history[1].userReservationName}}</view>
+                <view class="use-tip" wx:if="{{item.packageInfo.isRunOut}}">已用完</view>
+            </view>
+        </view>
+        <template is="foot" />
     </view>
 </view>

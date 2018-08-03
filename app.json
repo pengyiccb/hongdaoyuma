@@ -1,5 +1,5 @@
 {
-  "pages": [
+  "pages": [    
     "pages/carhome/carhome",
     "pages/user/user",
     "pages/addcar/addcar",
@@ -15,7 +15,9 @@
     "pages/order-details/index",
     "pages/company-introduction/company-introduction",
     "pages/vipcard/vipcard",
-    "pages/shopRecord/shopRecord"
+    "pages/card-detail/card-detail",
+    "pages/shopRecord/shopRecord",
+    "pages/vehicle-panel/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
