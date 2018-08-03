@@ -114,11 +114,18 @@ const getUserInfo = data => RequestServer(data, `/api/v1/wechat/user/info`)
 //获取用户短信验证码
 const getPhoneCode = (data, phoneNo) => RequestServer(data, `/api/v1/wechat/user/sms/verification/code?mobilePhone=${phoneNo}`)
 //验证用户短信验证码
-const verifyPhoneCode = (data, phoneNo, code) => RequestServer(data, `/api/v1/wechat/user/sms/verification/code?mobilePhone=${phoneNo}&code=${code}`, 'POST')
+const verifyPhoneCode = (data, phoneNo, code) => ReoneCode = (data, phoneNo, code) => RequestServer(data, `/api/v1/wechat/user/sms/verification/code?mobilePhone=${phoneNo}&code=${code}`, 'POST')
 //
 const dataDecode = data => RequestServer(data, `/api/v1/wechat/user/data/decode`, 'POST')
 
 const getQR = data => RequestServer(data, `/api/v1/wechat/qrcode/generate`, 'POST', false)
+
+//获取预约（历史）记录
+const getReservationRecord = data => RequestServer(data, '/api/v1/wechat/reservation/list' , 'GET')
+//预约记录 取消预约
+const shopRecordCancel = (data, reservationId) => RequestServer(data, `/api/v1/wechat/reservation/cancel?reservationId=${reservationId}`, 'POST')
+//预约记录 确认完成
+const shopRecordConfirm = (data, reservationId)  => RequestServer(data, `/api/v1/wechat/reservation/confirm?reservationId=${reservationId}`, 'POST')
 
 
 const loginToServer = (params = {data, success, fail}) => {
@@ -187,5 +194,8 @@ module.exports= {
   getGroupTree,
   getGroupProducts,
   getMainConfig,
-  getQR
+  getQR,
+  getReservationRecord,
+  shopRecordCancel,
+  shopRecordConfirm,
 }

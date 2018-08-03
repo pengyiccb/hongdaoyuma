@@ -1,32 +1,47 @@
-<view class="shopRecord" class="{{bIsHidePopup ? '' : 'noScroll'}}"> 
+<view class="{{bIsHidePopup ? '' : 'noScroll'}}"> 
     <view class="shopRecordItem" wx:for="{{shopRecordList}}"> 
-        <view class="textPublic">服务时间：{{item.time}}</view>
+        <view class="textPublic">服务时间：{{item.createTime}}</view>
         <view class="dashed"></view> 
-        <view class="textPublic">所属套餐：《{{item.setMealType}}》</view>
+        <view class="textPublic">所属套餐：《{{item.userPackageName}}》</view>
         <view class="dashed"></view> 
-        <view class="textPublic">服务项目：{{item.projectType}}</view>
+        <view style="display: flex">
+            <view class="textPublic">服务项目：</view>
+            <view class="textProjectList"> 
+                <view class="textProjectItem" wx:for="{{item.itemList}}">
+                    {{(item.itemId)}}、{{item.userPackageItemName}}(x{{item.amount}})
+                </view>
+            </view>
+        </view>
         <view class="dashed"></view> 
-        <view class="textPublic">服务车辆：{{item.carNumber}}</view>
+        <view class="textPublic">服务车辆：{{item.userRemark}}</view>
         <view class="dashed"></view> 
         <view class="statusItem"> 
-            <view class="textPublic">服务状态：{{statusName[item.status]}}</view>
-            <view class="buttonBase.confirm" hidden="{{item.status==1?false:true}}" bindtap='onClickButtonConfirm'>确认完成</view>
-            <view class="buttonBase" hidden="{{item.status==0?false:true}}" bindtap='onClickButtonCancel'>取消订单</view>
-            <view class="buttonBase.contact" hidden="{{item.status==0?false:true}}" bindtap='onClickButtonContact'>联系商家</view>
+            <view class="textPublic">服务状态：{{statusName[item.reservationStatus]}}</view>
+            <view wx:if="{{item.reservationStatus==1}}">
+                <view class="buttonBase.cancel" bindtap='onClickButtonCancel' data-id="{{item.reservationId}}">取消订单</view>
+                <view class="buttonBase.contact" bindtap='onClickButtonContact'>联系商家</view>
+            </view>
+            <view wx:elif="{{item.reservationStatus==2}}">
+                <view class="buttonBase.cancel" style="right:18rpx" bindtap='onClickButtonCancel' data-id="{{item.reservationId}}">取消订单</view>
+            </view>
+            <view wx:elif="{{item.reservationStatus==0}}">
+                <view class="buttonBase.confirm" bindtap='onClickButtonConfirm' data-id="{{item.reservationId}}">确认完成</view>
+            </view>
         </view>
     </view>
 </view>
 
+<!-- testcode popup -->
 <view class="popupMask" bindtap="closePopupTap" hidden="{{bIsHidePopup}}" >
     <view class="popupBg"> 
         <view class="pop-goods-close" bindtap="closePopupTap"></view> 
         <view class="textTitle">服务说明</view>
-        <view class="textTitlePS">“{{shopRecordList[0].setMealType}}”服务项目说明：</view>
+        <view class="textTitlePS">“{{shopRecordList[0].userPackageName}}”服务项目说明：</view>
         <scroll-view class="scrollViewFrame" scroll-y="true" style="width: 100%">
-            <view class="textInfo" wx:for="{{shopRecordList}}"> 
-                <view class="textSubTitle">{{(index+1)}}、{{item.setMealType}}：</view>
-                <view class="textSubInfo">{{item.carNumber}}{{item.carNumber}}{{item.carNumber}}{{item.carNumber}}{{item.carNumber}}{{item.carNumber}}{{item.carNumber}}{{item.carNumber}}{{item.carNumber}}{{item.carNumber}}</view>
-                <view class="separateDashed" hidden="{{(index+1)==shopRecordList.length?true:false}}"></view> 
+            <view class="textInfo" wx:for="{{shopRecordList[0].itemList}}"> 
+                <view class="textSubTitle">{{(item.itemId)}}、{{item.userPackageItemName}}：</view>
+                <view class="textSubInfo">{{item.userPackageItemName}}(x{{item.amount}})</view>
+                <view class="separateDashed" hidden="{{(item.itemId)==shopRecordList[0].itemList.length?true:false}}"></view> 
             </view>
         </scroll-view >
     </view>
