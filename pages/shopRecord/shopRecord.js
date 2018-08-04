@@ -13,6 +13,7 @@ Page({
         this.GetReservationRecord();
     },
     GetReservationRecord: function () {
+        var that = this;
         api.getReservationRecord({}).catch(res => {
             wx.showToast({
               icon: 'none',
@@ -20,8 +21,7 @@ Page({
             })
           }).then(res => {
             if(res.code && res.code == 200){
-                console.log(res)
-                this.setData({ 
+                that.setData({ 
                     shopRecordList: res.data,
                 });
               }else{
@@ -33,24 +33,36 @@ Page({
           });
     },
     onClickButtonCancel:function(event){
-        api.shopRecordCancel({}, event.currentTarget.dataset.id).catch(res => {
-            wx.showToast({
-              icon: 'none',
-              title: '网络数据错误',
-            })
-          }).then(res =>{
-            if(res.code && res.code == 200){
-                console.log(res);
-                this.GetReservationRecord();
-            }else{
-              wx.showToast({
-                icon: 'none',
-                title: res.msg,
-              })
+        var that = this;
+        wx.showModal({
+            title: '提示',
+            content: '是否取消订单',
+            success: function(res){
+                if(res.confirm){
+                    api.shopRecordCancel({}, event.currentTarget.dataset.id).catch(res => {
+                        wx.showToast({
+                          icon: 'none',
+                          title: '网络数据错误',
+                        })
+                      }).then(res =>{
+                        if(res.code && res.code == 200){
+                            console.log(res);
+                            that.GetReservationRecord();
+                        }else{
+                          wx.showToast({
+                            icon: 'none',
+                            title: res.msg,
+                          })
+                        }
+                    });
+                }else if(res.cancel){
+                }
             }
         });
+        
     },
     onClickButtonConfirm:function(event){
+        var that = this;
         api.shopRecordConfirm({}, event.currentTarget.dataset.id).catch(res => {
             wx.showToast({
               icon: 'none',
@@ -59,7 +71,7 @@ Page({
           }).then(res =>{
             if(res.code && res.code == 200){
                 console.log(res);
-                this.GetReservationRecord();
+                that.GetReservationRecord();
             }else{
               wx.showToast({
                 icon: 'none',

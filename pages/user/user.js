@@ -80,9 +80,16 @@ Page({
   },
 
   onTapVipCard: function(){
-    wx.navigateTo({
-      url:"/pages/vipcard/vipcard"
-    })
+    if(this.data.bindMobilePhone){
+      wx.navigateTo({
+        url:"/pages/vipcard/vipcard"
+      })
+    }else{
+      wx.showToast({
+        icon: 'none',
+        title: '请先绑定手机号',
+      })
+    }    
   },
 
   getPhoneNumber: function(e){
@@ -172,6 +179,16 @@ Page({
       });
       return;
     }
+
+    that.setData({
+      bActive: !that.data.bActive
+    });
+    that.data.times = 60;
+    that.setData({
+      codeBtnTxt: "获取验证码(" + that.data.times + "s)"
+    });
+    that.data.myTimeID = setInterval(that.updateTips, 1000);
+
     api.getPhoneCode({}, this.data.phoneNum).catch(res => {
       wx.showToast({
         icon: 'none',
@@ -179,14 +196,6 @@ Page({
       })
     }).then(res => {
       if(res.code && res.code == 200){
-        that.setData({
-          bActive: !that.data.bActive
-        });
-        that.data.times = 60;
-        that.setData({
-          codeBtnTxt: "获取验证码(" + that.data.times + "s)"
-        });
-        that.data.myTimeID = setInterval(that.updateTips, 1000);
       }else{
         wx.showToast({
           icon: 'none',

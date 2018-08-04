@@ -114,7 +114,7 @@ const getUserInfo = data => RequestServer(data, `/api/v1/wechat/user/info`)
 //获取用户短信验证码
 const getPhoneCode = (data, phoneNo) => RequestServer(data, `/api/v1/wechat/user/sms/verification/code?mobilePhone=${phoneNo}`)
 //验证用户短信验证码
-const verifyPhoneCode = (data, phoneNo, code) => ReoneCode = (data, phoneNo, code) => RequestServer(data, `/api/v1/wechat/user/sms/verification/code?mobilePhone=${phoneNo}&code=${code}`, 'POST')
+const verifyPhoneCode = (data, phoneNo, code) => RequestServer(data, `/api/v1/wechat/user/sms/verification/code?mobilePhone=${phoneNo}&code=${code}`, 'POST')
 //
 const dataDecode = data => RequestServer(data, `/api/v1/wechat/user/data/decode`, 'POST')
 
