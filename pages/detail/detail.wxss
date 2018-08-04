@@ -51,6 +51,8 @@ swiper-item image {
   height: 230rpx;
 }
 .btn_grounp{
+  display: flex;
+  flex-direction: row;
   position:absolute;
   left:0;
   right:0;

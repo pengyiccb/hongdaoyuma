@@ -139,6 +139,11 @@ Page({
         wx.showToast({
           icon: 'none',
           title: '预约成功',
+          success: function(){
+            wx.navigateTo({
+              url:"/pages/shopRecord/shopRecord"
+            })
+          }
         });
         that.onShow();
       }else{

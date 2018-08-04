@@ -5,17 +5,17 @@
             我的会员卡
         </view>
         <view class="sale-detail" bindtap="openShopRecord">
-            消费记录 >>
+            历史记录 >>
         </view>
     </view>
     <view class="item-list">
-        <view class="card-view" wx:for="{{cardData}}" wx:key="index">
+        <navigator class="card-view" wx:for="{{cardData}}" wx:key="index" hover-class="none" url="../card-detail/card-detail?id={{item.packageInfo.packageId}}">
             <view class="card-body {{item.packageInfo.isRunOut ? 'unused' : ''}}" style="background-color: {{item.packageInfo.colorString}};">
                 <view class="card-info">
                     <view class="card-name">{{item.packageInfo.packageName}}</view>
                     <view class="card-time">{{item.packageInfo.packageBuyTime}}</view>
                 </view>
-                <navigator hover-class="none" url="../card-detail/card-detail?id={{item.packageInfo.packageId}}" class="card-btn"></navigator>
+                <view class="card-btn"></view>
             </view>
             <view class="line-dot"></view>
             <view class="card-foot">
@@ -24,7 +24,7 @@
                 <view class="use-item second" wx:if="{{item.history.length > 1}}">{{item.history[1].serverTime}}{{item.history[1].userReservationName}}</view>
                 <view class="use-tip" wx:if="{{item.packageInfo.isRunOut}}">已用完</view>
             </view>
-        </view>
+        </navigator>
         <template is="foot" />
     </view>
 </view>

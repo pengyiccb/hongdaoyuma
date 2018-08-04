@@ -339,7 +339,7 @@ Page({
     });
 
     this.animation = animation;
-    animation.height(0).step();
+    animation.bottom(-100).step();
     this.setData({
       bSharePopop: true,
       hideShopPopup: false,
@@ -347,7 +347,7 @@ Page({
     });
 
     setTimeout(function(){
-      animation.height(162).step();
+      animation.bottom(0).step();
       this.setData({
         animationData: animation.export()
       });
@@ -460,7 +460,7 @@ Page({
     });
 
     this.animation = animation;
-    animation.height(0).step();
+    animation.top(1000).step();
     this.setData({
       bSharePopop: false,
       hideShopPopup: false,
@@ -468,7 +468,7 @@ Page({
     });
 
     setTimeout(function(){
-      animation.height(534).step();
+      animation.top(100).step();
       this.setData({
         animationData: animation.export()
       });
