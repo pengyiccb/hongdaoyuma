@@ -140,12 +140,14 @@ Page({
           icon: 'none',
           title: '预约成功',
           success: function(){
-            wx.navigateTo({
-              url:"/pages/shopRecord/shopRecord"
-            })
+            setTimeout(function(){
+              wx.navigateTo({
+                url:"/pages/shopRecord/shopRecord"
+              });
+            }, 1500);
           }
         });
-        that.onShow();
+        // that.onShow();
       }else{
         wx.showToast({
           icon: 'none',
