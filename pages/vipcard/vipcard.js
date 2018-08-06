@@ -1,5 +1,5 @@
 const api = require('../../utils/api');
-
+const util = require("../../utils/util")
 Page({
 
   /**
@@ -13,7 +13,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+
   },
 
   /**
@@ -30,11 +30,17 @@ Page({
       })
     }).then(res => {
       wx.hideLoading();
-      if(res.code && res.code == 200){
+      if (res.code && res.code == 200) {
         that.setData({
-          cardData: res.data
+          cardData: res.data.map(packageInfo => {
+            packageInfo.history = packageInfo.history.map(e => {
+              e.serverTime = e.serverTime.split(" ")[0];
+              return e;
+            });
+            return packageInfo;
+          })
         });
-      }else{
+      } else {
         wx.showToast({
           icon: 'none',
           title: res.msg,
@@ -42,7 +48,7 @@ Page({
       }
     });
   },
-  openShopRecord:function(event) {
+  openShopRecord: function (event) {
     wx.navigateTo({
       url: '../shopRecord/shopRecord'
     })
