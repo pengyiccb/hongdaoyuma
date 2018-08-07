@@ -78,17 +78,17 @@ Page({
     },
 
     getProductList: function(event) {
-        wx.showLoading({})
+        // wx.showLoading({})
         api.getGroupProducts({groupId: this.data.groupId,
                                 appId: app.globalData.appId}).catch(err => {
-                                    wx.hideLoading();
+                                    // wx.hideLoading();
                                     wx.showToast({
                                       icon: 'none',
                                       title: '网络数据错误',
                                     })
                                 }).then(res => {    
         //
-        wx.hideLoading();
+        // wx.hideLoading();
         if (res.code && res.code == 200) {
 
             if (res.data == null || res.data.length == 0) {

@@ -253,15 +253,15 @@ Page({
   },
 
   getMainConfigInfo: function(){
-    wx.showLoading({})
+    // wx.showLoading({})
     api.getMainConfig({appId: app.globalData.appId}).catch(err => {
-        wx.hideLoading();
+        // wx.hideLoading();
         wx.showToast({
           icon: 'none',
           title: '网络数据错误',
         })
     }).then(res=>{
-      wx.hideLoading();
+      // wx.hideLoading();
       if (res.code && res.code == 200) {
         //console.log("getMainConfigInfo res.data"+JSON.stringify(res.data))
         //遍历整个数组
@@ -444,7 +444,7 @@ Page({
   getKindsList: function() {
       
       api.getKindsList({parentId: this.data.currentParentId, gradeId: this.data.currentGradeId}).catch(err => {
-        wx.hideLoading();
+        // wx.hideLoading();
         wx.showToast({
           icon: 'none',
           title: '网络数据错误',

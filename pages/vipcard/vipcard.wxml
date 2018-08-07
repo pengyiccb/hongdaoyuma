@@ -19,9 +19,9 @@
             </view>
             <view class="line-dot"></view>
             <view class="card-foot">
-                <view class="use-item first" wx:if="{{item.history.length > 0}}">{{item.history[0].serverTime}}{{item.history[0].userReservationName}}</view>
+                <view class="use-item first" wx:if="{{item.history.length > 0}}">{{item.history[0].serverTime}} {{item.history[0].userReservationName}}</view>
                 <view class="line-dot" wx:if="{{item.history.length > 1}}"></view>
-                <view class="use-item second" wx:if="{{item.history.length > 1}}">{{item.history[1].serverTime}}{{item.history[1].userReservationName}}</view>
+                <view class="use-item second" wx:if="{{item.history.length > 1}}">{{item.history[1].serverTime}} {{item.history[1].userReservationName}}</view>
                 <view class="use-tip" wx:if="{{item.packageInfo.isRunOut}}">已用完</view>
             </view>
         </navigator>
