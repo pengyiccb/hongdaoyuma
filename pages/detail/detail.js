@@ -68,7 +68,7 @@ Page({
         that.setData({
           bAccept: true
         });
-        wx.showLoading();
+        // wx.showLoading();
         app.globalData.userInfo = res.userInfo;
         api.loginToServer({
           data:{
@@ -76,7 +76,7 @@ Page({
             "appId": app.globalData.appId
           },
           success: (res) => {
-            wx.hideLoading();
+            // wx.hideLoading();
             if(res.code && res.code == 200){              
             }else{
               wx.showToast({
@@ -86,7 +86,7 @@ Page({
             }            
           },
           fail: (res) => {
-            wx.hideLoading();
+            // wx.hideLoading();
             wx.showToast({
               icon: 'none',
               title: '网络数据错误',

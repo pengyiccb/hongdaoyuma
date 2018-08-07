@@ -271,7 +271,7 @@ Page({
     var that = this;
     wx.getUserInfo({
       success: function(res){
-        wx.showLoading();
+        // wx.showLoading();
         app.globalData.userInfo = res.userInfo;
         api.loginToServer({
           data:{
@@ -281,13 +281,13 @@ Page({
           success: (res) => {
             if(res.code && res.code == 200){
               api.getUserInfo().catch(res => {
-                wx.hideLoading()
+                // wx.hideLoading()
                 wx.showToast({
                   icon: 'none',
                   title: '网络数据错误',
                 })
               }).then(res => {
-                wx.hideLoading()
+                // wx.hideLoading()
                 if(res.code && res.code == 200){
                   var icons = that.data.icons;
                   icons[0].num = res.data.waitForPay;
@@ -314,7 +314,7 @@ Page({
             }            
           },
           fail: (res) => {
-            wx.hideLoading();
+            // wx.hideLoading();
             wx.showToast({
               icon: 'none',
               title: '网络数据错误',

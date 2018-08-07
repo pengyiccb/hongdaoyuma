@@ -20,15 +20,16 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    wx.showLoading();
+    // wx.showLoading();
+
     api.getCardList({}).catch(res => {
-      wx.hideLoading();
+      // wx.hideLoading();
       wx.showToast({
         icon: 'none',
         title: '网络数据错误',
       })
     }).then(res => {
-      wx.hideLoading();
+      // wx.hideLoading();
       if (res.code && res.code == 200) {
         // console.log(res.data);
         let data = res.data.map(packageInfo => {
