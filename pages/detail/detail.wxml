@@ -6,7 +6,7 @@
             <!-- <block wx:for="{{goodsDetail}}" wx:key="id"> -->
             <block wx:for="{{goodsDetail.imgPrimaryList}}" wx:key="index">
                 <swiper-item>
-                    <image src="{{item.url}}" class="slide-image" mode="aspectFit" lazy-load="true"/>
+                    <image src="{{item.url}}" class="slide-image" mode="aspectFit" lazy-load="true" data-url="{{item.url}}" bindtap="onSwiperPreview"/>
                 </swiper-item>
             </block>
         </swiper>
@@ -42,10 +42,10 @@
         <view bindtap="goodSize" class="label-title {{toView==='goodSize'?'active':''}}">商品参数</view>
     </view>
     <view class="goods-des-info" >        
-        <view id="goodDesc" class="img-box" wx:for="{{goodsDetail.imgDescList}}" wx:key="index">
+        <view id="goodDesc" class="img-box" wx:for="{{goodsDetail.imgDescList}}" wx:key="index" data-url="{{item.url}}" bindtap="onImagePreview">
             <image mode="widthFix" class="des-imgs" src="{{item.url}}" />
         </view>        
-        <view id="goodSize" class="img-box" wx:for="{{goodsDetail.imgSpecList}}" wx:key="index">
+        <view id="goodSize" class="img-box" wx:for="{{goodsDetail.imgSpecList}}" wx:key="index" data-url="{{item.url}}" bindtap="onImagePreview">
             <image mode="widthFix" class="des-imgs" src="{{item.url}}" />
         </view>
     </view>

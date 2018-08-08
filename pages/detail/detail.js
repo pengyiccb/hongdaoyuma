@@ -32,6 +32,7 @@ Page({
     bAccept: false,
     bSharePopop: false,
     maskHidden: true,
+    imageList: [],
 
     
     propertyChildIds: "",
@@ -120,6 +121,14 @@ Page({
           attrs : res.data.attrs,
           single_image: res.data.product.imgPrimaryList[0].url,
         });
+
+        this.data.goodsDetail.imgDescList.forEach(item => {
+          this.data.imageList.push(item.url);
+        });
+
+        this.data.goodsDetail.imgSpecList.forEach(item => {
+          this.data.imageList.push(item.url);
+        });
   
         wx.setNavigationBarTitle({
           title: that.data.goodsDetail.title
@@ -167,6 +176,22 @@ Page({
   closeCanvas: function () {
     this.setData({
       maskHidden: true
+    });
+  },
+
+  onSwiperPreview: function(e){
+    wx.previewImage({
+      current: e.currentTarget.dataset.url,
+      urls: this.data.goodsDetail.imgPrimaryList.map(item => {
+        return item.url;
+      })
+    });
+  },
+
+  onImagePreview: function(e){
+    wx.previewImage({
+      current: e.currentTarget.dataset.url,
+      urls: this.data.imageList
     });
   },
 
