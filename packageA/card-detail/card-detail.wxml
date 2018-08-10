@@ -37,7 +37,7 @@
         <view class="textTitle">服务说明</view>
         <view class="textTitlePS">“{{cardName}}”服务项目说明：</view>
         <scroll-view class="scrollViewFrame" scroll-y="true" style="width: 100%">
-            <view class="textInfo" wx:for="{{cardItemList}}"> 
+            <view class="textInfo" wx:for="{{cardItemList}}" wx:key="index"> 
                 <view class="textSubTitle">{{(index+1)}}、{{item.itemName}}：</view>
                 <view class="textSubInfo">{{item.itemDesc}}</view>
                 <view class="separateDashed" hidden="{{(index+1)==cardItemList.length?true:false}}"></view> 
