@@ -1,6 +1,6 @@
 .body-view {
     width: 100%;
-    height: 100%;
+    overflow-y: scroll;
     font-family: "PingFang SC", "Helvetica Neue", Helvetica, "Nimbus Sans L", Arial, "Liberation Sans", "Hiragino Sans GB", "Source Han Sans CN Normal", "Microsoft YaHei", "Wenquanyi Micro Hei", "WenQuanYi Zen Hei", "ST Heiti", SimHei, "WenQuanYi Zen Hei Sharp", sans-serif
 }
 
@@ -50,6 +50,7 @@
 
 .body-body {
     width: 100%;
+    margin-top: 79rpx;
     padding-left: 25rpx;
     padding-right: 9rpx;
     display: flex;

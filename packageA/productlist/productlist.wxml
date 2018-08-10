@@ -6,7 +6,8 @@
             <icon hidden="{{inputSearch}}" class='searchcion' size='14' type='search' color='#b7b7b7'></icon>
             <input class="{{inputSearch?'searchinput-select':'searchinput'}}" placeholder="请输入想找的商品" placeholder-class="place-search-intput" value="{{searchValue}}" bindfocus='startInputSearch' bindblur='endInputSearch'/>
         </view>
-        <view class="body-body">
+    </view> 
+    <view class="body-body">
             <view class="no-dir" hidden="{{productData ? true : false}}">
                 <view>暂无数据</view>
             </view>
@@ -20,8 +21,7 @@
                     <!--view class="product-sale-price">会员价：￥{{item.salePrice}}</view-->
                 </view>
             </view>
-        </view>
-        <template is="foot" />
-    </view>    
+    </view> 
+     <template is="foot" />  
   </view>  
 </view>

@@ -17,9 +17,6 @@ Page({
       address: '江西省南昌市进贤县人民大道（豪景一品旁约96米）'
     },
     adUrl: [
-      '../../images/image1.png',
-      '../../images/image1.png',
-      '../../images/image1.png'
     ],
 
     loginFlag: false,
@@ -54,36 +51,6 @@ Page({
       gradeId:  1,
       parentId: 0,
       kindlist: [
-        {
-            kindId: 1,
-            name: '洗车美容',
-            imageUrl: '../../images/kind0.png',
-            sortId: 1
-        },
-        {
-            kindId: 2,
-            name: '保养快修',
-            imageUrl: '../../images/kind1.png',
-            sortId: 2
-        },
-        {
-            kindId: 3,
-            name: '套餐卡',
-            imageUrl: '../../images/kind2.png',
-            sortId: 3
-        },
-        {
-            kindId: 4,
-            name: '钣金喷漆',
-            imageUrl: '../../images/kind3.png',
-            sortId: 4
-        },
-        {
-            kindId: 999,
-            name: '更多服务',
-            imageUrl: '../../images/kind4.png',
-            sortId: 5
-        }
       ]
     },
     
