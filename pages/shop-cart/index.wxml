@@ -9,11 +9,11 @@
         <view class="a-gooods" wx:for="{{list}}"  wx:key="{{itemId}}" >
             <view class="a-goods-conts {{item.active? 'active':''}}" bindtap="selectTap" bindtouchstart="touchS" bindtouchmove="touchM" bindtouchend="touchE" data-index="{{index}}" style="{{item.left}}">
                 <view  catchtap="stopTap" class="goods-info">
-                    <navigator hover-class="none" class="img-box" url="/pages/detail/detail?id={{item.productId}}">
+                    <navigator hover-class="none" class="img-box" url="/packageA/detail/detail?id={{item.productId}}">
                         <image src="{{item.image}}" class="img"/>
                     </navigator>
                     <view class="text-box">
-                        <navigator hover-class="none" class="goods-title" url="/pages/detail/detail?id={{item.productId}}">{{item.desc}}</navigator>
+                        <navigator hover-class="none" class="goods-title" url="/packageA/detail/detail?id={{item.productId}}">{{item.desc}}</navigator>
                         <view class="goods-label" catchtap="selectSpec" data-index="{{index}}">{{item.spec}}</view>
                         <view class="goods-price">¥ {{item.unitPrice}}</view>
                         <view class="buy-num">

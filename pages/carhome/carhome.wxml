@@ -39,7 +39,7 @@
     </view>
     <view class="service-kinds">
         <view class="kinds-set">
-            <view class="kind-view" wx:for="{{kindsInfo.kindlist}}" wx:key="" url="/pages/group/group?kindId={{item.kindId}}" bindtap='loadKindPage' data-kindid="{{item.kindId}}">
+            <view class="kind-view" wx:for="{{kindsInfo.kindlist}}" wx:key="" url="/packageA/group/group?kindId={{item.kindId}}" bindtap='loadKindPage' data-kindid="{{item.kindId}}">
                     <image class="kind-image" src="{{item.imageUrl}}" />
                     <view class="kind-text">{{item.name}}</view>    
             </view>

@@ -23,25 +23,25 @@ Page({
       {
         icon: '/images/user/order_wait_for_pay.png',
         name: '待付款',
-        url : '/pages/order/order?currentType=1',
+        url : '/packageA/order/order?currentType=1',
         num: 0
       },
       {
         icon: '/images/user/order_wait_for_service.png',
         name: '待服务',
-        url: '/pages/order/order?currentType=2',
+        url: '/packageA/order/order?currentType=2',
         num: 0
       },
       {
         icon: '/images/user/order_completed.png',
         name: '已服务',
-        url: '/pages/order/order?currentType=3',
+        url: '/packageA/order/order?currentType=3',
         num: 0
       },
       {
         icon: '/images/user/order_cancel.png',
         name: '已完成',
-        url: '/pages/order/order?currentType=4',
+        url: '/packageA/order/order?currentType=4',
         num: 0
       }
     ],
@@ -82,7 +82,7 @@ Page({
   onTapVipCard: function(){
     if(this.data.bindMobilePhone){
       wx.navigateTo({
-        url:"/pages/vipcard/vipcard"
+        url:"/packageA/vipcard/vipcard"
       })
     }else{
       wx.showToast({
@@ -117,13 +117,13 @@ Page({
 
   onTapBindCar: function(){
     wx.navigateTo({
-      url:"/pages/bindcar/bindcar"
+      url:"/packageA/bindcar/bindcar"
     })
   },
   
   onTapAddress: function(){
     wx.navigateTo({
-      url:"/pages/select-address/index"
+      url:"/packageA/select-address/index"
     })
   },
 

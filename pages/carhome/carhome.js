@@ -120,7 +120,7 @@ Page({
 
   loadKindPage: function(event) {
     var kindId = event.currentTarget.dataset.kindid;
-    wx.navigateTo({url: '../group/group?kindId='+kindId})
+    wx.navigateTo({url: '/packageA/group/group?kindId='+kindId})
   },
 
   bindUserCar:function(event) {
@@ -129,7 +129,7 @@ Page({
       success: function(res){
 
 
-        wx.navigateTo({url:'../bindcar/bindcar'})
+        wx.navigateTo({url:'/packageA/bindcar/bindcar'})
       },
       fail: function(res){ 
         /*wx.switchTab({
@@ -213,11 +213,11 @@ Page({
     //跳商品
     if (this.data.scrollList[index].navigateType == -3) {
       wx.navigateTo({
-        url: "/pages/detail/detail?id="+this.data.scrollList[index].navigateParam
+        url: "/packageA/detail/detail?id="+this.data.scrollList[index].navigateParam
       });
     //跳分组
     } else if (this.data.scrollList[index].navigateType == -2) {
-      wx.navigateTo({url: '../productlist/productlist?groupId='+this.data.scrollList[index].navigateParam})
+      wx.navigateTo({url: '/packageA/productlist/productlist?groupId='+this.data.scrollList[index].navigateParam})
     }
   },
 
@@ -241,14 +241,14 @@ Page({
   bindHot: function(event) {
     var productid = event.currentTarget.dataset.productid
     wx.navigateTo({
-      url: "/pages/detail/detail?id="+productid
+      url: "/packageA/detail/detail?id="+productid
     });
   },
 
   inputDetail: function(event) {
     var productid = event.currentTarget.dataset.productid
     wx.navigateTo({
-      url: "/pages/detail/detail?id="+productid
+      url: "/packageA/detail/detail?id="+productid
     });
   },
 
@@ -515,14 +515,14 @@ Page({
     if(options.scene){
       var scene = decodeURIComponent(options.scene)
       wx.navigateTo({
-        url: "/pages/detail/detail?id=" + scene
+        url: "/packageA/detail/detail?id=" + scene
       });
       return;
     }
 
     if(options.productId){
       wx.navigateTo({
-        url: "/pages/detail/detail?id=" + options.productId
+        url: "/packageA/detail/detail?id=" + options.productId
       });
     }
     /* wx.getImageInfo({

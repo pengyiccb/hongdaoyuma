@@ -37,13 +37,13 @@ Page({
 
   addAddess : function () {
     wx.navigateTo({
-      url:"/pages/address-add/index"
+      url:"../address-add/index"
     })
   },
   
   editAddess: function (e) {
     wx.navigateTo({
-      url: "/pages/address-add/index?id=" + e.currentTarget.dataset.id
+      url: "../address-add/index?id=" + e.currentTarget.dataset.id
     })
   },
   

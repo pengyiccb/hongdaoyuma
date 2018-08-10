@@ -41,19 +41,27 @@
         <view bindtap="goodInstr" class="label-title {{toView==='goodDesc'?'active':''}}">图文详情</view>
         <view bindtap="goodSize" class="label-title {{toView==='goodSize'?'active':''}}">商品参数</view>
     </view>
-    <view class="goods-des-info" >        
+    <view class="goods-des-info" >
+        <!-- <txv-video class="txvideo" vid="t0749tg27ce" playerid="txv1" autoplay="{{true}}"></txv-video>  -->
+        <!-- <video 
+        id="myVideo"
+        src="http://cloud.video.taobao.com//play/u/801604093/p/1/e/6/t/1/50228002196.mp4"
+        autoplay="{{true}}"
+        loop="{{true}}"
+        class="txvideo"
+         ></video> -->
         <view id="goodDesc" class="img-box" wx:for="{{goodsDetail.imgDescList}}" wx:key="index" data-url="{{item.url}}" bindtap="onImagePreview">
             <image mode="widthFix" class="des-imgs" src="{{item.url}}" />
         </view>        
         <view id="goodSize" class="img-box" wx:for="{{goodsDetail.imgSpecList}}" wx:key="index" data-url="{{item.url}}" bindtap="onImagePreview">
             <image mode="widthFix" class="des-imgs" src="{{item.url}}" />
-        </view>
+        </view>        
     </view>
     <view class="footer-box">
         <view class="kefu-btn">
             <button open-type="contact" class="kefu"
             send-message-title="{{goodsDetail.sharetitle}}" 
-            send-message-path="/pages/detail/detail?id={{productId}}"  
+            send-message-path="/packageA/detail/detail?id={{productId}}"  
             send-message-img="{{single_image}}" 
             show-message-card="true">
             <!-- <image class="kefu_pic" src="../../images/kefu.png" /> -->

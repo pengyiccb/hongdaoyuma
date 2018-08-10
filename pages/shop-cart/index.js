@@ -571,7 +571,7 @@ Page({
     navigateToPayOrder:function () {
       wx.hideLoading();
       wx.navigateTo({
-        url:"/pages/to-pay-order/index?typeId=1"
+        url:"/packageA/to-pay-order/index?typeId=1"
       })
     }
 })

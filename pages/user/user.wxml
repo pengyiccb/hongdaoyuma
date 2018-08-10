@@ -84,7 +84,7 @@
         <!--<zan-cell-group>-->
           <zan-cell
             is-link
-            url="/pages/order/order"
+            url="/packageA/order/order"
             title="我的订单"
           ><text style='position:absolute;right:30px;top:15px;color:#999;'>查看全部订单</text></zan-cell>
         <!--</zan-cell-group>-->

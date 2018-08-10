@@ -234,14 +234,14 @@ Page({
       title: '海报生成中...'
     });
 
-    wx.getImageInfo({
-      src: that.data.goodsDetail.shareImage.url,
+    wx.downloadFile({
+      url: that.data.goodsDetail.shareImage.url,
       success: function(res){
         var context = wx.createCanvasContext('mycanvas');
         context.setFillStyle("#ffffff")
         context.fillRect(0, 0, 750, 1334);
         
-        context.drawImage(res.path, 28, 70, 686, 686);
+        context.drawImage(res.tempFilePath, 28, 70, 686, 686);
 
         context.font = "36px PingFang SC";
         context.setFillStyle('#333333');
@@ -298,12 +298,12 @@ Page({
             icon: 'none',
             title: '网络数据错误',
           })
-        }).then(res => {
-          if(res.code && res.code == 200){
-            wx.getImageInfo({
-              src: res.data.url,
-              success: function(res){
-                context.drawImage(res.path, 286, 1100, 160, 160);
+        }).then(res01 => {
+          if(res01.code && res01.code == 200){
+            wx.downloadFile({
+              url: res01.data.url,
+              success: function(res02){
+                context.drawImage(res02.tempFilePath, 286, 1100, 160, 160);
 
                 context.font = "18px PingFang SC";
                 context.setFillStyle('#9b9b9b');
@@ -314,42 +314,42 @@ Page({
                 setTimeout(function () {
                   wx.canvasToTempFilePath({
                     canvasId: 'mycanvas',
-                    success: function (res) {
+                    success: function (res03) {
                       wx.hideLoading();
-                      var tempFilePath = res.tempFilePath;
+                      var tempFilePath = res03.tempFilePath;
                       that.setData({
                         imagePath: tempFilePath,
                         maskHidden: false
                       });
                     },
-                    fail: function (res) {
+                    fail: function (err) {
                       wx.hideLoading();
                       wx.showLoading({
                         title: '海报生成失败'
                       });
                     }
                   });
-                }, 200);
+                }, 500);
               },
-              fail: function(res){
+              fail: function(err){
                 wx.showToast({
                   icon: 'none',
-                  title: '数据错误',
+                  title: err.errMsg,
                 });
               }
             });
           }else{
             wx.showToast({
               icon: 'none',
-              title: res.msg,
+              title: res01.msg,
             })
           }
         });        
       },
-      fail: function(res){
+      fail: function(err){
         wx.showToast({
           icon: 'none',
-          title: '数据错误',
+          title: err.errMsg,
         })
       }
     });    
@@ -719,7 +719,7 @@ Page({
     wx.setStorageSync('goodData', goodData);
     this.closePopupTap();
     wx.navigateTo({
-      url:"/pages/to-pay-order/index?typeId=2"
+      url:"../to-pay-order/index?typeId=2"
     })
   },
 

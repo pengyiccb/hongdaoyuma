@@ -2,28 +2,13 @@
   "pages": [    
     "pages/carhome/carhome",
     "pages/user/user",
-    "pages/addcar/addcar",
-    "pages/bindcar/bindcar",
-    "pages/productlist/productlist",
-    "pages/group/group",
-    "pages/detail/detail",
-    "pages/order/order",
-    "pages/shop-cart/index",
-    "pages/to-pay-order/index",
-    "pages/address-add/index",
-    "pages/select-address/index",
-    "pages/order-details/index",
-    "pages/company-introduction/company-introduction",
-    "pages/vipcard/vipcard",
-    "pages/card-detail/card-detail",
-    "pages/shopRecord/shopRecord",
-    "pages/vehicle-panel/index"
+    "pages/shop-cart/index"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#ececee",
-    "navigationBarTitleText": "Wafer Quick Start",
+    "navigationBarTitleText": "红道御马",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
@@ -55,5 +40,28 @@
       "version": "1.1.2",
       "provider": "wxa75efa648b60994b"
     }
-  }
+  },
+
+  "subPackages":[
+    {
+      "root": "packageA",
+      "pages": [
+        "addcar/addcar",
+        "address-add/index",
+        "bindcar/bindcar",
+        "card-detail/card-detail",
+        "company-introduction/company-introduction",
+        "detail/detail",
+        "group/group",
+        "order/order",
+        "order-details/index",
+        "productlist/productlist",
+        "select-address/index",
+        "shopRecord/shopRecord",
+        "to-pay-order/index",
+        "vehicle-panel/index",
+        "vipcard/vipcard"
+      ]
+    }
+  ]
 }

@@ -119,7 +119,7 @@ Page({
                     title: '支付成功',
                   });
                   wx.redirectTo({
-                    url: "/pages/order-details/index?id=" + orderId
+                    url: "/packageA/order-details/index?id=" + orderId
                   });
                 },
               fail: function (res) {
@@ -128,7 +128,7 @@ Page({
                     title: '支付失败',
                   });
                   wx.redirectTo({
-                    url: "/pages/order-details/index?id=" + orderId
+                    url: "/packageA/order-details/index?id=" + orderId
                   });
                 },
               });
@@ -171,12 +171,12 @@ Page({
   },
   addAddress: function () {
     wx.navigateTo({
-      url: "/pages/address-add/index"
+      url: "../address-add/index"
     })
   },
   selectAddress: function () {
     wx.navigateTo({
-      url: "/pages/select-address/index"
+      url: "../select-address/index"
     })
   },
   /* getMyCoupons: function () {

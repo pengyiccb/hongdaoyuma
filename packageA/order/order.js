@@ -21,7 +21,7 @@ Page({
   orderDetail: function (e) {
     var orderId = e.currentTarget.dataset.id;
     wx.navigateTo({
-      url: "/pages/order-details/index?id=" + orderId
+      url: "/packageA/order-details/index?id=" + orderId
     })
   },
   cancelOrderTap: function (e) {
@@ -80,7 +80,7 @@ Page({
               title: '支付成功',
             });
             wx.navigateTo({
-              url: "/pages/order-details/index?id=" + orderId
+              url: "/packageA/order-details/index?id=" + orderId
             })
           },
           fail: function (res) {
@@ -112,7 +112,7 @@ Page({
       wx.hideLoading();
       if(res.code && res.code == 200){
         wx.navigateTo({
-          url: "/pages/order-details/index?id=" + orderId
+          url: "/packageA/order-details/index?id=" + orderId
         });
       }else{
         wx.showToast({

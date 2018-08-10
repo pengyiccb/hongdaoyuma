@@ -142,7 +142,7 @@ Page({
           success: function(){
             setTimeout(function(){
               wx.navigateTo({
-                url:"/pages/shopRecord/shopRecord"
+                url:"../shopRecord/shopRecord"
               });
             }, 1500);
           }
