@@ -1,6 +1,3 @@
 {
-    "navigationBarTitleText": "商品详情",
-    "usingComponents": {
-        "txv-video": "plugin://tencentvideo/video"
-      }
+    "navigationBarTitleText": "商品详情"
 }
