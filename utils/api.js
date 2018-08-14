@@ -6,8 +6,8 @@ const app = getApp();
 let tokenVal = null;
 
 //const API_URL = "http://localhost:8080";
-// const API_URL = "https://shop.ydmaj.com";
-const API_URL = "https://shop.jxxykj.cn";
+const API_URL = "https://shop.ydmaj.com";
+// const API_URL = "https://shop.jxxykj.cn";
 // const API_URL = "http://192.168.10.100:8080";
 
 // 通过Promise发请求到服务器
