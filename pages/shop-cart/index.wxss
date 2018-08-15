@@ -2,6 +2,7 @@
 page{
   min-height: 100%;
   background-color: #F2f2f2;
+  overflow-y: hidden;
 }
 
 view {
@@ -416,3 +417,9 @@ view {
   margin-top:-50rpx;
   position:absolute;
 }
+
+::-webkit-scrollbar{
+  width: 0;
+  height: 0;
+  color: transparent;
+  }

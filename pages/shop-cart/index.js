@@ -82,6 +82,13 @@ Page({
 
   onShow: function(){
     var that = this;
+    wx.getSystemInfo({
+      success: function (res) {
+        that.setData({
+          scrollHeight: res.windowHeight
+        });
+      }
+    });
     wx.getUserInfo({
       success: function(res){
         that.initEleWidth();
