@@ -382,13 +382,14 @@ swiper-item image {
   right: 0rpx;
 }
 .size-label-box{
-  margin-left: 20rpx;
-  margin-right: 20rpx;
+  height: 580rpx;
+  width: 96%;
+  margin: 0 auto;
 }
-.size-label-box  .label{
+.size-label-box .label{
   font-size:28rpx;
   color:#343434;
-  margin-top:35rpx;
+  
 }
 .size-label-box .label-item-box{
   display: flex;
@@ -410,7 +411,9 @@ swiper-item image {
 }
 .buy-num-box{
   height: 124rpx;
+  width: 100%;
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   line-height: 124rpx;
   align-items: center;
@@ -561,3 +564,9 @@ button[class="baocun"]::after{
   right: 66rpx;
   z-index: 11;
 }
+
+::-webkit-scrollbar{
+  width: 0;
+  height: 0;
+  color: transparent;
+  }

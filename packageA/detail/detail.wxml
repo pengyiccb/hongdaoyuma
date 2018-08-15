@@ -104,8 +104,8 @@
                 </view>
                  <view class="pop-goods-close" bindtap="closePopupTap"></view> 
              </view>
-            <view class="size-label-box">
-                <view style="border-bottom: 1rpx solid #eee;" wx:for="{{attrs}}" wx:for-item="property" wx:for-index="idx" wx:key="id">
+            <scroll-view scroll-y class="size-label-box">
+                <view style="border-bottom: 1rpx solid #eee; padding-top:35rpx;" wx:for="{{attrs}}" wx:for-item="property" wx:for-index="idx" wx:key="id">
                 <view class="label">{{property.attrName}}</view> 
                 <view class="label-item-box">
                     <view class="label-item {{item.active ? 'active' : '' }}" wx:for="{{property.children}}" wx:key="id" 
@@ -124,8 +124,8 @@
                         </view>
                         <view class="num-jia {{buyNumber== buyNumMax ? 'hui': ''}}" bindtap="numJiaTap">+</view>
                     </view>
-                </view>  
-            </view> 
+                </view>
+            </scroll-view> 
             
             <block wx:if="{{isOkButton}}">
                 <view class="popup-ok-btn" bindtap="onOKButton">
