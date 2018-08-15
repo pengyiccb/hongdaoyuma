@@ -10,7 +10,7 @@
             <view class="addr-text">{{curAddressData.areaAddress1}} {{curAddressData.areaAddress2}} {{curAddressData.areaAddress3}} {{curAddressData.addressDetail}}</view>
         </view>
      </view>
-     <view class="goods-list">
+     <scroll-view scroll-y class="goods-list">
         <view class="a-goods" wx:for="{{goodsData.list}}" wx:key="{{index}}">
             <view class="img-box">
                 <image mode='aspectFit' src="{{item.image}}" class="img" />
@@ -24,16 +24,16 @@
                 </view>                
             </view>
         </view>
-     </view>
-     <view class="peisong-way">
-        <view class="row-box">
-            <view class="row-label">备注</view>
-            <view class="right-text">
-                <input name="remark" type="text" class="liuyan" placeholder="如需备注请输入" />
+        <view class="peisong-way">
+            <view class="row-box">
+                <view class="row-label">备注</view>
+                <view class="right-text">
+                    <input name="remark" type="text" class="liuyan" placeholder="如需备注请输入" />
+                </view>
             </view>
         </view>
-     </view>
-     <template is="foot" />
+        <template is="foot" />
+     </scroll-view>     
 
      <view class="jiesuan-box">
         <view class="left-price">

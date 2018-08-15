@@ -40,10 +40,10 @@
 
     <view catchtouchmove="true" class="show-popup" hidden="{{hideShopPopup}}" >
         <view class="popup-mask" bindtap="closePopupTap"></view>
-        <view class="popup-contents">
+        <view class="popup-contents" animation="{{animationData}}">
              <view class="pop-goods-info">
                 <view class="pop-img-box">
-                    <image mode="aspectFit" src="{{single_image}}" class="goods-thumbnail"/>
+                    <image mode="aspectFit" src="{{single_image}}" class="goods-thumbnail" bindtap="onThumbnailPreview"/>
                 </view>
                 <view class="popup-good-attr">
                     <view class="pop-goods-price">¥ {{pop_goods_price}}</view>
@@ -52,8 +52,8 @@
                 </view>
                  <view class="pop-goods-close" bindtap="closePopupTap"></view> 
              </view>
-            <view class="size-label-box">
-                <view style="border-bottom: 1rpx solid #eee;" wx:for="{{attrs}}" wx:for-item="property" wx:for-index="idx" wx:key="id">
+            <scroll-view scroll-y class="size-label-box">
+                <view style="border-bottom: 1rpx solid #eee; padding-top:35rpx;" wx:for="{{attrs}}" wx:for-item="property" wx:for-index="idx" wx:key="id">
                 <view class="label">{{property.attrName}}</view> 
                 <view class="label-item-box">
                     <view class="label-item {{item.active ? 'active' : '' }}" wx:for="{{property.children}}" wx:key="id" 
@@ -63,7 +63,7 @@
                     </view> 
                 </view>
                 </view> 
-            </view> 
+            </scroll-view> 
             
             <block>
                 <view class="popup-ok-btn" bindtap="onOKButton">确定</view>

@@ -232,6 +232,26 @@ Page({
               }
             }
 
+            var animation = wx.createAnimation({
+              duration: 200,
+              timingFunction: "linear"
+        
+            });
+        
+            this.animation = animation;
+            animation.top(1000).step();
+            this.setData({
+              bSharePopop: false,
+              hideShopPopup: false,
+              animationData: animation.export()
+            });
+        
+            setTimeout(function(){
+              animation.top(100).step();
+              this.setData({
+                animationData: animation.export()
+              });
+            }.bind(this), 100);
 
           }else{
             wx.showToast({
@@ -248,9 +268,9 @@ Page({
       }
     });
 
-    this.setData({
-      hideShopPopup: false,
-    });
+    // this.setData({
+    //   hideShopPopup: false,
+    // });
   },
 
   labelItemTap: function (e) {
@@ -344,6 +364,13 @@ Page({
   },
 
   stopTap: function(){
+  },
+
+  onThumbnailPreview: function(e){
+    wx.previewImage({
+      current: this.data.single_image,
+      urls: [this.data.single_image]
+    });
   },
 
   delItem:function(e){

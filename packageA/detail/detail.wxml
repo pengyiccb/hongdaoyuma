@@ -95,7 +95,7 @@
         <view class="popup-contents" animation="{{animationData}}" wx:else>
              <view class="pop-goods-info">
                 <view class="pop-img-box">
-                    <image mode="aspectFit" src="{{single_image}}" class="goods-thumbnail"/>
+                    <image mode="aspectFit" src="{{single_image}}" class="goods-thumbnail" bindtap="onThumbnailPreview"/>
                 </view>
                 <view class="popup-good-attr">
                     <view class="pop-goods-price">¥ {{pop_goods_price}}</view>

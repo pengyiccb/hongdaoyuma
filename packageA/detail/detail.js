@@ -195,6 +195,13 @@ Page({
     });
   },
 
+  onThumbnailPreview: function(e){
+    wx.previewImage({
+      current: this.data.single_image,
+      urls: [this.data.single_image]
+    });
+  },
+
   stopClick: function(){
   },
 
