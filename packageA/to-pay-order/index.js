@@ -22,6 +22,19 @@ Page({
     typeId: 1                 //1为购物车购买，2为立即购买
   },
   onShow: function () {
+    this.initShippingAddress();
+  },
+
+  onLoad: function(e){
+    if(e.typeId > 2 || e.typeId < 1){
+      wx.showModal({
+        title: '错误提示',
+        content: '数据参数错误'
+      });
+      return;
+    }
+    this.data.typeId = e.typeId;
+
     var that = this;
     let goodData = wx.getStorageSync('goodData');
     var submitData = {};
@@ -43,7 +56,7 @@ Page({
       })
     }).then(res => {
       if(res.code && res.code == 200){
-        that.initShippingAddress();
+        //that.initShippingAddress();
         that.setData({
           goodsData: goodData,
           totalPriceToPay: res.data
@@ -55,17 +68,6 @@ Page({
         });
       }
     });
-  },
-
-  onLoad: function(e){
-    if(e.typeId > 2 || e.typeId < 1){
-      wx.showModal({
-        title: '错误提示',
-        content: '数据参数错误'
-      });
-      return;
-    }
-    this.data.typeId = e.typeId;
   },
 
   createOrder: function (e) {
