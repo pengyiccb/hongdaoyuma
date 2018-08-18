@@ -12,7 +12,7 @@ Page({
     },
     onClickPhoneCounsel:function(event){
         wx.makePhoneCall({
-            phoneNumber: '15170057995',
+            phoneNumber: '13697009343',
             success: function () {
                 console.log("成功拨打电话")
             }
