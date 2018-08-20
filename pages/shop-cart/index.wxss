@@ -199,7 +199,10 @@ view {
   width: 184rpx;
   height:184rpx;
 }
-
+.empty-box{
+  height: 100rpx;
+  /* display: none; */
+}
 .a-goods-conts .delete-btn{
   width: 120rpx;
   line-height: 220rpx;

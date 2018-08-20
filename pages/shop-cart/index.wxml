@@ -31,6 +31,7 @@
         </view>
         <template is="foot" />
     </view>
+    <view class="empty-box"></view>
     <view class="jiesuan-box">
         <view class="left-price">
             <view class="all-selected  {{allSelect?'active':''}}" bindtap="bindAllSelect">全选</view>
