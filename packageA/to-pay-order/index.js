@@ -79,6 +79,7 @@ Page({
       return;
     }
 
+    wx.showLoading();
     var submitData = {};
     submitData.customerName = this.data.curAddressData.userName;
     submitData.wxAppId = app.globalData.appId;
@@ -95,6 +96,7 @@ Page({
     }
     submitData.goods = goods;
     api.orderCreate(submitData).catch(res => {
+      wx.hideToast();
       wx.showToast({
         icon: 'none',
         title: '网络数据错误',
@@ -103,6 +105,7 @@ Page({
       if(res.code && res.code == 200){
         var orderId = res.data;
         api.playorder({orderId: orderId}).catch(res => {
+          wx.hideToast();
           wx.showToast({
             icon: 'none',
             title: '网络数据错误',
@@ -116,6 +119,7 @@ Page({
               signType: res.data.signType,
               paySign: res.data.paySign,
               success: function(res){
+                  wx.hideToast();
                   wx.showToast({
                     icon: 'none',
                     title: '支付成功',
@@ -125,6 +129,7 @@ Page({
                   });
                 },
               fail: function (res) {
+                  wx.hideToast();
                   wx.showToast({
                     icon: 'none',
                     title: '支付失败',
@@ -135,6 +140,7 @@ Page({
                 },
               });
           }else{
+            wx.hideToast();
             wx.showToast({
               icon: 'none',
               title: res.msg,
@@ -142,6 +148,7 @@ Page({
           }
         });
       }else{
+        wx.hideToast();
         wx.showToast({
           icon: 'none',
           title: res.msg,
