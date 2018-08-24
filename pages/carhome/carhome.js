@@ -256,7 +256,7 @@ Page({
               hot.push(listconfig.children[y].product)
             }
             if (hot) {
-              hot.sort(this.comparedown("productId"))
+              //hot.sort(this.comparedown("productId"))
               this.setData({
                 displayHot: true,
                 hotList: hot
@@ -277,7 +277,7 @@ Page({
               recommend.push(listconfig.children[y].product)
             }
             if (recommend) {
-              recommend.sort(this.comparedown("productId"))
+              //recommend.sort(this.comparedown("productId"))
               this.setData({
                 displayRecommend: true,
                 recommendList: recommend

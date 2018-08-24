@@ -363,7 +363,7 @@ page{
   width: 302rpx;
   height: 314rpx;
   margin-top:20rpx;
-  margin-left:10rpx
+  margin-left:20rpx
 }
 
 .product-one-title-view {
