@@ -86,6 +86,7 @@ Page({
     submitData.mobile_phone = this.data.curAddressData.mobilePhone;
     submitData.userAddressId = this.data.curAddressData.id;
     submitData.userRemark = e.detail.value.remark;
+    submitData.wxFormId = e.detail.formId;
     var goods = {};
     goods.buyType = this.data.typeId;
     if(this.data.typeId == 1){
