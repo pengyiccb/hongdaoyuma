@@ -46,6 +46,7 @@ Page({
     shopType: "addShopCar",//购物类型，加入购物车或立即购买，默认为加入购物车
     attrCount: 0,
     promotionList: [],
+    showPromotion: false, // 是否显示优惠
     showBottomPopup: false
   },
 
@@ -131,7 +132,8 @@ Page({
         });
 
         this.setData({
-          promotionList: response.data
+          promotionList: response.data,
+          showPromotion: response.data.length !== 0
         })
       }
     });

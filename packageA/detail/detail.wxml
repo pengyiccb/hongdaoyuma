@@ -37,7 +37,7 @@
         <image mode="aspectFit" class="tip-style" src='../../images/youbiao.png' />
    </view>
 
-    <zan-panel bindtap="toggleBottomPopup">
+    <zan-panel bindtap="toggleBottomPopup" wx:if="{{showPromotion}}">
         <view style="padding: 10px 0;">
             <zan-capsule style="margin-left: 10px;" type="danger" wx:for="{{promotionList}}" wx:key="*this" leftText="{{item.tag}}" rightText="{{item.ruleStrategyDescription[0]}}" />
         <!--<zan-capsule type="danger" leftText="折扣" rightText="限购一份" />-->
