@@ -34,9 +34,9 @@
                         <!--<zan-col col="8" col-class="custom-zan-col">-->
                         <!--</zan-col>-->
                     <!--</zan-row>-->
-                    <zan-cell value="{{ totalDiscount }} 元">
+                    <zan-cell >
                             <zan-tag type="danger" plain> 优惠 </zan-tag>
-                        <!--<view class="zan-pull-right">{{ totalDiscount }} 元</view>-->
+                        <view style="color: #e64340;float: right;">{{ totalDiscount }} 元</view>
                         <!--<view class="zan-c-red">{{ totalDiscount }} 元</view>-->
                     </zan-cell>
                 </zan-panel>
@@ -56,7 +56,10 @@
 
         <view class="jiesuan-box">
             <view class="left-price">
-                <view class="total">优惠：￥{{ totalDiscount }}元 合计：¥ {{totalPriceToPay}}元</view>
+                <view class="totalDiscount">优惠：￥{{ totalDiscount }}元</view>
+            </view>
+            <view class="left-price">
+                <view class="total">合计：¥ {{totalPriceToPay}}元</view>
                 <!-- <view class="total">合计：¥ {{allGoodsAndYunPrice - youhuijine}} + {{totalScoreToPay}} 积分</view> -->
             </view>
             <button class="to-pay-btn" formType="submit">支付</button>

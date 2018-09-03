@@ -210,6 +210,11 @@ form{
     box-sizing: border-box;
 }
 
+.jiesuan-box .totalDiscount{
+    color: #e64340;
+    text-align: left;
+}
+
 .jiesuan-box .total{
     color: #e64340;
     text-align: right;
