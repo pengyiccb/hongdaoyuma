@@ -210,6 +210,11 @@ form{
     box-sizing: border-box;
 }
 
+.jiesuan-box .totalDiscount{
+    color: #e64340;
+    text-align: left;
+}
+
 .jiesuan-box .total{
     color: #e64340;
     text-align: right;
@@ -219,4 +224,11 @@ form{
     width: 0;
     height: 0;
     color: transparent;
-    }
+}
+.custom-zan-col {
+    line-height: 30px;
+    text-align: left;
+    /*background-color: #39a9ed;*/
+    font-size: 12px;
+}
+

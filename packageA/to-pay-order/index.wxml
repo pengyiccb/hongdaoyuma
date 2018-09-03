@@ -1,46 +1,68 @@
-<import src="../../pages/template/foot.wxml" />
+<import src="../../pages/template/foot.wxml"/>
 <view class="container">
-  <form bindsubmit='createOrder' report-submit="true">
-     <view class="address-box" wx:if="{{isNeedLogistics > 0}}">
-        <view class="add-address" hidden="{{curAddressData}}">
-            <view class="title" bindtap="addAddress">新增收货地址</view>
-        </view>
-        <view class="show-address" hidden="{{!curAddressData}}" bindtap="selectAddress">
-            <view class="name-tel">{{curAddressData.userName}}  {{curAddressData.mobilePhone}}</view>
-            <view class="addr-text">{{curAddressData.areaAddress1}} {{curAddressData.areaAddress2}} {{curAddressData.areaAddress3}} {{curAddressData.addressDetail}}</view>
-        </view>
-     </view>
-     <scroll-view scroll-y class="goods-list">
-        <view class="a-goods" wx:for="{{goodsData.list}}" wx:key="{{index}}">
-            <view class="img-box">
-                <image mode='aspectFit' src="{{item.image}}" class="img" />
+    <form bindsubmit='createOrder' report-submit="true">
+        <view class="address-box" wx:if="{{isNeedLogistics > 0}}">
+            <view class="add-address" hidden="{{curAddressData}}">
+                <view class="title" bindtap="addAddress">新增收货地址</view>
             </view>
-            <view class="text-box">
-                <view class="goods-name">{{item.desc}}</view>
-                <view class="goods-label">{{item.spec}}</view>
-                <view class="goods-arrow">
-                    <view class="goods-price">¥ {{item.unitPrice}}</view>
-                    <view class="goods-num">x {{item.count}}</view>
-                </view>                
-            </view>
-        </view>
-        <view class="peisong-way">
-            <view class="row-box">
-                <view class="row-label">备注</view>
-                <view class="right-text">
-                    <input name="remark" type="text" class="liuyan" placeholder="如需备注请输入" />
+            <view class="show-address" hidden="{{!curAddressData}}" bindtap="selectAddress">
+                <view class="name-tel">{{curAddressData.userName}} {{curAddressData.mobilePhone}}</view>
+                <view class="addr-text">{{curAddressData.areaAddress1}} {{curAddressData.areaAddress2}}
+                    {{curAddressData.areaAddress3}} {{curAddressData.addressDetail}}
                 </view>
             </view>
         </view>
-        <template is="foot" />
-     </scroll-view>     
+        <scroll-view scroll-y class="goods-list">
+            <view class="a-goods" wx:for="{{goodsData.list}}" wx:key="{{index}}">
+                <view class="img-box">
+                    <image mode='aspectFit' src="{{item.image}}" class="img"/>
+                </view>
+                <view class="text-box">
+                    <view class="goods-name">{{item.desc}}</view>
+                    <view class="goods-label">{{item.spec}}</view>
+                    <view class="goods-arrow">
+                        <view class="goods-price">¥ {{item.unitPrice}}</view>
+                        <view class="goods-num">x {{item.count}}</view>
+                    </view>
+                </view>
+            </view>
+            <view>
+                <zan-panel>
+                    <!--<zan-row>-->
+                        <!--<zan-col col="8" col-class="custom-zan-col">-->
+                        <!--</zan-col>-->
+                        <!--<zan-col col="8" col-class="custom-zan-col">-->
+                        <!--</zan-col>-->
+                    <!--</zan-row>-->
+                    <zan-cell >
+                            <zan-tag type="danger" plain> 优惠 </zan-tag>
+                        <view style="color: #e64340;float: right;">{{ totalDiscount }} 元</view>
+                        <!--<view class="zan-c-red">{{ totalDiscount }} 元</view>-->
+                    </zan-cell>
+                </zan-panel>
+            </view>
 
-     <view class="jiesuan-box">
-        <view class="left-price">
-        <view class="total">合计：¥ {{totalPriceToPay}}</view>
-            <!-- <view class="total">合计：¥ {{allGoodsAndYunPrice - youhuijine}} + {{totalScoreToPay}} 积分</view> -->
+            <view class="peisong-way">
+                <view class="row-box">
+                    <view class="row-label">备注</view>
+                    <view class="right-text">
+                        <input name="remark" type="text" class="liuyan" placeholder="如需备注请输入"/>
+                    </view>
+                </view>
+            </view>
+            <template is="foot"/>
+        </scroll-view>
+
+
+        <view class="jiesuan-box">
+            <view class="left-price">
+                <view class="totalDiscount">优惠：￥{{ totalDiscount }}元</view>
+            </view>
+            <view class="left-price">
+                <view class="total">合计：¥ {{totalPriceToPay}}元</view>
+                <!-- <view class="total">合计：¥ {{allGoodsAndYunPrice - youhuijine}} + {{totalScoreToPay}} 积分</view> -->
+            </view>
+            <button class="to-pay-btn" formType="submit">支付</button>
         </view>
-        <button class="to-pay-btn" formType="submit">支付</button> 
-    </view>
-  </form>
+    </form>
 </view>

@@ -37,6 +37,40 @@
         <image mode="aspectFit" class="tip-style" src='../../images/youbiao.png' />
    </view>
 
+    <zan-panel bindtap="toggleBottomPopup" wx:if="{{showPromotion}}">
+        <view style="padding: 10px 0;">
+            <zan-capsule style="margin-left: 10px;" type="danger" wx:for="{{promotionList}}" wx:key="*this" leftText="{{item.tag}}" rightText="{{item.ruleStrategyDescription[0]}}" />
+        <!--<zan-capsule type="danger" leftText="折扣" rightText="限购一份" />-->
+        </view>
+    </zan-panel>
+    <!-- 底部弹出框 -->
+    <zan-popup
+            show="{{ showBottomPopup }}"
+            type="bottom"
+            bindclose="toggleBottomPopup"
+    >
+            <zan-panel bindtap="toggleBottomPopup" style="display: block;">
+                <view style="padding: 10px 0;" wx:for="{{promotionList}}" wx:key="*this" wx:for-item="promotion">
+                    <zan-cell>
+                        <view >**原型界面 非最终效果**</view>
+                    </zan-cell>
+                    <zan-tag style="margin-left: 10px;" type="danger" plain>{{ promotion.tag }} </zan-tag>
+                    <zan-cell  wx:for="{{promotion.ruleStrategyDescription}}" wx:key="*this">
+                        <view style="text-align: center;color:#f44;">  {{item}} </view>
+                        <!--<zan-tag  style="margin-left: 10px;" type="primary" plain>{{ item }}</zan-tag>-->
+                    </zan-cell>
+                    <!--<zan-capsule type="danger" rightText="{{item.ruleStrategyDescription[0]}}" />-->
+                </view>
+            </zan-panel>
+        <view class="pop-example__container pop-example__container--bottom">
+            <view class="zan-btns">
+                <button class="zan-btn" catchtap="toggleBottomPopup">
+                    我知道啦!
+                </button>
+            </view>
+        </view>
+    </zan-popup>
+
     <view class="good-tab">
         <view bindtap="goodInstr" class="label-title {{toView==='goodDesc'?'active':''}}">图文详情</view>
         <view bindtap="goodSize" class="label-title {{toView==='goodSize'?'active':''}}">商品参数</view>
@@ -57,6 +91,7 @@
             <image mode="widthFix" class="des-imgs" src="{{item.url}}" />
         </view>        
     </view>
+
     <view class="footer-box">
         <view class="kefu-btn">
             <button open-type="contact" class="kefu"
