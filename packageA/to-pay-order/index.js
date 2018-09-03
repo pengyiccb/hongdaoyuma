@@ -59,7 +59,7 @@ Page({
         //that.initShippingAddress();
         that.setData({
           goodsData: goodData,
-          totalPriceToPay: res.data
+          totalPriceToPay: res.data.totalPrice
         });        
       }else{
         wx.showToast({
