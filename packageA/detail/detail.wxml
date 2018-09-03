@@ -55,7 +55,7 @@
                         <view >**原型界面 非最终效果**</view>
                     </zan-cell>
                     <zan-tag style="margin-left: 10px;" type="danger" plain>{{ promotion.tag }} </zan-tag>
-                    <zan-cell class="zan-panel" wx:for="{{promotion.ruleStrategyDescription}}" wx:key="*this">
+                    <zan-cell  wx:for="{{promotion.ruleStrategyDescription}}" wx:key="*this">
                         <view style="text-align: center;color:#f44;">  {{item}} </view>
                         <!--<zan-tag  style="margin-left: 10px;" type="primary" plain>{{ item }}</zan-tag>-->
                     </zan-cell>

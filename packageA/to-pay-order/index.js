@@ -7,6 +7,7 @@ Page({
   data: {
     orderId: 0,
     totalPriceToPay: 0,
+    totalDiscount: 0, // 总优惠
     goodsData: {},
     isNeedLogistics: 1, // 是否需要物流信息
     yunPrice: 0,
@@ -57,10 +58,12 @@ Page({
     }).then(res => {
       if(res.code && res.code == 200){
         //that.initShippingAddress();
+        console.log(res)
         that.setData({
           goodsData: goodData,
-          totalPriceToPay: res.data
-        });        
+          totalPriceToPay: res.data.totalPrice,
+          totalDiscount: res.data.totalDiscount
+        });
       }else{
         wx.showToast({
           icon: 'none',
