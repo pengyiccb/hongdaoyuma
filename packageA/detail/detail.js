@@ -44,7 +44,9 @@ Page({
 
     shopCarInfo: {},
     shopType: "addShopCar",//购物类型，加入购物车或立即购买，默认为加入购物车
-    attrCount: 0
+    attrCount: 0,
+    promotionList: [],
+    showBottomPopup: false
   },
 
   //事件处理函数
@@ -109,6 +111,30 @@ Page({
       productId: e.id
     });
 
+    api.getProductPromotion({ productId: e.id }).catch(response => {
+      wx.showToast({
+        icon: 'none',
+        title: '活动数据获取错误',
+      })
+    }).then(response => {
+      if (response.code && response.code === 200) {
+        console.log(response)
+        response.data.forEach(promotion => {
+          //解析对象
+          promotion.ruleStrategy = JSON.parse(promotion.ruleStrategy);
+          if (promotion.ruleType === 1) { //满减活动
+            //把规则改成描述
+            // promotion.ruleStrategyDescription = promotion.ruleStrategy
+            promotion.ruleStrategyDescription = promotion.ruleStrategy.map(strategy => '满'+ strategy.full + '元减' + strategy.reduction + '元')
+            console.log(promotion.ruleStrategyDescription);
+          }
+        });
+
+        this.setData({
+          promotionList: response.data
+        })
+      }
+    });
     api.GetProductDetail({ productId: e.id }).catch(res => {
       wx.showToast({
         icon: 'none',
@@ -171,6 +197,11 @@ Page({
       }
     });
   
+  },
+  toggleBottomPopup() {
+    this.setData({
+      showBottomPopup: !this.data.showBottomPopup
+    });
   },
 
   closeCanvas: function () {

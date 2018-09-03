@@ -570,3 +570,14 @@ button[class="baocun"]::after{
   height: 0;
   color: transparent;
   }
+
+
+
+.pop-example__container {
+  overflow: hidden;
+  background: #fff;
+}
+
+.pop-example__container--bottom {
+  width: 100vw;
+}
