@@ -6,10 +6,11 @@ const app = getApp();
 let tokenVal = null;
 
 //const API_URL = "http://localhost:8080";
-const API_URL = "https://shop.ydmaj.com";
-// const API_URL = "https://shop.jxxykj.cn"; //测试服
-// const API_URL = "https://shopwk.jxxykj.cn"; //王昆的本地机器
+// const API_URL = "https://shop.ydmaj.com";
+// const API_URL = "https://shop.jxxykj.cn";
 // const API_URL = "http://192.168.10.100:8080";
+const API_URL = "https://shoppengyi.jxxykj.cn";
+// const API_URL = "http://192.168.10.153:8080";
 
 // 通过Promise发请求到服务器
 const RequestServer = (data, url, method="GET", token = true) => {
@@ -132,9 +133,6 @@ const shopRecordCancel = (data, reservationId) => RequestServer(data, `/api/v1/w
 //预约记录 确认完成
 const shopRecordConfirm = (data, reservationId)  => RequestServer(data, `/api/v1/wechat/reservation/confirm?reservationId=${reservationId}`, 'POST')
 
-//获取该商品的优惠活动列表
-const getProductPromotion = data => RequestServer(data, `/api/v1/wechat/product/promotion/list/${data.productId}` , 'GET')
-
 
 const loginToServer = (params = {data, success, fail}) => {
   wx.login({
@@ -209,5 +207,4 @@ module.exports= {
   getReservationRecord,
   shopRecordCancel,
   shopRecordConfirm,
-  getProductPromotion,
 }
